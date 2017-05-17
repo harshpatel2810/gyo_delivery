@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addListeners() {
         //btnsignin.setOnClickListener(this);
-
+        //test code
     }
 
     @OnClick(R.id.buttonSignin)

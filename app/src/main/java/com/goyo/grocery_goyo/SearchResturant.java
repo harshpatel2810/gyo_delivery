@@ -22,5 +22,6 @@ public class SearchResturant extends AppCompatActivity {
         ActionBar action=getSupportActionBar();
         action.setDisplayShowCustomEnabled(true);
         action.setCustomView(R.layout.search_for_resturant);
+        //test code
     }
 }

@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.content.Intent;
 import android.icu.util.ULocale;
 import android.support.design.widget.TabLayout;
@@ -26,7 +25,6 @@ import android.widget.TextView;
 import com.goyo.grocery.R;
 
 import java.util.ArrayList;
-
 public class ResturantProfile extends AppCompatActivity {
 
     /**
@@ -39,7 +37,8 @@ public class ResturantProfile extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     protected String ResturantName;
-
+    static public TextView QTY;
+    private int CART;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -48,10 +47,13 @@ public class ResturantProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resturant_profile);
+        QTY=(TextView)findViewById(R.id.textAddToCart);
+
         Intent io = getIntent();
         setTitle(io.getStringExtra("resturantName"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -61,17 +63,13 @@ public class ResturantProfile extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(mViewPager);
-       InitAppBar();
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_resturant_profile, menu);
         return true;
-    }
-    public void InitAppBar()
-    {
-        View v=getLayoutInflater().inflate(R.layout.add_to_cart_xml,null);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -96,10 +94,11 @@ public class ResturantProfile extends AppCompatActivity {
          * The fragment argument representing the section number for this
          * fragment.
          */
+        TextView txtDisplayCart;
         private static final String ARG_SECTION_NUMBER = "section_number";
         private int mpage;
-
-        public PlaceholderFragment() {
+        public PlaceholderFragment()
+        {
         }
 
         /**
@@ -113,18 +112,17 @@ public class ResturantProfile extends AppCompatActivity {
             fragment.setArguments(args);
             return fragment;
         }
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_resturant_profile, container, false);
+
             mpage=getArguments().getInt(ARG_SECTION_NUMBER);
+            txtDisplayCart=(TextView)rootView.findViewById(R.id.textAddToCart);
             fillData(rootView);
             return rootView;
 
         }
-
-
         private void fillData(View rootView){
 
             ArrayList<MenuItems> items=GetMenuList();

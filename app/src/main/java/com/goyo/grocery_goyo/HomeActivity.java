@@ -28,9 +28,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private ListView resturant_list;
     private Button search;
-    private ArrayList<ResturantDetails> r1=new ArrayList<>();
-    ResturantDetails resturant;
-    ResturantDetails resturant1;
     Context context;
     private ActionBar action;
     @Override
@@ -46,10 +43,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(io);
             }
         });
-        resturant=new ResturantDetails("Punjab Resturant","North Mughlai",4.3,"31 mins");
-        resturant1=new ResturantDetails("Kathiyawad Resturant","Katiyawadi",4.7,"22 mins");
-        r1.add(resturant);
-        r1.add(resturant1);
           resturant_list=(ListView)findViewById(R.id.list_display_resturants);
         resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
@@ -95,7 +88,5 @@ public class HomeActivity extends AppCompatActivity {
                 });
 
     }
-
-
 
 }

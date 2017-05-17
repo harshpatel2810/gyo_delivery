@@ -3,6 +3,8 @@ package com.goyo.grocery_goyo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.widget.BottomNavigationView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,15 +28,16 @@ import java.util.HashMap;
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
-    private  Integer addTocart=0;
+    private   Integer addTocart=0;
     ImageButton addQty, subQty;
-    private  TextView txtDisplayCart;
     private ImageButton btnAddQty, btnsubQty;
-
+private  BottomNavigationView navigationView;
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
     public CustomMenuAdapter(Context activity, ArrayList<MenuItems> xyz) {
         context = activity;
         dataList = xyz;
+
+
     }
     public int getCount() {
         return dataList.size();
@@ -66,8 +69,10 @@ public class CustomMenuAdapter extends BaseAdapter {
         }
 
         final MenuItems mtem = dataList.get(position);
+        navigationView=(BottomNavigationView)convertView.findViewById(R.id.btmNavCart);
         btnAddQty = (ImageButton) convertView.findViewById(R.id.btnAddQty);
         btnAddQty.setTag(position);
+
         btnsubQty = (ImageButton) convertView.findViewById(R.id.btnSubQty);
         btnsubQty.setTag(position);
         h1.uniqueKey = String.valueOf(position);
@@ -77,7 +82,7 @@ public class CustomMenuAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Integer currQty = mtem.getCartQty();
                 mtem.setCartQty(currQty + 1);
-                AddToCart(mtem);
+                AddToCart();
                 notifyDataSetChanged();
             }
         });
@@ -92,7 +97,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                     return;
                 }
                 mtem.setCartQty(currQty - 1);
-                DeductToCart(mtem);
+                DeductToCart();
                 notifyDataSetChanged();
             }
         });
@@ -111,15 +116,18 @@ public class CustomMenuAdapter extends BaseAdapter {
 
         return convertView;
     }
-    public void AddToCart(MenuItems item)
+    public void AddToCart()
     {
-       addTocart=addTocart+item.getCartQty();
-       Toast.makeText(context,addTocart.toString(),Toast.LENGTH_LONG).show();
+
+         addTocart=addTocart+1;
+         ResturantProfile.QTY.setText(String.valueOf(addTocart));
+         notifyDataSetChanged();
     }
-    public void DeductToCart(MenuItems item)
+    public int DeductToCart()
     {
-        addTocart=addTocart-item.getCartQty();
-        Toast.makeText(context,addTocart.toString(),Toast.LENGTH_LONG).show();
+        addTocart=addTocart-1;
+        ResturantProfile.QTY.setText(String.valueOf(addTocart));
+        return addTocart;
     }
     public class Holder {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;

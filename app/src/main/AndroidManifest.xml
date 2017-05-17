@@ -10,17 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.goyo.grocery_goyo.LoginActivity">
+
+        </activity>
+        <activity android:name="com.goyo.grocery_goyo.HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.goyo.grocery_goyo.HomeActivity" />
         <activity
             android:name="com.goyo.grocery_goyo.ResturantProfile"
             android:label="@string/title_activity_resturant_profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
         <activity android:name="com.goyo.grocery_goyo.SearchResturant"></activity>
     </application>
 

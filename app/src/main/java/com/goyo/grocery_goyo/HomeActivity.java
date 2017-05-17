@@ -9,10 +9,20 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.model.restaurantModel;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -40,8 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         resturant1=new ResturantDetails("Kathiyawad Resturant","Katiyawadi",4.7,"22 mins");
         r1.add(resturant);
         r1.add(resturant1);
-        resturant_list=(ListView)findViewById(R.id.list_display_resturants);
-        resturant_list.setAdapter(new CustomResturantAdapter(this,r1));
+          resturant_list=(ListView)findViewById(R.id.list_display_resturants);
         resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 // When clicked, show a toast with the TextView text
@@ -52,6 +61,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         InitAppBar();
+        getRestaurant();
+
     }
 
      public void InitAppBar()
@@ -61,4 +72,30 @@ public class HomeActivity extends AppCompatActivity {
         action.setCustomView(R.layout.layout_location_select);
         TextView label=(TextView)action.getCustomView().findViewById(R.id.txtLocation);
     }
+
+    //getRestaurantMaster
+    //flag = 'all'
+    private void getRestaurant(){
+        JsonObject json = new JsonObject();
+        json.addProperty("flag", "all");
+        Ion.with(context)
+                .load("http://192.168.1.101:3005/getRestaurantMaster")
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        // do stuff with the result or error
+                        Gson gson = new Gson();
+                        List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>(){}.getType());
+                        resturant_list.setAdapter(new CustomResturantAdapter(HomeActivity.this,myList));
+
+                        //Toast.makeText(HomeActivity.this,result.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+
+
 }

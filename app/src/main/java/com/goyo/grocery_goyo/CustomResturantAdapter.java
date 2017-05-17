@@ -12,10 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.model.restaurantModel;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 5/12/2017.
@@ -24,8 +26,8 @@ import java.util.ArrayList;
 public class CustomResturantAdapter extends BaseAdapter {
     Context context;
     String abc[];
-    private ArrayList<ResturantDetails> x;
-    public CustomResturantAdapter(HomeActivity activity,ArrayList<ResturantDetails> xyz) {
+    private List<restaurantModel> x;
+    public CustomResturantAdapter(HomeActivity activity,List<restaurantModel> xyz) {
         context = activity;
         x=xyz;
     }
@@ -66,11 +68,11 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtVegNonVeg = (TextView)convertView.findViewById(R.id.txtExpenseCategory);
         h1.txtRating = (TextView)convertView.findViewById(R.id.txtRating);
         h1.txtDeliveryTime = (TextView)convertView.findViewById(R.id.txtDeliveryTime);
-        ResturantDetails resturant=x.get(position);
-        h1.txtRname.setText(resturant.getResturantName());
-        h1.txtRtype.setText(resturant.getResturantDesc());
-        h1.txtRating.setText(String.valueOf(resturant.getResturantRating()));
-        h1.txtDeliveryTime.setText(resturant.getDeliveryTime());
+        restaurantModel resturant=x.get(position);
+        h1.txtRname.setText(resturant.restname);
+        h1.txtRtype.setText(resturant.restname);
+        h1.txtRating.setText("0");
+        h1.txtDeliveryTime.setText("20");
         return convertView;
     }
 }

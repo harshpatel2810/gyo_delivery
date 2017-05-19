@@ -28,5 +28,6 @@
     <string name="title_activity_main3">Main3Activity</string>
     <string name="title_activity_menu__list__item">Menu_List_Item</string>
     <string name="cart_name">Your Cart</string>
-
+    <string name="GPSTitleAlert">GPS</string>
+    <string name="GPSMessage">Enable Your Location Services</string>
 </resources>

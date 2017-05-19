@@ -47,6 +47,7 @@ public class ResturantProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resturant_profile);
+        //Qty initialization for setting total number of cart in it
         QTY=(TextView)findViewById(R.id.textAddToCart);
 
         Intent io = getIntent();

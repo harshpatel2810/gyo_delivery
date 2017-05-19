@@ -1,7 +1,14 @@
 package com.goyo.grocery_goyo;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,17 +30,22 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
 
 public class HomeActivity extends AppCompatActivity {
 
     private ListView resturant_list;
     private Button search;
+    private TextView txtLocation,txtLocDesc;
     Context context;
     private ActionBar action;
+    AppLocationService appLocationService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        appLocationService=new AppLocationService(this);
+        ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         context=this;
         search=(Button)findViewById(R.id.btnResturantSearch);
         search.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
           resturant_list=(ListView)findViewById(R.id.list_display_resturants);
-        resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 // When clicked, show a toast with the TextView text
                TextView txtResturant=(TextView)view.findViewById(R.id.txtResturantName);
@@ -54,20 +66,20 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         InitAppBar();
-        getRestaurant();
+        //Helps to set the details of user current location
+        if(appLocationService.getIsGPSTrackingEnabled())
+        {
+            String addressLine=String.valueOf(appLocationService.getLocality(this));
+            txtLocation.setText(appLocationService.SubAdminArea(this));
+            txtLocDesc.setText(appLocationService.getAddressLine(this)+","+String.valueOf(addressLine));
+        }
+        else
+        {
+            appLocationService.showSettingsAlert();
+        }
+        //getRestaurant();
 
     }
-
-     public void InitAppBar()
-    {
-        ActionBar action=getSupportActionBar();
-        action.setDisplayShowCustomEnabled(true);
-        action.setCustomView(R.layout.layout_location_select);
-        TextView label=(TextView)action.getCustomView().findViewById(R.id.txtLocation);
-    }
-
-    //getRestaurantMaster
-    //flag = 'all'
     private void getRestaurant(){
         JsonObject json = new JsonObject();
         json.addProperty("flag", "all");
@@ -86,7 +98,35 @@ public class HomeActivity extends AppCompatActivity {
                         //Toast.makeText(HomeActivity.this,result.toString(),Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
+    //A method to get GPS provider
+     public void InitAppBar()
+    {
+        ActionBar action=getSupportActionBar();
+        action.setDisplayShowCustomEnabled(true);
+        action.setCustomView(R.layout.layout_location_select);
+        //Initializing both the textView to display current Location
+        txtLocation=(TextView)action.getCustomView().findViewById(R.id.txtLocation);
+        txtLocDesc=(TextView)action.getCustomView().findViewById(R.id.txtLocDesc);
+    }
+    //Request to set permission runtime because of 6.0 and SecurityException Fatal Error
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+    //getRestaurantMaster
+    //flag = 'all'
 }

@@ -164,7 +164,8 @@ public class AppLocationService extends Service implements LocationListener {
             Address address = addresses.get(0);
             String addressLine = address.getAddressLine(0);
             return addressLine;
-        } else {
+        } else
+        {
             return null;
         }
     }
@@ -174,21 +175,9 @@ public class AppLocationService extends Service implements LocationListener {
         if (addresses != null && addresses.size() > 0) {
             Address address = addresses.get(0);
             String locality = address.getLocality();
-
             return locality;
-        } else {
-            return null;
-        }
-
-    }
-    public String getArea(Context context) {
-        List<Address> addresses = getGeoDecoderAdress(context);
-
-        if (addresses != null && addresses.size() > 0) {
-            Address address = addresses.get(0);
-            String postalCode = address.getAdminArea();
-            return postalCode;
-        } else {
+        } else
+        {
             return null;
         }
     }
@@ -201,17 +190,13 @@ public class AppLocationService extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
 
     }
-
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
-
     @Override
     public void onProviderEnabled(String provider) {
 
     }
-
     @Override
     public void onProviderDisabled(String provider) {
     }

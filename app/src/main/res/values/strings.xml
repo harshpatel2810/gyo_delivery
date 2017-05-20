@@ -7,21 +7,18 @@
     <string name="Pwd">PASSWORD</string>
     <string name="title_activity_home">Home</string>
     <string name="large_text">
-
     </string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_xyz">xyz</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="delivery">Delivery Fragment</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_resturant">Resturant</string>
     <string name="title_activity_resturant_final">ResturantFinal</string>
-    <string name="ButtonSearchText">Search resturants,dishes..</string>
+    <string name="ButtonSearchText">Search resturants,dishes and ..</string>
     <string name="ButtonFilter">FILTER</string>
     <string name="title_activity_resturant_profile">ResturantProfile</string>
     <string name="title_activity_main2">Main2Activity</string>

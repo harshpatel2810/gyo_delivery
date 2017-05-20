@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@mipmap/ic_previous_button"
+        android:paddingLeft="5dp"
+        android:id="@+id/image_button_previous"
+        android:background="@null"/>
+     <AutoCompleteTextView
+        android:layout_width="match_parent"
+         android:id="@+id/txtSearchLocation"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/image_button_previous"
+        android:hint="Search for area,street name,loc.."
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@null"
+        android:textColorHint="#808080"
+        android:textStyle="normal"
+        android:maxLines="1"
+        android:fontFamily="Comic Sans MS"
+        android:background="#ffffff"
+        />
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSearchLocation"
+        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+        />
+</RelativeLayout>

@@ -14,8 +14,6 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/resturantpunjab_grill" />
-
-
         <TextView
             android:id="@+id/txtResturantName"
             android:layout_width="wrap_content"
@@ -46,10 +44,9 @@
             android:layout_alignBottom="@+id/txtRating"
             android:layout_alignStart="@+id/txtResturantType"
             android:layout_below="@+id/txtResturantType"
-            android:drawableLeft="@drawable/ic_resturant_veg"
+            android:drawableLeft="@drawable/ic_nonveg_resturant_icon"
             android:gravity="fill"
             android:text="" />
-
         <TextView
             android:id="@+id/txtRating"
             android:layout_width="wrap_content"
@@ -78,7 +75,15 @@
             android:layout_alignBottom="@+id/txtRating"
             android:layout_below="@+id/txtResturantType" />
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/txtSetMinimumPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/imgResturantDisplay"
+            android:layout_below="@+id/txtExpenseCategory"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="120dp"
+            android:textSize="10dp"
+            android:text="Minimum Order:₹100" />
     </RelativeLayout>
-
 </LinearLayout>

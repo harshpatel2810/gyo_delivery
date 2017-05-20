@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +21,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -31,19 +34,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
-
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
 
     private ListView resturant_list;
     private Button search;
     private TextView txtLocation,txtLocDesc;
     Context context;
-    private ActionBar action;
+    public ActionBar action;
     AppLocationService appLocationService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Intent io=getIntent();
         appLocationService=new AppLocationService(this);
         ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         context=this;
@@ -59,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
           resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 // When clicked, show a toast with the TextView text
-               TextView txtResturant=(TextView)view.findViewById(R.id.txtResturantName);
+                TextView txtResturant=(TextView)view.findViewById(R.id.txtResturantName);
                 Intent io=new Intent(context,ResturantProfile.class);
                 io.putExtra("resturantName",txtResturant.getText().toString());
                 startActivity(io);
@@ -70,15 +73,15 @@ public class HomeActivity extends AppCompatActivity {
         if(appLocationService.getIsGPSTrackingEnabled())
         {
             String addressLine=String.valueOf(appLocationService.getLocality(this));
-            txtLocation.setText(appLocationService.SubAdminArea(this));
+            txtLocation.setText(appLocationService.getAddressLine(this));
             txtLocDesc.setText(appLocationService.getAddressLine(this)+","+String.valueOf(addressLine));
+
         }
         else
         {
             appLocationService.showSettingsAlert();
         }
         //getRestaurant();
-
     }
     private void getRestaurant(){
         JsonObject json = new JsonObject();
@@ -108,6 +111,14 @@ public class HomeActivity extends AppCompatActivity {
         //Initializing both the textView to display current Location
         txtLocation=(TextView)action.getCustomView().findViewById(R.id.txtLocation);
         txtLocDesc=(TextView)action.getCustomView().findViewById(R.id.txtLocDesc);
+        //Creating Listener on main Title(txtLocation) of action bar to go in next fragment for searching location
+        txtLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SearchLocation.class));
+                overridePendingTransition(R.anim.enter,R.anim.exit);
+            }
+        });
     }
     //Request to set permission runtime because of 6.0 and SecurityException Fatal Error
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -127,6 +138,7 @@ public class HomeActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
+
     //getRestaurantMaster
     //flag = 'all'
 }

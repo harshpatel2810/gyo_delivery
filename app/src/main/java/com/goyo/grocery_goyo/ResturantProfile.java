@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.goyo.grocery.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 public class ResturantProfile extends AppCompatActivity {
 
@@ -38,6 +40,8 @@ public class ResturantProfile extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     protected String ResturantName;
     static public TextView QTY;
+    static public TextView totalAmount;
+
     private int CART;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -48,13 +52,14 @@ public class ResturantProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resturant_profile);
         //Qty initialization for setting total number of cart in it
+        //total Amount initialization
         QTY=(TextView)findViewById(R.id.textAddToCart);
-
+        totalAmount=(TextView)findViewById(R.id.txtTotalAmount);
         Intent io = getIntent();
+        //Setting Name of the Resturant by going into the next screen
         setTitle(io.getStringExtra("resturantName"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

@@ -10,7 +10,6 @@ import android.view.MenuItem;
 public class MenuItems {
     private String itemName;
     private Integer Rate;
-
     public String getMenuDesc() {
         return menuDesc;
     }
@@ -39,18 +38,14 @@ public class MenuItems {
         this.itemName = itemName;
         Rate = rate;
     }
-
     public Integer getCartQty() {
         return cartQty;
     }
-
     public void setCartQty(Integer cartQty) {
         this.cartQty = cartQty;
     }
-
     private Integer cartQty = 0;
     public MenuItems()
     {
-
     }
 }

@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 public class HomeActivity extends AppCompatActivity  {
-
     private ListView resturant_list;
     private Button search;
     private TextView txtLocation,txtLocDesc;
@@ -81,13 +80,13 @@ public class HomeActivity extends AppCompatActivity  {
         {
             appLocationService.showSettingsAlert();
         }
-        //getRestaurant();
+        getRestaurant();
     }
     private void getRestaurant(){
         JsonObject json = new JsonObject();
         json.addProperty("flag", "all");
         Ion.with(context)
-                .load("http://192.168.1.101:3005/getRestaurantMaster")
+                .load("http://35.154.230.244:8085/getRestaurantMaster")
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -138,7 +137,6 @@ public class HomeActivity extends AppCompatActivity  {
             // permissions this app might request
         }
     }
-
     //getRestaurantMaster
     //flag = 'all'
 }

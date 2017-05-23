@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:layout_gravity="top"
     >
-
-    <EditText
+    <com.goyo.grocery_goyo.DelayAutoCompleteTextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:id="@+id/txtSearchBar"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:drawableLeft="@drawable/ic_search_black"
-        android:layout_marginRight="10dp"
-        android:drawablePadding="10dp"
-        android:hint="Search Place Here"
-        android:textColorHint="@color/grey"
+        android:imeOptions="flagNoExtractUi|actionSearch"
+        android:inputType="textCapSentences|textNoSuggestions"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/write_text"
-        android:singleLine="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="35dp"
+        android:layout_marginEnd="10dp"
+        android:drawablePadding="10dp"
+        android:layout_weight="2"
+        android:drawableLeft="@drawable/ic_search_black"
+        android:hint="@string/text_location_search"
+        android:dropDownWidth="fill_parent"
+        android:textColorHint="@color/grey"
+        android:padding="10dp"
+        android:textSize="13sp"
+        android:maxLines="1"
         />
-    <ImageView
-        android:layout_width="16dp"
-        android:id="@+id/clearText"
-        android:layout_height="16dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="20dp"
-        android:layout_alignParentRight="true"
-        />
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/recyclerView"
         android:layout_below="@+id/txtSearchBar"
         android:layout_marginTop="10dp"
         android:scrollbars="vertical">
-    </android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+    </android.support.v7.widget.RecyclerView>-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/geo_autocomplete_text_clear"
+        android:layout_gravity="center_vertical|end"
+        android:src="@drawable/ic_cancel_icon"
+        android:visibility="visible"
+        android:layout_weight="0"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="12dp"/>
+</FrameLayout>

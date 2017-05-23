@@ -23,6 +23,8 @@ import java.security.SecurityPermission;
 import java.util.List;
 import java.util.Locale;
 public class AppLocationService extends Service implements LocationListener {
+   //Basically it is a class which helps to get the current location of the user
+    //even we can also able to get current Latitude and Longtitude of the user
     private static String TAG = AppLocationService.class.getName();
     private final Context mContext;
     //It will check wether GPS is enabled

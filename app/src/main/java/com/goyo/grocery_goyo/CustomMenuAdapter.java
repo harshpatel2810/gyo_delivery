@@ -28,7 +28,6 @@ public class CustomMenuAdapter extends BaseAdapter {
     private Integer addTocart = 0;
     ImageButton addQty, subQty;
     private ImageButton btnAddQty, btnsubQty;
-
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private int totalAmount = 0;
@@ -91,7 +90,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                         builder = new AlertDialog.Builder(context);
                     }
                     builder.setTitle("Quantity Maximum")
-                            .setMessage("Order Value Maximum Cannot able to proceed")
+                            .setMessage("Order value maximum cannot able to proceed")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete

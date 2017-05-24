@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
@@ -27,18 +28,31 @@ public class CustomMenuAdapter extends BaseAdapter {
     private ArrayList<MenuItems> dataList;
     private Integer addTocart = 0;
     ImageButton addQty, subQty;
+    ImageView checkout;
     private ImageButton btnAddQty, btnsubQty;
+    private int resturant_id;
+    private String resturant_name;
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private int totalAmount = 0;
     private BottomNavigationView navigationView;
-
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
-    public CustomMenuAdapter(Context activity, ArrayList<MenuItems> xyz) {
+    SharedPreferences settings;
+    public CustomMenuAdapter(Context activity, ArrayList<MenuItems> xyz,String resturant_name) {
         context = activity;
         dataList = xyz;
+        //Created listener for checkout imageview so that it can intent to screen of bill
+        ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent io=new Intent(context,CustomerBill.class);
+                context.startActivity(io);
+            }
+        });
+        settings = context.getSharedPreferences("PREF_NAME", 0);
+        resturant_id = settings.getInt("Resturant_id", 0);
+        this.resturant_name=resturant_name;
     }
-
     public int getCount() {
         return dataList.size();
     }
@@ -82,6 +96,9 @@ public class CustomMenuAdapter extends BaseAdapter {
                 Integer currQty = mtem.getCartQty();
                 //AddToCart Method which will increment quantity on add button and will help to set it on the cart icon
                 //Checking for maximum quantity selected by user
+                Toast.makeText(context,String.valueOf(resturant_id),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,resturant_name,Toast.LENGTH_LONG).show();
+
                 if (mtem.getCartQty() >= 10) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -94,7 +111,6 @@ public class CustomMenuAdapter extends BaseAdapter {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
-
                                 }
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)

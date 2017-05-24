@@ -1,4 +1,5 @@
 package com.goyo.grocery_goyo;
+
 import android.Manifest;
 import android.app.Service;
 import android.content.Context;
@@ -17,13 +18,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+
 import com.goyo.grocery.R;
+
 import java.io.IOException;
 import java.security.SecurityPermission;
 import java.util.List;
 import java.util.Locale;
+
 public class AppLocationService extends Service implements LocationListener {
-   //Basically it is a class which helps to get the current location of the user
+    //Basically it is a class which helps to get the current location of the user
     //even we can also able to get current Latitude and Longtitude of the user
     private static String TAG = AppLocationService.class.getName();
     private final Context mContext;
@@ -41,10 +45,12 @@ public class AppLocationService extends Service implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
     private String provider_info;
+
     public AppLocationService(Context context) {
         this.mContext = context;
         getLocation();
     }
+
     //Helps to get the Location by checking if GPS and Network is Enabled
     public void getLocation() throws SecurityException {
         try {
@@ -82,6 +88,7 @@ public class AppLocationService extends Service implements LocationListener {
             longtitude = location.getLongitude();
         }
     }
+
     //Helps to get the Latitude
     public double getLatitude() {
         if (location != null) {
@@ -89,6 +96,7 @@ public class AppLocationService extends Service implements LocationListener {
         }
         return latitude;
     }
+
     public double getLongitude() {
         if (location != null) {
             longtitude = location.getLongitude();
@@ -96,16 +104,19 @@ public class AppLocationService extends Service implements LocationListener {
 
         return longtitude;
     }
+
     //Helps to stop using GPS
     public void StopUsingGps() {
         if (locationManager != null) {
             locationManager.removeUpdates(AppLocationService.this);
         }
     }
+
     public boolean getIsGPSTrackingEnabled() {
 
         return this.isGPSTrackingEnabled;
     }
+
     //Help to get the Adress of the Current Location
     public List<Address> getGeoDecoderAdress(Context cxt) {
         if (location != null) {
@@ -119,6 +130,7 @@ public class AppLocationService extends Service implements LocationListener {
         }
         return null;
     }
+
     //Method of Alert Dialog box if the GPS is not enabled
     public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
@@ -148,6 +160,7 @@ public class AppLocationService extends Service implements LocationListener {
         });
         alertDialog.show();
     }
+
     public String SubAdminArea(Context context) {
         List<Address> addresses = getGeoDecoderAdress(context);
         if (addresses != null && addresses.size() > 0) {
@@ -166,11 +179,11 @@ public class AppLocationService extends Service implements LocationListener {
             Address address = addresses.get(0);
             String addressLine = address.getAddressLine(0);
             return addressLine;
-        } else
-        {
+        } else {
             return null;
         }
     }
+
     //Helps to get the Locality of the Location
     public String getLocality(Context context) {
         List<Address> addresses = getGeoDecoderAdress(context);
@@ -178,12 +191,12 @@ public class AppLocationService extends Service implements LocationListener {
             Address address = addresses.get(0);
             String locality = address.getLocality();
             return locality;
-        } else
-        {
+        } else {
             return null;
         }
     }
-//All kinds of listeners related to GPS Services
+
+    //All kinds of listeners related to GPS Services
     public IBinder onBind(Intent intent) {
         return null;
     }
@@ -192,13 +205,16 @@ public class AppLocationService extends Service implements LocationListener {
     public void onLocationChanged(Location location) {
 
     }
+
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
     }
+
     @Override
     public void onProviderEnabled(String provider) {
 
     }
+
     @Override
     public void onProviderDisabled(String provider) {
     }

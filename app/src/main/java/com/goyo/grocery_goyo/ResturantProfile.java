@@ -1,4 +1,5 @@
 package com.goyo.grocery_goyo;
+
 import android.content.Intent;
 import android.icu.util.ULocale;
 import android.support.design.widget.TabLayout;
@@ -19,16 +20,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goyo.grocery.R;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-public class ResturantProfile extends AppCompatActivity {
 
+public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -39,9 +42,11 @@ public class ResturantProfile extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     protected String ResturantName;
+    protected static Integer resturant_id;
     static public TextView QTY;
     static public TextView totalAmount;
-
+    static public ImageView checkout;
+    static Intent io;
     private int CART;
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -53,9 +58,11 @@ public class ResturantProfile extends AppCompatActivity {
         setContentView(R.layout.activity_resturant_profile);
         //Qty initialization for setting total number of cart in it
         //total Amount initialization
-        QTY=(TextView)findViewById(R.id.textAddToCart);
-        totalAmount=(TextView)findViewById(R.id.txtTotalAmount);
-        Intent io = getIntent();
+        QTY = (TextView) findViewById(R.id.textAddToCart);
+        totalAmount = (TextView) findViewById(R.id.txtTotalAmount);
+        io = getIntent();
+        //initializing checkout button to proceed for bill
+        checkout = (ImageView) findViewById(R.id.CheckOut);
         //Setting Name of the Resturant by going into the next screen
         setTitle(io.getStringExtra("resturantName"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,21 +76,21 @@ public class ResturantProfile extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_resturant_profile, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -103,14 +110,15 @@ public class ResturantProfile extends AppCompatActivity {
         TextView txtDisplayCart;
         private static final String ARG_SECTION_NUMBER = "section_number";
         private int mpage;
-        public PlaceholderFragment()
-        {
+
+        public PlaceholderFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -118,71 +126,71 @@ public class ResturantProfile extends AppCompatActivity {
             fragment.setArguments(args);
             return fragment;
         }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_resturant_profile, container, false);
-
-            mpage=getArguments().getInt(ARG_SECTION_NUMBER);
-            txtDisplayCart=(TextView)rootView.findViewById(R.id.textAddToCart);
+            mpage = getArguments().getInt(ARG_SECTION_NUMBER);
+            txtDisplayCart = (TextView) rootView.findViewById(R.id.textAddToCart);
             fillData(rootView);
             return rootView;
 
         }
-        private void fillData(View rootView){
 
-            ArrayList<MenuItems> items=GetMenuList();
-            ListView lv=(ListView)rootView.findViewById(R.id.list_menu_items);
-            lv.setAdapter(new CustomMenuAdapter(getContext(),items));
+        private void fillData(View rootView) {
+
+            ArrayList<MenuItems> items = GetMenuList();
+            ListView lv = (ListView) rootView.findViewById(R.id.list_menu_items);
+            lv.setAdapter(new CustomMenuAdapter(getContext(), items,io.getStringExtra("resturantName")));
         }
 
         private ArrayList<MenuItems> GetMenuList() {
-            ArrayList<MenuItems> item=new ArrayList<>();
-            MenuItems mi=new MenuItems();
-           switch(mpage)
-           {
-               case 1:
-                   mi = new MenuItems("Hot and Sour", 150, "");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn cjcjcjcjc cjcjcjcjcj cjcjcjcjc jjcjcjcj jcjcjc");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
-                   mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
-                   item.add(mi);
+            ArrayList<MenuItems> item = new ArrayList<>();
+            MenuItems mi = new MenuItems();
+            switch (mpage) {
+                case 1:
+                    mi = new MenuItems("Hot and Sour", 150, "");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn cjcjcjcjc cjcjcjcjcj cjcjcjcjc jjcjcjcj jcjcjc");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    item.add(mi);
 
-                   break;
+                    break;
 
-                   case 2:
-                       mi = new MenuItems("Hara Bhara Kabab", 150, "It will contain pudina");
-                       item.add(mi);
-                       mi = new MenuItems("Spring Rolls", 170, "It will contain hakka noodles");
-                       item.add(mi);
-                       break;
-                 case 3:
-                   mi = new MenuItems("Spicy Raita", 250, "It will contain curd with some spices");
-                   item.add(mi);
-                   mi = new MenuItems("Vegetable Salad", 190, "Mix Vegetable salad");
-                   item.add(mi);
-                   mi=new MenuItems("Sweet Raita",350,"Sweet curd raita with mix fruits");
-                     item.add(mi);
-                   break;
+                case 2:
+                    mi = new MenuItems("Hara Bhara Kabab", 150, "It will contain pudina");
+                    item.add(mi);
+                    mi = new MenuItems("Spring Rolls", 170, "It will contain hakka noodles");
+                    item.add(mi);
+                    break;
+                case 3:
+                    mi = new MenuItems("Spicy Raita", 250, "It will contain curd with some spices");
+                    item.add(mi);
+                    mi = new MenuItems("Vegetable Salad", 190, "Mix Vegetable salad");
+                    item.add(mi);
+                    mi = new MenuItems("Sweet Raita", 350, "Sweet curd raita with mix fruits");
+                    item.add(mi);
+                    break;
 
-           }
+            }
             /*if(mpage==1) {
                mi = new MenuItems("Hot cjjcjcjc and Sour", 150, "It will gggg gggg ggggg ggggg gggggg gggggggggggg");
                 item.add(mi);
@@ -196,7 +204,7 @@ public class ResturantProfile extends AppCompatActivity {
                 mi = new MenuItems("Spring Rolls", 170, "It will contain hakka noodles");
                 item.add(mi);
             }*/
-            return  item;
+            return item;
         }
     }
 
@@ -205,7 +213,6 @@ public class ResturantProfile extends AppCompatActivity {
      * one of the sections/tabs/pages.
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -222,6 +229,7 @@ public class ResturantProfile extends AppCompatActivity {
             // Show 3 total pages.
             return Category.category.length;
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
             return Category.category[position];

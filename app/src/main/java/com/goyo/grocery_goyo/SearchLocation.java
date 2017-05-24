@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,9 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.goyo.grocery.R;
-
 public class SearchLocation extends AppCompatActivity{
-
     private Integer TRESHOLD=2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private  ImageView geo_autocomplete_clear;
@@ -62,10 +59,12 @@ public class SearchLocation extends AppCompatActivity{
             public void afterTextChanged(Editable s) {
                if(s.length()>0)
                {
+                   //if there is text in autocomplete textview than the image view will be visible
                    geo_autocomplete_clear.setVisibility(View.VISIBLE);
                }
                else
                {
+                   //if auto complete text view is clear than the image view will be invisible
                    geo_autocomplete_clear.setVisibility(View.GONE);
                }
             }

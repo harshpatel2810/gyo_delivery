@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 public class HomeActivity extends AppCompatActivity  {
-    private ListView resturant_list;
+    public static ListView resturant_list;
     private Button search;
     private TextView txtLocation,txtLocDesc;
     Context context;
@@ -58,15 +58,6 @@ public class HomeActivity extends AppCompatActivity  {
             }
         });
           resturant_list=(ListView)findViewById(R.id.list_display_resturants);
-          resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                // When clicked, show a toast with the TextView text
-                TextView txtResturant=(TextView)view.findViewById(R.id.txtResturantName);
-                Intent io=new Intent(context,ResturantProfile.class);
-                io.putExtra("resturantName",txtResturant.getText().toString());
-                startActivity(io);
-            }
-        });
         InitAppBar();
         //Helps to set the details of user current location
         if(appLocationService.getIsGPSTrackingEnabled())

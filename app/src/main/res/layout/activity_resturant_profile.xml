@@ -122,7 +122,7 @@
                     android:id="@+id/txtTotalAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="₹100"
+                    android:text="₹ 0"
                     android:paddingLeft="40dp"
                     android:textColor="#FFF"
                     android:textSize="14dp"
@@ -139,11 +139,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:paddingLeft="30dp"
+                    android:id="@+id/CheckOut"
                     android:src="@drawable/ic_checkout_cart"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginStart="20dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:contextClickable="true"/>
                 <TextView
                     android:id="@+id/txtDisplayCheckOut"
                     android:layout_width="wrap_content"

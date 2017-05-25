@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txtResturantBillName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:paddingStart="10dp"
+        android:textStyle="bold"
+        android:text="Resturant Name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="15dp"
+        android:paddingStart="10dp"
+        android:layout_below="@+id/txtResturantBillName"
+        android:id="@+id/txtItemName"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="15dp"
+        android:paddingStart="10dp"
+        android:layout_toRightOf="@id/txtItemName"
+        android:layout_below="@+id/txtResturantBillName"
+        android:id="@+id/txtItemQuantity"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="15dp"
+        android:paddingStart="10dp"
+        android:layout_toRightOf="@id/txtItemQuantity"
+        android:layout_below="@+id/txtResturantBillName"
+        android:id="@+id/txtRate"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="15dp"
+        android:paddingStart="10dp"
+        android:layout_toRightOf="@id/txtRate"
+        android:layout_below="@+id/txtResturantBillName"
+        android:id="@+id/txtBillAmount"/>
+</RelativeLayout>

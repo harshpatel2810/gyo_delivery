@@ -1,4 +1,5 @@
 package com.goyo.grocery_goyo;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -6,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.text.TextUtils;
@@ -21,8 +23,14 @@ import android.widget.Toast;
 
 import com.goyo.grocery.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
@@ -34,25 +42,34 @@ public class CustomMenuAdapter extends BaseAdapter {
     private String resturant_name;
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
-    private int totalAmount = 0;
+    private static int totalAmount = 0;
     private BottomNavigationView navigationView;
+    private CustomerBillDetails customerBillDetails;
+    private List<CustomerBillDetails> customerBillDetailsList;
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
     SharedPreferences settings;
-    public CustomMenuAdapter(Context activity, ArrayList<MenuItems> xyz,String resturant_name) {
+
+    public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, String resturant_name) {
         context = activity;
         dataList = xyz;
+        settings = context.getSharedPreferences("PREF_NAME", 0);
+        resturant_id = settings.getInt("Resturant_id", 0);
+        this.resturant_name = resturant_name;
+        customerBillDetailsList = new ArrayList<CustomerBillDetails>();
         //Created listener for checkout imageview so that it can intent to screen of bill
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent io=new Intent(context,CustomerBill.class);
+                Intent io = new Intent(context, CustomerBill.class);
+                io.putExtra("bill", (Serializable) customerBillDetailsList);
                 context.startActivity(io);
             }
         });
-        settings = context.getSharedPreferences("PREF_NAME", 0);
-        resturant_id = settings.getInt("Resturant_id", 0);
-        this.resturant_name=resturant_name;
+        //Since there is need of resturant id i have stored it in object of shared preference
+        //and i am fetching it through same object of shared preference
+
     }
+
     public int getCount() {
         return dataList.size();
     }
@@ -96,9 +113,6 @@ public class CustomMenuAdapter extends BaseAdapter {
                 Integer currQty = mtem.getCartQty();
                 //AddToCart Method which will increment quantity on add button and will help to set it on the cart icon
                 //Checking for maximum quantity selected by user
-                Toast.makeText(context,String.valueOf(resturant_id),Toast.LENGTH_LONG).show();
-                Toast.makeText(context,resturant_name,Toast.LENGTH_LONG).show();
-
                 if (mtem.getCartQty() >= 10) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -115,15 +129,16 @@ public class CustomMenuAdapter extends BaseAdapter {
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
-                } else
-                    {
+                } else {
                     //Creating Alert Dialog Box if the order reaches to the maximum value
-                        CalculateTotalPrice(mtem.getRate());
-                        AddToCart();
-                        mtem.setCartQty(currQty + 1);
-                        notifyDataSetChanged();
-                    }
+                    int totalAmount = CalculateTotalPrice(mtem.getRate());
+                    AddToCart();
+                    mtem.setCartQty(currQty + 1);
+                    customerBillDetails = new CustomerBillDetails(resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
+                    notifyDataSetChanged();
 
+                }
+                customerBillDetailsList.add(customerBillDetails);
             }
         });
         btnsubQty.setTag(position + "");
@@ -134,16 +149,13 @@ public class CustomMenuAdapter extends BaseAdapter {
                 if (currQty == 0) {
                     Toast.makeText(context, "Qty cannot be less than 0", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else if(ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0"))
-                {
+                } else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
 
-                }
-                else
-                {
+                } else {
                     DeductTotalPrice(mtem.getRate());
                     DeductToCart();
-                    mtem.setCartQty(currQty-1);
+                    mtem.setCartQty(currQty - 1);
+
                     notifyDataSetChanged();
                 }
 
@@ -171,12 +183,13 @@ public class CustomMenuAdapter extends BaseAdapter {
     }
 
     //Method to update the total bill of the user in the bottom Navigation View
-    public void CalculateTotalPrice(int rate) {
+    public Integer CalculateTotalPrice(int rate) {
         //Each time user will increment the quantity of 1 so the total amount will added in
         //the variable name totalAmount
         totalAmount = totalAmount + rate * 1;
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(totalAmount));
         notifyDataSetChanged();
+        return totalAmount;
     }
 
     public void DeductTotalPrice(int rate) {
@@ -186,14 +199,17 @@ public class CustomMenuAdapter extends BaseAdapter {
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(totalAmount));
         notifyDataSetChanged();
     }
+
     public int DeductToCart() {
         addTocart = addTocart - 1;
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
         return addTocart;
     }
+
     public class Holder {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;
+
         public Holder(View item) {
             textItemName = (TextView) item.findViewById(R.id.txtMenuItem);
             textMenuPrice = (TextView) item.findViewById(R.id.txtMenuRate);

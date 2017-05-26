@@ -1,105 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.goyo.grocery_goyo.CustomerBill">
+
     <TextView
+        android:id="@+id/txtBillDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
+        android:includeFontPadding="true"
+        android:paddingTop="10dp"
         android:text="Your Bill"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:id="@+id/txtBillDisplay"
-        android:paddingTop="10dp"
-        android:includeFontPadding="true"/>
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="10dp"
-        android:paddingRight="10dp"
-        android:layout_below="@+id/txtBillDisplay"
-        android:layout_gravity="center"
-        android:id="@+id/layout_display_bill">
+        android:layout_height="0dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="3"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
         <ListView
+            android:id="@+id/list_display_bill"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:background="@color/blue"
+            android:layout_height="match_parent"
             android:visibility="visible"
-            android:id="@+id/list_display_bill">
-        </ListView>
+            ></ListView>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:id="@+id/layout_display_details"
-        android:layout_below="@+id/layout_display_bill">
+        android:layout_height="0dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="0.15"
+        android:gravity="left"
+        android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/DeliveryDisplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="14dp"
-            android:paddingTop="10dp"
+            android:layout_weight="2"
+            android:text="Total Amount"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="Delivery Charges" />
+            android:textStyle="bold" />
+
         <TextView
-            android:id="@+id/txtDeliveryValue"
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:paddingStart="14dp"
-            android:paddingTop="10dp"
+            android:layout_weight="0.3"
+            android:text="₹ 0.00" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_weight="0.15"
+        android:gravity="left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Delivery Charges"
             android:textSize="15sp"
-            android:textStyle="italic"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
             android:text="₹ 0.00" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/layout_proceed_payment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="40dp"
-        android:layout_below="@+id/layout_display_bill">
-        <TextView
-            android:id="@+id/AmountPayable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="14dp"
-            android:paddingTop="10dp"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="Amount Payable" />
-        <TextView
-            android:id="@+id/txtAmountValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:paddingStart="14dp"
-            android:paddingTop="10dp"
-            android:textSize="15sp"
-            android:textStyle="italic"
-            android:text="₹ 0.00" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/layout_display_bill">
+        android:layout_height="0dip"
+        android:layout_weight="0.5"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
         <Button
-            android:layout_width="match_parent"
+            android:id="@+id/btnForPayment"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_gravity="bottom"
-            android:textAlignment="center"
-            android:text="@string/proceed_for_payment"/>
+            android:layout_gravity="center_horizontal|center"
+            android:layout_marginBottom="20dp"
+            android:text="@string/proceed_for_payment"
+            android:textAllCaps="false" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

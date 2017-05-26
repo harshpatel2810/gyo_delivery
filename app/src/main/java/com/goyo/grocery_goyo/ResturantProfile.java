@@ -52,6 +52,7 @@ public class ResturantProfile extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +100,10 @@ public class ResturantProfile extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -142,7 +147,7 @@ public class ResturantProfile extends AppCompatActivity {
 
             ArrayList<MenuItems> items = GetMenuList();
             ListView lv = (ListView) rootView.findViewById(R.id.list_menu_items);
-            lv.setAdapter(new CustomMenuAdapter(getContext(), items,io.getStringExtra("resturantName")));
+            lv.setAdapter(new CustomMenuAdapter(getContext(), items, io.getStringExtra("resturantName")));
         }
 
         private ArrayList<MenuItems> GetMenuList() {

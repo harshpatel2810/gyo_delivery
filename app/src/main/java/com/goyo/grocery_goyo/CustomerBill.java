@@ -12,7 +12,6 @@ import com.goyo.grocery.R;
 import java.util.ArrayList;
 import java.util.List;
 public class CustomerBill extends AppCompatActivity  {
-    List<CustomerBillDetails> customerBillDetailsList;
     private ListView mListView;
     private android.support.v7.app.ActionBar actionBar;
     @Override
@@ -20,13 +19,13 @@ public class CustomerBill extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_bill);
         Intent io=getIntent();
-        customerBillDetailsList= (ArrayList<CustomerBillDetails>) io.getSerializableExtra("bill");
+       // customerBillDetailsList= (ArrayList<CustomerBillDetails>)io.getSerializableExtra("bill");
         mListView=(ListView)findViewById(R.id.list_display_bill);
+        mListView.setAdapter(new CustomBillAdapter(CustomerBill.this,PlaceOrder.customerDetails));
         actionBar=getSupportActionBar();
         actionBar.hide();
     }
-    private  void initalizeListview()
-    {
+    private void setDataListItems(){
 
     }
 }

@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class CustomResturantAdapter extends BaseAdapter {
     Context context;
-    String abc[];
     private List<restaurantModel> x;
     restaurantModel resturant;
     //Created Shared Preferences at app level to store resturant_id of particular resturant

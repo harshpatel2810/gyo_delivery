@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.goyo.grocery_goyo.CustomerBill">
-
     <TextView
         android:id="@+id/txtBillDisplay"
         android:layout_width="match_parent"
@@ -17,7 +16,6 @@
         android:text="Your Bill"
         android:textSize="20sp"
         android:textStyle="bold" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -99,7 +97,8 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/paymentbuttoncolor"
             android:text="@string/proceed_for_payment"
             android:textAllCaps="false" />
     </LinearLayout>

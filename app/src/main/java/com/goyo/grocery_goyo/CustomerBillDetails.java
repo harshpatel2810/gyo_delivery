@@ -5,22 +5,26 @@ package com.goyo.grocery_goyo;
  */
 
 public class CustomerBillDetails {
+    private Integer ItemId;
     private Integer resturant_id;
     private String resturant_name;
     private String item_name;
     private Integer quantity;
     private Integer rate;
     private Integer totalAmount;
+
+
     public CustomerBillDetails()
     {
     }
-    public CustomerBillDetails(Integer resturant_id, String resturant_name, String item_name, Integer quantity, Integer rate, Integer totalAmount) {
+    public CustomerBillDetails(Integer _ItemId, Integer resturant_id, String resturant_name, String item_name, Integer quantity, Integer rate, Integer totalAmount) {
         this.resturant_id = resturant_id;
         this.resturant_name = resturant_name;
         this.item_name = item_name;
         this.quantity = quantity;
         this.rate = rate;
         this.totalAmount = totalAmount;
+        this.ItemId = _ItemId;
     }
 
     public Integer getResturant_id() {
@@ -69,5 +73,14 @@ public class CustomerBillDetails {
 
     public void setTotalAmount(Integer totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+
+    public Integer getItemId() {
+        return ItemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        ItemId = itemId;
     }
 }

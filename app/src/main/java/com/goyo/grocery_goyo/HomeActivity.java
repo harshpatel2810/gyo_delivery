@@ -65,7 +65,6 @@ public class HomeActivity extends AppCompatActivity  {
             String addressLine=String.valueOf(appLocationService.getLocality(this));
             txtLocation.setText(appLocationService.getAddressLine(this));
             txtLocDesc.setText(appLocationService.getAddressLine(this)+","+String.valueOf(addressLine));
-
         }
         else
         {

@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Global.global;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,34 +30,36 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
     private Integer addTocart = 0;
     ImageButton addQty, subQty;
-    int t=0;
     ImageView checkout;
     private ImageButton btnAddQty, btnsubQty;
     private int resturant_id;
     private String resturant_name;
-
+    PlaceOrder p1;
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private static int totalAmount = 0;
     private BottomNavigationView navigationView;
     CustomerBillDetails customerBillDetails;
-    public static ArrayList<CustomerBillDetails> customerBillDetailsList;
+    //public static ArrayList<CustomerBillDetails> customerBillDetailsList;
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
+    private final String PREF_BILL = "Bill Details";
     SharedPreferences settings;
+
     public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, String resturant_name) {
         context = activity;
         dataList = xyz;
         settings = context.getSharedPreferences("PREF_NAME", 0);
+        settings = context.getSharedPreferences("PREF_BILL", 0);
         resturant_id = settings.getInt("Resturant_id", 0);
+        //Fetching the current value of the total amount ordered by the customer
+        ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings.getInt("Total Amount", 0)));
         this.resturant_name = resturant_name;
-
-        customerBillDetailsList = new ArrayList<CustomerBillDetails>();
+        //customerBillDetailsList = new ArrayList<CustomerBillDetails>();
         //Created listener for checkout imageview so that it can intent to screen of bill
         //Since there is need of resturant id i have stored it in object of shared preference
         //and i am fetching it through same object of shared preference
@@ -71,6 +73,7 @@ public class CustomMenuAdapter extends BaseAdapter {
             }
         });
     }
+
     public int getCount() {
         return dataList.size();
     }
@@ -79,13 +82,14 @@ public class CustomMenuAdapter extends BaseAdapter {
     public Object getItem(int position) {
         return position;
     }
+
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         //View rowView;
         LayoutInflater mInflater = null;
         if (convertView == null) {
@@ -126,7 +130,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                                     // continue with delete
                                 }
                             })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setIcon(R.drawable.ic_warning_icon)
                             .show();
                 } else {
                     //Creating Alert Dialog Box if the order reaches to the maximum value
@@ -134,14 +138,24 @@ public class CustomMenuAdapter extends BaseAdapter {
                     AddToCart();
                     mtem.setCartQty(currQty + 1);
                     notifyDataSetChanged();
-                    customerBillDetails=new CustomerBillDetails(resturant_id,resturant_name,mtem.getItemName(),mtem.getCartQty(),mtem.getRate(),totalAmount);
-                    PlaceOrder p1=new PlaceOrder();
-                    p1.AddToBill(customerBillDetails);
+                    if (global.myCart == null) {
+                        global.myCart = new HashMap<Integer, CustomerBillDetails>();
+                    }
+                    if (global.myCart.containsKey(mtem.getItemId())) {
+                        customerBillDetails = global.myCart.get(mtem.getItemId());
+                        customerBillDetails.setQuantity(mtem.getCartQty());
 
+                    } else {
+                        customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
+                        global.myCart.put(mtem.getItemId(), customerBillDetails);
+                    }
+//                    p1 = new PlaceOrder();
+//                    if (mtem.getCartQty() == 5) {
+//                        p1.AddToBill(customerBillDetails);
+//                    }
                 }
             }
         });
-
         btnsubQty.setTag(position + "");
         btnsubQty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +171,17 @@ public class CustomMenuAdapter extends BaseAdapter {
                     DeductToCart();
                     mtem.setCartQty(currQty - 1);
                     notifyDataSetChanged();
+                    if (global.myCart == null) {
+                        global.myCart = new HashMap<Integer, CustomerBillDetails>();
+                    }
+                    if (global.myCart.containsKey(mtem.getItemId())) {
+                        customerBillDetails = global.myCart.get(mtem.getItemId());
+                        customerBillDetails.setQuantity(mtem.getCartQty());
+
+                    } else {
+                        customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
+                        global.myCart.put(mtem.getItemId(), customerBillDetails);
+                    }
                 }
             }
         });
@@ -173,6 +198,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         }*/
         return convertView;
     }
+
     public int AddToCart() {
         addTocart = addTocart + 1;
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
@@ -185,14 +211,23 @@ public class CustomMenuAdapter extends BaseAdapter {
         //Each time user will increment the quantity of 1 so the total amount will added in
         //the variable name totalAmount
         totalAmount = totalAmount + rate * 1;
+        //Storing current amount according to the items selected by the customer
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("Total Amount", totalAmount);
+        editor.commit();
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(totalAmount));
         notifyDataSetChanged();
         return totalAmount;
     }
+
     public void DeductTotalPrice(int rate) {
         //Each time user will decrement the quantity of 1 so the total amount will be deducted in
         //the variable name totalAmount
         totalAmount = totalAmount - rate * 1;
+        //Similarly when amount will be deducted it will also stored in the object of shared preferences
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("Total Amount", totalAmount);
+        editor.commit();
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(totalAmount));
         notifyDataSetChanged();
     }
@@ -206,6 +241,7 @@ public class CustomMenuAdapter extends BaseAdapter {
     public class Holder {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;
+
         public Holder(View item) {
             textItemName = (TextView) item.findViewById(R.id.txtMenuItem);
             textMenuPrice = (TextView) item.findViewById(R.id.txtMenuRate);

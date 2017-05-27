@@ -155,43 +155,41 @@ public class ResturantProfile extends AppCompatActivity {
             MenuItems mi = new MenuItems();
             switch (mpage) {
                 case 1:
-                    mi = new MenuItems("Hot and Sour", 150, "");
+                    mi = new MenuItems(1, "Hot and Sour", 150, "");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn cjcjcjcjc cjcjcjcjcj cjcjcjcjc jjcjcjcj jcjcjc");
+                    mi = new MenuItems(2, "Sweet Corn Soup 2", 170, "It will consist baby corn cjcjcjcjc cjcjcjcjcj cjcjcjcjc jjcjcjcj jcjcjc");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(4, "Sweet Corn Soup 4", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(5, "Sweet Corn Soup 5", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(6, "Sweet Corn Soup 6", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(7, "Sweet Corn Soup 7", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(8, "Sweet Corn Soup 8", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(9, "Sweet Corn Soup 9", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(10, "Sweet Corn Soup 10", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(11, "Sweet Corn Soup 11", 170, "It will consist baby corn");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Corn Soup", 170, "It will consist baby corn");
+                    mi = new MenuItems(12, "Sweet Corn Soup 12", 170, "It will consist baby corn");
                     item.add(mi);
-
                     break;
-
                 case 2:
-                    mi = new MenuItems("Hara Bhara Kabab", 150, "It will contain pudina");
+                    mi = new MenuItems(13, "Hara Bhara Kabab 13", 150, "It will contain pudina");
                     item.add(mi);
-                    mi = new MenuItems("Spring Rolls", 170, "It will contain hakka noodles");
+                    mi = new MenuItems(14, "Spring Rolls 14", 170, "It will contain hakka noodles");
                     item.add(mi);
                     break;
                 case 3:
-                    mi = new MenuItems("Spicy Raita", 250, "It will contain curd with some spices");
+                    mi = new MenuItems(15, "Spicy Raita 15", 250, "It will contain curd with some spices");
                     item.add(mi);
-                    mi = new MenuItems("Vegetable Salad", 190, "Mix Vegetable salad");
+                    mi = new MenuItems(16, "Vegetable Salad 16", 190, "Mix Vegetable salad");
                     item.add(mi);
-                    mi = new MenuItems("Sweet Raita", 350, "Sweet curd raita with mix fruits");
+                    mi = new MenuItems(17, "Sweet Raita 17", 350, "Sweet curd raita with mix fruits");
                     item.add(mi);
                     break;
 

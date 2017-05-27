@@ -1,4 +1,5 @@
 package com.goyo.grocery_goyo;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by Admin on 5/12/2017.
  */
@@ -27,7 +29,7 @@ public class CustomResturantAdapter extends BaseAdapter {
     private List<restaurantModel> x;
     restaurantModel resturant;
     //Created Shared Preferences at app level to store resturant_id of particular resturant
-    private final String PREF_NAME="Resturant_id";
+    private final String PREF_NAME = "Resturant_id";
     SharedPreferences settings;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz) {
         context = activity;
@@ -36,25 +38,28 @@ public class CustomResturantAdapter extends BaseAdapter {
         HomeActivity.resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView txtResturant=(TextView)view.findViewById(R.id.txtResturantName);
-                Intent io=new Intent(context,ResturantProfile.class);
-                io.putExtra("resturantName",txtResturant.getText().toString());
+                TextView txtResturant = (TextView) view.findViewById(R.id.txtResturantName);
+                Intent io = new Intent(context, ResturantProfile.class);
+                io.putExtra("resturantName", txtResturant.getText().toString());
                 settings = context.getSharedPreferences("PREF_NAME", 0);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putInt("Resturant_id",resturant.restid);
+                editor.putInt("Resturant_id", resturant.restid);
                 editor.commit();
-                Toast.makeText(context,resturant.restid.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context, resturant.restid.toString(), Toast.LENGTH_LONG).show();
                 context.startActivity(io);
             }
         });
     }
-        public int getCount() {
+
+    public int getCount() {
         return x.size();
     }
+
     public class Holder {
         ImageView imgDisplay;
         TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime;
     }
+
     @Override
     public Object getItem(int position) {
         return position;
@@ -82,7 +87,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtVegNonVeg = (TextView) convertView.findViewById(R.id.txtExpenseCategory);
         h1.txtRating = (TextView) convertView.findViewById(R.id.txtRating);
         h1.txtDeliveryTime = (TextView) convertView.findViewById(R.id.txtDeliveryTime);
-         resturant = x.get(position);
+        resturant = x.get(position);
         h1.txtRname.setText(resturant.restname);
         h1.txtRtype.setText(resturant.adr);
         h1.txtRating.setText("0");

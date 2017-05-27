@@ -8,6 +8,15 @@ import android.view.MenuItem;
  */
 
 public class MenuItems {
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    private Integer itemId;
     private String itemName;
     private Integer Rate;
     public String getMenuDesc() {
@@ -23,10 +32,11 @@ public class MenuItems {
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
-    public MenuItems(String itemName, Integer rate, String menuDesc) {
+    public MenuItems(Integer _itemId,String itemName, Integer rate, String menuDesc) {
         this.itemName = itemName;
         Rate = rate;
         this.menuDesc = menuDesc;
+        this.itemId = _itemId;
     }
     public Integer getRate() {
         return Rate;

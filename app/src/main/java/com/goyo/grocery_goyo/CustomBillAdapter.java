@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.goyo.grocery.R;
 import java.util.ArrayList;
-public class CustomBillAdapter extends BaseAdapter {
+
+import de.halfbit.pinnedsection.PinnedSectionListView;
+public class CustomBillAdapter extends BaseAdapter  {
     Context context;
     Hold h1 = null;
     ArrayList<CustomerBillDetails> customerDetails;
@@ -47,6 +49,9 @@ public class CustomBillAdapter extends BaseAdapter {
         h1.txtAmount.setText(String.valueOf(customerBillDetails.getRate() * customerBillDetails.getQuantity()));
         return convertView;
     }
+
+
+
     public class Hold {
         private TextView txtResturantName, txtItemName, txtRate, txtQty, txtAmount;
         public Hold(View item) {

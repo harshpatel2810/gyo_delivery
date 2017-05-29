@@ -2,6 +2,7 @@ package com.goyo.grocery_goyo;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -41,6 +42,7 @@ public class HomeActivity extends AppCompatActivity  {
     Context context;
     public ActionBar action;
     AppLocationService appLocationService;
+    SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,13 @@ public class HomeActivity extends AppCompatActivity  {
                 startActivity(io);
             }
         });
-          resturant_list=(ListView)findViewById(R.id.list_display_resturants);
+        settings = context.getSharedPreferences("PREF_BILL", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("Total Amount",0);
+        editor.putInt("CurrentCart",0);
+        editor.commit();
+
+        resturant_list=(ListView)findViewById(R.id.list_display_resturants);
         InitAppBar();
         //Helps to set the details of user current location
         if(appLocationService.getIsGPSTrackingEnabled())

@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.goyo.grocery.R;
 import java.util.ArrayList;
-
+import com.vstechlab.easyfonts.EasyFonts;
 import de.halfbit.pinnedsection.PinnedSectionListView;
 public class CustomBillAdapter extends BaseAdapter  {
     Context context;
@@ -45,21 +45,23 @@ public class CustomBillAdapter extends BaseAdapter  {
         h1.txtResturantName.setText(customerBillDetails.getResturant_name());
         h1.txtItemName.setText(customerBillDetails.getItem_name());
         h1.txtQty.setText(String.valueOf(customerBillDetails.getQuantity()));
-        h1.txtRate.setText("₹" + String.valueOf(customerBillDetails.getRate()));
-        h1.txtAmount.setText(String.valueOf(customerBillDetails.getRate() * customerBillDetails.getQuantity()));
+        h1.txtRate.setText("₹" + " " +String.valueOf(customerBillDetails.getRate()));
+        h1.txtAmount.setText("₹" + " " +String.valueOf(customerBillDetails.getRate() * customerBillDetails.getQuantity()));
         return convertView;
     }
-
-
-
     public class Hold {
         private TextView txtResturantName, txtItemName, txtRate, txtQty, txtAmount;
         public Hold(View item) {
             txtResturantName = (TextView) item.findViewById(R.id.txtResturantBillName);
+            txtResturantName.setTypeface(EasyFonts.caviarDreamsBold(context));
             txtItemName = (TextView) item.findViewById(R.id.txtItemName);
+            txtItemName.setTypeface(EasyFonts.droidSerifBold(context));
             txtRate = (TextView) item.findViewById(R.id.txtRate);
+            txtRate.setTypeface(EasyFonts.droidSerifBold(context));
             txtQty = (TextView) item.findViewById(R.id.txtItemQuantity);
+            txtQty.setTypeface(EasyFonts.droidSerifBold(context));
             txtAmount = (TextView) item.findViewById(R.id.txtBillAmount);
+            txtAmount.setTypeface(EasyFonts.droidSerifBold(context));
         }
     }
 }

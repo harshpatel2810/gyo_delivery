@@ -1,4 +1,5 @@
 package com.goyo.grocery_goyo;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
@@ -58,6 +60,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         resturant_id = settings.getInt("Resturant_id", 0);
         //Fetching the current value of the total amount ordered by the customer
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings.getInt("Total Amount", 0)));
+        ResturantProfile.QTY.setText(String.valueOf(settings.getInt("CurrentCart", 0)));
         this.resturant_name = resturant_name;
         //customerBillDetailsList = new ArrayList<CustomerBillDetails>();
         //Created listener for checkout imageview so that it can intent to screen of bill
@@ -66,10 +69,28 @@ public class CustomMenuAdapter extends BaseAdapter {
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent io = new Intent(context, CustomerBill.class);
-//                io.putExtra("bill", (Serializable) customerBillDetailsList);
-//                Toast.makeText(context,"Hello",Toast.LENGTH_LONG).show();
-                context.startActivity(io);
+                if (global.myCart == null) {
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(context);
+                    }
+                    builder.setTitle("Cart Empty")
+                            .setMessage("Purchase your receipe to proceed for cart..")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                }
+                            })
+                            .setIcon(R.drawable.ic_empty_cart)
+                            .show();
+                } else {
+                    Intent io = new Intent(context, CustomerBill.class);
+//                 io.putExtra("bill", (Serializable) customerBillDetailsList);
+//                 Toast.makeText(context,"Hello",Toast.LENGTH_LONG).show();
+                    context.startActivity(io);
+                }
             }
         });
     }
@@ -138,10 +159,12 @@ public class CustomMenuAdapter extends BaseAdapter {
                     AddToCart();
                     mtem.setCartQty(currQty + 1);
                     notifyDataSetChanged();
+                    //Code to set item id  and Customer Bill Details according to items purchased by the customer
                     if (global.myCart == null) {
                         global.myCart = new HashMap<Integer, CustomerBillDetails>();
                     }
                     if (global.myCart.containsKey(mtem.getItemId())) {
+
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());
 
@@ -200,7 +223,11 @@ public class CustomMenuAdapter extends BaseAdapter {
     }
 
     public int AddToCart() {
-        addTocart = addTocart + 1;
+        addTocart = settings.getInt("CurrentCart", 0) + 1;
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("CurrentCart", addTocart);
+        editor.commit();
+
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
         notifyDataSetChanged();
         return addTocart;
@@ -233,7 +260,10 @@ public class CustomMenuAdapter extends BaseAdapter {
     }
 
     public int DeductToCart() {
-        addTocart = addTocart - 1;
+        addTocart = settings.getInt("CurrentCart", 0) - 1;
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("CurrentCart", addTocart);
+        editor.commit();
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
         return addTocart;
     }

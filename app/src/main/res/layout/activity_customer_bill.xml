@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#C0C0C0"
     tools:context="com.goyo.grocery_goyo.CustomerBill">
     <TextView
         android:id="@+id/txtBillDisplay"
@@ -14,7 +15,8 @@
         android:includeFontPadding="true"
         android:paddingTop="10dp"
         android:text="Your Bill"
-        android:textSize="20sp"
+        android:textColor="#003366"
+        android:textSize="25dp"
         android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,17 +26,14 @@
         android:layout_weight="3"
         android:gravity="center|bottom"
         android:orientation="vertical">
-
         <ListView
             android:id="@+id/list_display_bill"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
             >
-
         </ListView>
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -44,23 +43,23 @@
         android:layout_weight="0.15"
         android:gravity="left"
         android:orientation="horizontal">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Total Amount"
             android:textSize="15sp"
+            android:textColor="@color/maroon"
+            android:id="@+id/txtAmountDisplay"
             android:textStyle="bold" />
-
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/txtAmountValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
+            android:textColor="#000000"
             android:text="₹ 0.00" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -70,19 +69,21 @@
         android:layout_weight="0.15"
         android:gravity="left"
         android:orientation="horizontal">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:id="@+id/txtDeliveryDisplay"
             android:text="Delivery Charges"
             android:textSize="15sp"
+            android:textColor="@color/maroon"
             android:textStyle="bold" />
-
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
+            android:layout_weight="0.1"
+            android:textColor="#000000"
+            android:id="@+id/txtDeliveryValue"
             android:text="₹ 0.00" />
     </LinearLayout>
     <LinearLayout
@@ -92,7 +93,6 @@
         android:layout_weight="0.5"
         android:gravity="center|bottom"
         android:orientation="vertical">
-
         <Button
             android:id="@+id/btnForPayment"
             style="?android:attr/buttonStyleSmall"
@@ -102,6 +102,6 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/paymentbuttoncolor"
             android:text="@string/proceed_for_payment"
-            android:textAllCaps="false" />
+            android:textAllCaps="true" />
     </LinearLayout>
 </LinearLayout>

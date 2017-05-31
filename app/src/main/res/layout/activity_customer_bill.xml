@@ -26,13 +26,13 @@
         android:layout_weight="3"
         android:gravity="center|bottom"
         android:orientation="vertical">
-        <ListView
+        <ExpandableListView
             android:id="@+id/list_display_bill"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
             >
-        </ListView>
+        </ExpandableListView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

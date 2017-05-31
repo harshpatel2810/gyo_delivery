@@ -45,13 +45,12 @@ public class CustomMenuAdapter extends BaseAdapter {
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private static int totalAmount = 0;
-    private BottomNavigationView navigationView;
+    public BottomNavigationView navigationView;
     CustomerBillDetails customerBillDetails;
     //public static ArrayList<CustomerBillDetails> customerBillDetailsList;
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
     private final String PREF_BILL = "Bill Details";
     SharedPreferences settings;
-
     public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, String resturant_name) {
         context = activity;
         dataList = xyz;
@@ -66,6 +65,13 @@ public class CustomMenuAdapter extends BaseAdapter {
         //Created listener for checkout imageview so that it can intent to screen of bill
         //Since there is need of resturant id i have stored it in object of shared preference
         //and i am fetching it through same object of shared preference
+        if (global.resturantNames.contains(this.resturant_name)) {
+            //Code to to validate the wether the resturant name is already included in array list if availaible
+            //than it will not include it
+        } else {
+            //Else it will include it in the array list
+            global.resturantNames.add(this.resturant_name);
+        }
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,6 +172,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                     if (global.myCart.containsKey(mtem.getItemId())) {
 
                         customerBillDetails = global.myCart.get(mtem.getItemId());
+
                         customerBillDetails.setQuantity(mtem.getCartQty());
 
                     } else {

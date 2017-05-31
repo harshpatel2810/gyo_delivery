@@ -1,4 +1,5 @@
 package com.goyo.grocery_goyo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,6 +45,9 @@ public class SearchLocation extends AppCompatActivity{
                 GeoSearchResult result = (GeoSearchResult) adapterView.getItemAtPosition(position);
                 geo_autocomplete.setText(result.getAddress());
                 geo_autocomplete_clear.setVisibility(View.GONE);
+                Intent io=new Intent(getApplicationContext(),HomeActivity.class);
+                io.putExtra("SearchAddress",result.getAddress());
+                startActivity(io);
             }
         });
         //Text Change Listener to AutoComplete TextView

@@ -26,4 +26,13 @@ public class restaurantModel {
     @SerializedName("cont")
     public String cont = "";
 
+    @SerializedName("imgpath")
+    public String image_path;
+
+    @SerializedName("rating")
+    public String rating;
+
+    @SerializedName("resttyp")
+    public String resttype;
+
 }

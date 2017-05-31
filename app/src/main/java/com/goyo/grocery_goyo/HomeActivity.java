@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Global.global;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -43,11 +44,12 @@ public class HomeActivity extends AppCompatActivity  {
     public ActionBar action;
     AppLocationService appLocationService;
     SharedPreferences settings;
+    Intent io;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Intent io=getIntent();
+         io=getIntent();
         appLocationService=new AppLocationService(this);
         ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
         context=this;
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity  {
                 startActivity(io);
             }
         });
+        global.resturantNames=new ArrayList<>();
         settings = context.getSharedPreferences("PREF_BILL", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("Total Amount",0);

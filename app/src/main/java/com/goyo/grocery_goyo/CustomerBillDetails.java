@@ -1,5 +1,7 @@
 package com.goyo.grocery_goyo;
 
+import com.goyo.grocery_goyo.Global.global;
+
 /**
  * Created by Admin on 5/25/2017.
  */
@@ -83,4 +85,6 @@ public class CustomerBillDetails {
     public void setItemId(Integer itemId) {
         ItemId = itemId;
     }
+
+
 }

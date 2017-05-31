@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,17 +60,14 @@ public class CustomResturantAdapter extends BaseAdapter {
         ImageView imgDisplay;
         TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime;
     }
-
     @Override
     public Object getItem(int position) {
         return position;
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Holder h1 = new Holder();
@@ -90,7 +88,16 @@ public class CustomResturantAdapter extends BaseAdapter {
         resturant = x.get(position);
         h1.txtRname.setText(resturant.restname);
         h1.txtRtype.setText(resturant.adr);
-        h1.txtRating.setText("0");
+        //Below is the code
+        if(resturant.resttype.equals("Veg"))
+        {
+            h1.txtVegNonVeg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg_resturant_icon, 0, 0, 0);
+        }
+        else if(resturant.resttype.equals("Veg/Nonveg"))
+        {
+            h1.txtVegNonVeg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.veg_icon_nonveg_icon, 0, 0, 0);
+        }
+        h1.txtRating.setText(resturant.rating);
         h1.txtDeliveryTime.setText("20");
         return convertView;
     }

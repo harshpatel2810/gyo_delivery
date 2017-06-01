@@ -46,12 +46,10 @@ public class CustomResturantAdapter extends BaseAdapter {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
                 editor.commit();
-                Toast.makeText(context, resturant.restid.toString(), Toast.LENGTH_LONG).show();
                 context.startActivity(io);
             }
         });
     }
-
     public int getCount() {
         return x.size();
     }

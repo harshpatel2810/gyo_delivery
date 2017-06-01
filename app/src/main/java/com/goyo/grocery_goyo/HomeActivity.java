@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import java.util.jar.Manifest;
 public class HomeActivity extends AppCompatActivity  {
     public static ListView resturant_list;
     private Button search;
+    private ImageView filterOption;
     private TextView txtLocation,txtLocDesc;
     Context context;
     public ActionBar action;
@@ -59,6 +61,14 @@ public class HomeActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 Intent io=new Intent(context,SearchResturant.class);
                 startActivity(io);
+            }
+        });
+        filterOption=(ImageView)findViewById(R.id.imageFilter);
+        filterOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),FilterScreen.class));
+                overridePendingTransition(R.anim.enter,R.anim.exit);
             }
         });
         global.resturantNames=new ArrayList<>();

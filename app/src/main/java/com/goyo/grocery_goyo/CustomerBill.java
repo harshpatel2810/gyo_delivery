@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -30,19 +29,30 @@ public class CustomerBill extends AppCompatActivity {
     private ExpandableListAdapter expandableListAdapter;
     private TextView txtBillDisplay, txtAmountDisplay, txtDeliveryDisplay, txtAmountValue, txtDeliveryValue;
     private Button btnForPayment;
-
+    HashMap<String,List<String>> listChild;
     private android.support.v7.app.ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_bill);
         Intent io = getIntent();
+        List<String> nowShowing=new ArrayList<>();
+        listChild=new HashMap<String, List<String>>();
         // customerBillDetailsList= (ArrayList<CustomerBillDetails>)io.getSerializableExtra("bill");
         mListView = (ExpandableListView)findViewById(R.id.list_display_bill);
         ArrayList<CustomerBillDetails> cc = new ArrayList<>();
         for (Map.Entry<Integer, CustomerBillDetails> entry : global.myCart.entrySet()) {
-
-            cc.add(entry.getValue());
+             cc.add(entry.getValue());
+            for (int i=0;i<global.resturantNames.size();i++)
+            {
+                String itemName[]=new String[5];
+                if(global.resturantNames.contains(entry.getValue().getResturant_name()))
+                {
+                         itemName[i]=entry.getValue().getItem_name();
+                         nowShowing.add(itemName[i]);
+                         listChild.put(global.resturantNames.get(i), nowShowing);
+                }
+            }
             //System.out.println(entry.getKey() + "/" + entry.getValue());
         }
         txtAmountValue = (TextView) findViewById(R.id.txtAmountValue);
@@ -50,9 +60,7 @@ public class CustomerBill extends AppCompatActivity {
         //Setting the total amount of the bill in the final cart
         txtAmountValue.setText(ResturantProfile.totalAmount.getText().toString() + ".00");
         btnForPayment.setText(btnForPayment.getText().toString()+" "+ResturantProfile.totalAmount.getText().toString() + ".00");
-        HashMap<List<String>,List<CustomerBillDetails>> details=new HashMap<List<String>,List<CustomerBillDetails>>();
-        details.put(global.resturantNames,cc);
-        expandableListAdapter=new CustomBillAdapter(CustomerBill.this,global.resturantNames,details);
+        expandableListAdapter=new CustomBillAdapter(CustomerBill.this,global.resturantNames,listChild);
         mListView.setAdapter(expandableListAdapter);
         actionBar = getSupportActionBar();
         actionBar.hide();

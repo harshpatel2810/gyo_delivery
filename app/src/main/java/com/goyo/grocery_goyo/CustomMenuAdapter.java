@@ -65,6 +65,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         //Created listener for checkout imageview so that it can intent to screen of bill
         //Since there is need of resturant id i have stored it in object of shared preference
         //and i am fetching it through same object of shared preference
+
         if (global.resturantNames.contains(this.resturant_name)) {
             //Code to to validate the wether the resturant name is already included in array list if availaible
             //than it will not include it

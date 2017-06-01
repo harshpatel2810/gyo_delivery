@@ -20,8 +20,8 @@ public class CustomBillAdapter extends BaseExpandableListAdapter {
     HoldGroup hg = null;
     HoldChild hc=null;
     List<String> resturantNames;
-    HashMap<List<String>,List<CustomerBillDetails>> customerDetails;
-    public CustomBillAdapter(Context context,List<String> resturantNames,HashMap<List<String>,List<CustomerBillDetails>> customerDetails) {
+    HashMap<String,List<String>> customerDetails;
+    public CustomBillAdapter(Context context,List<String> resturantNames,HashMap<String,List<String>> customerDetails) {
         this.context = context;
         this.customerDetails = customerDetails;
         this.resturantNames = resturantNames;
@@ -80,11 +80,19 @@ public class CustomBillAdapter extends BaseExpandableListAdapter {
     }
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final String childText = (String) getChild(groupPosition, childPosition);
         if(convertView==null)
         {
             LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView=inflater.inflate(R.layout.layout_bill_child,null);
+           hc=new HoldChild(convertView);
+            convertView.setTag(hc);
         }
+        else
+        {
+            hc=(HoldChild)convertView.getTag();
+        }
+        hc.txtBillItemName.setText(childText);
         return convertView;
     }
     @Override

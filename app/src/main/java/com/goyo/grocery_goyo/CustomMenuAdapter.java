@@ -194,6 +194,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                 Integer currQty = mtem.getCartQty();
                 if (currQty == 0) {
                     Toast.makeText(context, "Qty cannot be less than 0", Toast.LENGTH_SHORT).show();
+                    global.myCart.remove(mtem.getItemId());
                     return;
                 } else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
 

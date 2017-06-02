@@ -15,18 +15,29 @@
         >
         <Button
             android:id="@+id/btnResturantSearch"
-            android:layout_width="match_parent"
+            android:layout_width="303dp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:drawableLeft="@drawable/ic_action_search_white"
             android:onClick="onSearchPage"
-            android:paddingLeft="30dp"
+            android:paddingLeft="10dp"
             android:paddingTop="5dp"
+            android:layout_weight="1"
             android:singleLine="true"
             android:text="@string/ButtonSearchText"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
+        <ImageView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/imageFilter"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_action_name"
+            android:visibility="visible">
+
+        </ImageView>
       </LinearLayout>
     <ListView
         android:id="@+id/list_display_resturants"

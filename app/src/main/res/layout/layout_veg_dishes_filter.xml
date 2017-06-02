@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="left"
+        android:showDividers="middle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+           android:text="Pure Veg Dishes"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/txtVegDishersDisplay">
+        </TextView>
+        <Switch
+            android:id="@+id/simpleSwitch"
+            android:layout_weight="0.3"
+            android:checked="true"
+            android:paddingRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/SCBSwitch"/>
+    </LinearLayout>
+    <LinearLayout
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="left"
+        android:showDividers="middle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Special Offers"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_weight="1"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:id="@+id/txtVegOffersDisplay">
+        </TextView>
+        <Switch
+            android:id="@+id/simpleSwitchOffers"
+            android:layout_weight="0.3"
+            android:checked="true"
+            android:paddingRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:theme="@style/SCBSwitch"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -16,9 +16,9 @@ public class CustomerBillDetails {
     private Integer totalAmount;
 
 
-    public CustomerBillDetails()
-    {
+    public CustomerBillDetails() {
     }
+
     public CustomerBillDetails(Integer _ItemId, Integer resturant_id, String resturant_name, String item_name, Integer quantity, Integer rate, Integer totalAmount) {
         this.resturant_id = resturant_id;
         this.resturant_name = resturant_name;
@@ -76,7 +76,6 @@ public class CustomerBillDetails {
     public void setTotalAmount(Integer totalAmount) {
         this.totalAmount = totalAmount;
     }
-
 
     public Integer getItemId() {
         return ItemId;

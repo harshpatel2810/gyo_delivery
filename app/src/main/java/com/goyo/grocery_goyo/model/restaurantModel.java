@@ -1,11 +1,9 @@
 package com.goyo.grocery_goyo.model;
 
 import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Admin on 5/17/2017.
  */
-
 public class restaurantModel {
 
     @SerializedName("restid")
@@ -35,4 +33,6 @@ public class restaurantModel {
     @SerializedName("resttyp")
     public String resttype;
 
+   @SerializedName("minordamt")
+    public Double min_order;
 }

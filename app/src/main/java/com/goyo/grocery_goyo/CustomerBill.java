@@ -36,8 +36,8 @@ public class CustomerBill extends AppCompatActivity {
     private List<String> nowShowing;
     private List<Integer> totalQuantity;
     private List<Double> Rates;
+    public static List<Integer> sumQuantity;
     private android.support.v7.app.ActionBar actionBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,13 +59,16 @@ public class CustomerBill extends AppCompatActivity {
             nowShowing = new ArrayList<>();
             totalQuantity = new ArrayList<>();
             Rates = new ArrayList<>();
+            sumQuantity=new ArrayList<>();
+            int qty_sum=0;
             for (int j = 0; j < cc.size(); j++) {
                 //Seperating all the values from CustomerBillDetails ArratList according to the Match of Resturant Names
                 if (global.resturantNames.get(i).contains(cc.get(j).getResturant_name())) {
                     nowShowing.add(cc.get(j).getItem_name());
                     totalQuantity.add(cc.get(j).getQuantity());
+                    qty_sum=qty_sum+cc.get(j).getQuantity();
+                    sumQuantity.add(qty_sum);
                     Rates.add(Double.valueOf((cc.get(j).getQuantity()) * (cc.get(j).getRate())));
-
                 }
 
             }

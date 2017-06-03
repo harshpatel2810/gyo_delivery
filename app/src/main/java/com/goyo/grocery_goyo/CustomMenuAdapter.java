@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
@@ -45,27 +47,32 @@ public class CustomMenuAdapter extends BaseAdapter {
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private static int totalAmount = 0;
+    private int MinOrder;
     public BottomNavigationView navigationView;
     CustomerBillDetails customerBillDetails;
     //public static ArrayList<CustomerBillDetails> customerBillDetailsList;
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
     private final String PREF_BILL = "Bill Details";
-    SharedPreferences settings;
-    public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, String resturant_name) {
+    SharedPreferences settings, settings1;
+    ArrayList<CustomerBillDetails> cc;
+    public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, final String resturant_name) {
         context = activity;
         dataList = xyz;
         settings = context.getSharedPreferences("PREF_NAME", 0);
-        settings = context.getSharedPreferences("PREF_BILL", 0);
+        settings1 = context.getSharedPreferences("PREF_BILL", 0);
         resturant_id = settings.getInt("Resturant_id", 0);
+        //Fetching Minimum Order Value According to the Resturant selection
+        MinOrder = CustomResturantAdapter.MinOrder.intValue();
+        cc = new ArrayList<>();
         //Fetching the current value of the total amount ordered by the customer
-        ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings.getInt("Total Amount", 0)));
-        ResturantProfile.QTY.setText(String.valueOf(settings.getInt("CurrentCart", 0)));
+        ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings1.getInt("Total Amount", 0)));
+        ResturantProfile.QTY.setText(String.valueOf(settings1.getInt("CurrentCart", 0)));
+        //Getting Name of the Restaurants
         this.resturant_name = resturant_name;
         //customerBillDetailsList = new ArrayList<CustomerBillDetails>();
         //Created listener for checkout imageview so that it can intent to screen of bill
         //Since there is need of resturant id i have stored it in object of shared preference
         //and i am fetching it through same object of shared preference
-
         if (global.resturantNames.contains(this.resturant_name)) {
             //Code to to validate the wether the resturant name is already included in array list if availaible
             //than it will not include it
@@ -76,15 +83,35 @@ public class CustomMenuAdapter extends BaseAdapter {
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (global.myCart == null) {
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                    } else
+                        {
+                        builder = new AlertDialog.Builder(context);
+                      }
+                    builder.setTitle("Cart Empty")
+                            .setMessage("Purchase your receipe to proceed for cart..")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                }
+                            })
+                            .setIcon(R.drawable.ic_empty_cart)
+                            .show();
+                }
+                //Checking with the Method FetchOrderAmount wether Order Value is Greater Than Minimum Value
+                else if (FetchOrderAmount() < MinOrder) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
                     } else {
                         builder = new AlertDialog.Builder(context);
                     }
-                    builder.setTitle("Cart Empty")
-                            .setMessage("Purchase your receipe to proceed for cart..")
+                    builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
+                            .setMessage("Unable to proceed please select more items..")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
@@ -101,21 +128,17 @@ public class CustomMenuAdapter extends BaseAdapter {
             }
         });
     }
-
     public int getCount() {
         return dataList.size();
     }
-
     @Override
     public Object getItem(int position) {
         return position;
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //View rowView;
@@ -162,7 +185,8 @@ public class CustomMenuAdapter extends BaseAdapter {
                             .show();
                 } else {
                     //Creating Alert Dialog Box if the order reaches to the maximum value
-                    int totalAmount = CalculateTotalPrice(mtem.getRate());
+
+                    totalAmount = CalculateTotalPrice(mtem.getRate());
                     AddToCart();
                     mtem.setCartQty(currQty + 1);
                     notifyDataSetChanged();
@@ -173,19 +197,16 @@ public class CustomMenuAdapter extends BaseAdapter {
                     if (global.myCart.containsKey(mtem.getItemId())) {
 
                         customerBillDetails = global.myCart.get(mtem.getItemId());
-
                         customerBillDetails.setQuantity(mtem.getCartQty());
 
                     } else {
                         customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
                         global.myCart.put(mtem.getItemId(), customerBillDetails);
                     }
-//                    p1 = new PlaceOrder();
-//                    if (mtem.getCartQty() == 5) {
-//                        p1.AddToBill(customerBillDetails);
-//                    }
+                    //Code for validating the Minimum Order of each and every resturant
+
                 }
-            }
+                }
         });
         btnsubQty.setTag(position + "");
         btnsubQty.setOnClickListener(new View.OnClickListener() {
@@ -230,25 +251,22 @@ public class CustomMenuAdapter extends BaseAdapter {
         }*/
         return convertView;
     }
-
     public int AddToCart() {
-        addTocart = settings.getInt("CurrentCart", 0) + 1;
-        SharedPreferences.Editor editor = settings.edit();
+        addTocart = settings1.getInt("CurrentCart", 0) + 1;
+        SharedPreferences.Editor editor = settings1.edit();
         editor.putInt("CurrentCart", addTocart);
         editor.commit();
-
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
         notifyDataSetChanged();
         return addTocart;
     }
-
     //Method to update the total bill of the user in the bottom Navigation View
     public Integer CalculateTotalPrice(int rate) {
         //Each time user will increment the quantity of 1 so the total amount will added in
         //the variable name totalAmount
         totalAmount = totalAmount + rate * 1;
         //Storing current amount according to the items selected by the customer
-        SharedPreferences.Editor editor = settings.edit();
+        SharedPreferences.Editor editor = settings1.edit();
         editor.putInt("Total Amount", totalAmount);
         editor.commit();
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(totalAmount));
@@ -256,31 +274,43 @@ public class CustomMenuAdapter extends BaseAdapter {
         return totalAmount;
     }
 
-    public void DeductTotalPrice(int rate) {
+    public Integer DeductTotalPrice(int rate) {
         //Each time user will decrement the quantity of 1 so the total amount will be deducted in
         //the variable name totalAmount
         totalAmount = totalAmount - rate * 1;
         //Similarly when amount will be deducted it will also stored in the object of shared preferences
-        SharedPreferences.Editor editor = settings.edit();
+        SharedPreferences.Editor editor = settings1.edit();
         editor.putInt("Total Amount", totalAmount);
         editor.commit();
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(totalAmount));
         notifyDataSetChanged();
+        return totalAmount;
     }
 
     public int DeductToCart() {
-        addTocart = settings.getInt("CurrentCart", 0) - 1;
-        SharedPreferences.Editor editor = settings.edit();
+        addTocart = settings1.getInt("CurrentCart", 0) - 1;
+        SharedPreferences.Editor editor = settings1.edit();
         editor.putInt("CurrentCart", addTocart);
         editor.commit();
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
         return addTocart;
     }
-
+    //Getting Total Amount of Bill According to Restaurant Wise
+    public Integer FetchOrderAmount() {
+        int totalSum = 0;
+        for (Map.Entry<Integer, CustomerBillDetails> entry : global.myCart.entrySet()) {
+            cc.add(entry.getValue());
+        }
+        for (int i = 0; i < cc.size(); i++) {
+            if (cc.get(i).getResturant_name().equals(resturant_name)) {
+                totalSum += cc.get(i).getQuantity() * cc.get(i).getRate();
+            }
+        }
+        return totalSum;
+    }
     public class Holder {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;
-
         public Holder(View item) {
             textItemName = (TextView) item.findViewById(R.id.txtMenuItem);
             textMenuPrice = (TextView) item.findViewById(R.id.txtMenuRate);

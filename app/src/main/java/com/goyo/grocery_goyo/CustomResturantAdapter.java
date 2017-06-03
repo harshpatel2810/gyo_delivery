@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,7 +20,6 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by Admin on 5/12/2017.
  */
@@ -31,6 +29,7 @@ public class CustomResturantAdapter extends BaseAdapter {
     restaurantModel resturant;
     //Created Shared Preferences at app level to store resturant_id of particular resturant
     private final String PREF_NAME = "Resturant_id";
+    public static Double MinOrder;
     SharedPreferences settings;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz) {
         context = activity;
@@ -45,6 +44,7 @@ public class CustomResturantAdapter extends BaseAdapter {
                 settings = context.getSharedPreferences("PREF_NAME", 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
+                MinOrder=resturant.min_order;
                 editor.commit();
                 context.startActivity(io);
             }
@@ -53,10 +53,9 @@ public class CustomResturantAdapter extends BaseAdapter {
     public int getCount() {
         return x.size();
     }
-
     public class Holder {
         ImageView imgDisplay;
-        TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime;
+        TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime,txtMinimumOrderValue;
     }
     @Override
     public Object getItem(int position) {
@@ -83,6 +82,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtVegNonVeg = (TextView) convertView.findViewById(R.id.txtExpenseCategory);
         h1.txtRating = (TextView) convertView.findViewById(R.id.txtRating);
         h1.txtDeliveryTime = (TextView) convertView.findViewById(R.id.txtDeliveryTime);
+        h1.txtMinimumOrderValue=(TextView)convertView.findViewById(R.id.txtSetMinimumPrice);
         resturant = x.get(position);
         h1.txtRname.setText(resturant.restname);
         h1.txtRtype.setText(resturant.adr);
@@ -96,6 +96,7 @@ public class CustomResturantAdapter extends BaseAdapter {
             h1.txtVegNonVeg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.veg_icon_nonveg_icon, 0, 0, 0);
         }
         h1.txtRating.setText(resturant.rating);
+        h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order"+"  "+"₹"+resturant.min_order));
         h1.txtDeliveryTime.setText("20");
         return convertView;
     }

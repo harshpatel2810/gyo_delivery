@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         android:paddingTop="10dp"
         android:orientation="horizontal"
         android:gravity="left"
-        android:showDividers="middle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -26,13 +25,12 @@
             android:paddingRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/SCBSwitch"/>
+            />
     </LinearLayout>
     <LinearLayout
-        android:paddingTop="10dp"
+        android:paddingTop="40dp"
         android:orientation="horizontal"
         android:gravity="left"
-        android:showDividers="middle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -43,7 +41,7 @@
             android:layout_weight="1"
             android:textSize="17dp"
             android:textStyle="bold"
-            android:id="@+id/txtVegOffersDisplay">
+            android:id="@+id/txtOffersDisplay">
         </TextView>
         <Switch
             android:id="@+id/simpleSwitchOffers"
@@ -52,7 +50,6 @@
             android:paddingRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/SCBSwitch"/>
+            />
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

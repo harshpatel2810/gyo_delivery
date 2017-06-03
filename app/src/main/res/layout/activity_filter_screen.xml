@@ -5,5 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.goyo.grocery_goyo.FilterScreen">
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerviewFilter"
+        android:layout_width="395dp"
+        android:layout_height="587dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp" />
 </android.support.constraint.ConstraintLayout>

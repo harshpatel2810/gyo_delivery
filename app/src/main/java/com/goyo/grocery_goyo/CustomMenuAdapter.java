@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
@@ -103,14 +101,16 @@ public class CustomMenuAdapter extends BaseAdapter {
                             .show();
                 }
                 //Checking with the Method FetchOrderAmount wether Order Value is Greater Than Minimum Value
-                else if (FetchOrderAmount() < MinOrder) {
+                 if (FetchOrderAmount() < MinOrder) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-                    } else {
+                    }
+                    else
+                    {
                         builder = new AlertDialog.Builder(context);
                     }
-                    builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
+                        builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
                             .setMessage("Unable to proceed please select more items..")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

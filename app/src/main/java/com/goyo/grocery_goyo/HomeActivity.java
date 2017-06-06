@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,24 +39,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
-
 public class HomeActivity extends AppCompatActivity {
     public static ListView resturant_list;
     private Button search;
     private ImageView filterOption;
-    private TextView txtLocation, txtLocDesc;
+    public static TextView txtLocation, txtLocDesc;
     private LinearLayout layout_location;
     Context context;
     public ActionBar action;
+    String addressLine,newAddress;
     AppLocationService appLocationService;
     SharedPreferences settings;
     Intent io;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        io = getIntent();
         appLocationService = new AppLocationService(this);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         context = this;
@@ -83,20 +80,22 @@ public class HomeActivity extends AppCompatActivity {
         editor.putInt("Total Amount", 0);
         editor.putInt("CurrentCart", 0);
         editor.commit();
-
         resturant_list = (ListView) findViewById(R.id.list_display_resturants);
         InitAppBar();
         //Helps to set the details of user current location
         if (appLocationService.getIsGPSTrackingEnabled()) {
-            String addressLine = String.valueOf(appLocationService.getLocality(this));
+            addressLine = String.valueOf(appLocationService.getLocality(this));
             txtLocation.setText(appLocationService.getAddressLine(this));
             txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
-        } else {
+        }
+        else
+        {
             appLocationService.showSettingsAlert();
         }
+        io = getIntent();
+        newAddress=io.getStringExtra("SearchAddress");
         getRestaurant();
     }
-
     private void getRestaurant() {
         JsonObject json = new JsonObject();
         json.addProperty("flag", "all");
@@ -112,12 +111,10 @@ public class HomeActivity extends AppCompatActivity {
                         List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
                         }.getType());
                         resturant_list.setAdapter(new CustomResturantAdapter(HomeActivity.this, myList));
-
                         //Toast.makeText(HomeActivity.this,result.toString(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
     //A method to get GPS provider
     public void InitAppBar() {
         ActionBar action = getSupportActionBar();
@@ -157,3 +154,4 @@ public class HomeActivity extends AppCompatActivity {
     //getRestaurantMaster
     //flag = 'all'
 }
+

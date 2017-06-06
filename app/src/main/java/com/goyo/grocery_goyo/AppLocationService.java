@@ -45,12 +45,10 @@ public class AppLocationService extends Service implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
     private String provider_info;
-
     public AppLocationService(Context context) {
         this.mContext = context;
         getLocation();
     }
-
     //Helps to get the Location by checking if GPS and Network is Enabled
     public void getLocation() throws SecurityException {
         try {
@@ -101,7 +99,6 @@ public class AppLocationService extends Service implements LocationListener {
         if (location != null) {
             longtitude = location.getLongitude();
         }
-
         return longtitude;
     }
 

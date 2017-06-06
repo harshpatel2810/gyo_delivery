@@ -21,8 +21,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBJouxWkhWfVRdPqZxLDG7gHTMJwv4Oi4Y" />
-
+            android:value="AIzaSyAXJbhK_apLxdfAqe3kvcW0LpVppuEehXQ"/>
         <activity android:name="com.goyo.grocery_goyo.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

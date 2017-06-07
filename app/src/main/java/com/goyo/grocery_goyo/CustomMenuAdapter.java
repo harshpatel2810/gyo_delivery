@@ -45,6 +45,9 @@ public class CustomMenuAdapter extends BaseAdapter {
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private static int totalAmount = 0;
+    //Declaring static variable to get the order amount according to the restaurant by calling method
+    public static int totalAmountValidate;
+    //Variable to fetch value of Minimum Order according to restaurant
     private int MinOrder;
     public BottomNavigationView navigationView;
     CustomerBillDetails customerBillDetails;
@@ -59,6 +62,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         settings = context.getSharedPreferences("PREF_NAME", 0);
         settings1 = context.getSharedPreferences("PREF_BILL", 0);
         resturant_id = settings.getInt("Resturant_id", 0);
+        totalAmountValidate=0;
         //Fetching Minimum Order Value According to the Resturant selection
         MinOrder = CustomResturantAdapter.MinOrder.intValue();
         cc = new ArrayList<>();
@@ -74,14 +78,15 @@ public class CustomMenuAdapter extends BaseAdapter {
         if (global.resturantNames.contains(this.resturant_name)) {
             //Code to to validate the wether the resturant name is already included in array list if availaible
             //than it will not include it
-        } else {
+        }
+        else
+        {
             //Else it will include it in the array list
             global.resturantNames.add(this.resturant_name);
         }
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (global.myCart == null) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -100,31 +105,39 @@ public class CustomMenuAdapter extends BaseAdapter {
                             .setIcon(R.drawable.ic_empty_cart)
                             .show();
                 }
-                //Checking with the Method FetchOrderAmount wether Order Value is Greater Than Minimum Value
-                 if (FetchOrderAmount() < MinOrder) {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                else
+                {
+                    if (totalAmountValidate < MinOrder)
+                    {
+
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        {
+                            builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                        }
+                        else
+                        {
+                            builder = new AlertDialog.Builder(context);
+                        }
+                                 builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
+                                .setMessage("Unable to proceed please select more items..")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                    }
+                                })
+                                .setIcon(R.drawable.ic_empty_cart)
+                                .show();
                     }
                     else
                     {
-                        builder = new AlertDialog.Builder(context);
+                        Intent io = new Intent(context, CustomerBill.class);
+//                      io.putExtra("bill", (Serializable) customerBillDetailsList);
+//                      Toast.makeText(context,"Hello",Toast.LENGTH_LONG).show();
+                        context.startActivity(io);
                     }
-                        builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
-                            .setMessage("Unable to proceed please select more items..")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                }
-                            })
-                            .setIcon(R.drawable.ic_empty_cart)
-                            .show();
-                } else {
-                    Intent io = new Intent(context, CustomerBill.class);
-//                 io.putExtra("bill", (Serializable) customerBillDetailsList);
-//                 Toast.makeText(context,"Hello",Toast.LENGTH_LONG).show();
-                    context.startActivity(io);
                 }
+                //Checking with the Method FetchOrderAmount wether Order Value is Greater Than Minimum Value
             }
         });
     }
@@ -183,28 +196,31 @@ public class CustomMenuAdapter extends BaseAdapter {
                             })
                             .setIcon(R.drawable.ic_warning_icon)
                             .show();
-                } else {
+                }
+                else
+                {
                     //Creating Alert Dialog Box if the order reaches to the maximum value
-
                     totalAmount = CalculateTotalPrice(mtem.getRate());
+                   totalAmountValidate=AmountToValidateAdd(mtem.getRate());
                     AddToCart();
                     mtem.setCartQty(currQty + 1);
                     notifyDataSetChanged();
                     //Code to set item id  and Customer Bill Details according to items purchased by the customer
-                    if (global.myCart == null) {
+                    if (global.myCart == null)
+                    {
                         global.myCart = new HashMap<Integer, CustomerBillDetails>();
                     }
                     if (global.myCart.containsKey(mtem.getItemId())) {
 
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());
-
-                    } else {
+                    }
+                    else
+                        {
                         customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
                         global.myCart.put(mtem.getItemId(), customerBillDetails);
                     }
                     //Code for validating the Minimum Order of each and every resturant
-
                 }
                 }
         });
@@ -217,10 +233,14 @@ public class CustomMenuAdapter extends BaseAdapter {
                     Toast.makeText(context, "Qty cannot be less than 0", Toast.LENGTH_SHORT).show();
                     global.myCart.remove(mtem.getItemId());
                     return;
-                } else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
+                }
+                else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
 
-                } else {
+                }
+                else
+                    {
                     DeductTotalPrice(mtem.getRate());
+                    totalAmountValidate=AmountToValidateSub(mtem.getRate());
                     DeductToCart();
                     mtem.setCartQty(currQty - 1);
                     notifyDataSetChanged();
@@ -273,7 +293,17 @@ public class CustomMenuAdapter extends BaseAdapter {
         notifyDataSetChanged();
         return totalAmount;
     }
-
+    //Method to get the order amount of the restaurant indivisually
+    public Integer AmountToValidateAdd(int rate)
+    {
+        totalAmountValidate=totalAmountValidate+rate*1;
+        return totalAmountValidate;
+    }
+    public Integer AmountToValidateSub(int rate)
+    {
+        totalAmountValidate=totalAmountValidate-rate*1;
+        return totalAmountValidate;
+    }
     public Integer DeductTotalPrice(int rate) {
         //Each time user will decrement the quantity of 1 so the total amount will be deducted in
         //the variable name totalAmount
@@ -296,18 +326,21 @@ public class CustomMenuAdapter extends BaseAdapter {
         return addTocart;
     }
     //Getting Total Amount of Bill According to Restaurant Wise
-    public Integer FetchOrderAmount() {
-        int totalSum = 0;
+
+    //Approach to get the order of the restaurant
+    /*public Integer FetchOrderAmount() {
+
         for (Map.Entry<Integer, CustomerBillDetails> entry : global.myCart.entrySet()) {
             cc.add(entry.getValue());
         }
         for (int i = 0; i < cc.size(); i++) {
-            if (cc.get(i).getResturant_name().equals(resturant_name)) {
+            if (cc.get(i).getResturant_id()==resturant_id)
+            {
                 totalSum += cc.get(i).getQuantity() * cc.get(i).getRate();
             }
         }
         return totalSum;
-    }
+    }*/
     public class Holder {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;

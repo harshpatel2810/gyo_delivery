@@ -166,41 +166,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_above="@+id/layoutApplyButton"
         android:orientation="vertical"
         android:layout_below="@+id/displayCategories"
         android:background="@drawable/layout_background"
         >
-        <CheckBox
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/chkSouthIndian"
-            android:checked="false"
-            android:text="SOUTH INDIAN"
-            android:layout_weight="1">
-        </CheckBox>
-        <CheckBox
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/chkPunjabi"
-            android:checked="false"
-            android:text="PUNJABI"
-            android:layout_weight="1">
-        </CheckBox>
-        <CheckBox
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/chkContinental"
-            android:checked="false"
-            android:text="CONTINENTAL"
-            android:layout_weight="1">
-        </CheckBox>
+       <ListView
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:dividerHeight="1.0sp"
+           android:textAlignment="center"
+           android:footerDividersEnabled="true"
+           android:divider="@android:color/darker_gray"
+           android:id="@+id/listDispCategories">
+
+       </ListView>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:weightSum="1"
+        android:id="@+id/layoutApplyButton"
+         android:weightSum="1"
         android:orientation="horizontal">
         <Button
             android:id="@+id/btnApplyFilters"
@@ -209,6 +197,4 @@
             android:layout_width="match_parent"
             android:text="@string/apply_filter"/>
     </LinearLayout>
-
-
 </RelativeLayout>

@@ -44,7 +44,7 @@ public class CustomResturantAdapter extends BaseAdapter {
                 settings = context.getSharedPreferences("PREF_NAME", 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
-                MinOrder=resturant.min_order;
+                MinOrder=(Double)x.get(position).min_order;
                 editor.commit();
                 context.startActivity(io);
             }

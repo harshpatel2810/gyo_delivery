@@ -11,23 +11,27 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary"
-        >
-        <Button
-            android:id="@+id/btnResturantSearch"
+        android:background="@color/colorPrimary">
+        <EditText
+            android:id="@+id/etResturantSearch"
             android:layout_width="303dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:drawableLeft="@drawable/ic_action_search_white"
-            android:onClick="onSearchPage"
-            android:paddingLeft="10dp"
+            android:layout_height="40dp"
+            android:background="@drawable/write_text"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:inputType="textCapSentences|textNoSuggestions"
+            android:clickable="false"
+            android:layout_marginTop="7dp"
+            android:paddingLeft="12dp"
+            android:layout_marginLeft="5dp"
             android:paddingTop="5dp"
             android:layout_weight="1"
             android:singleLine="true"
-            android:text="@string/ButtonSearchText"
+            android:hint="@string/ButtonSearchText"
+            android:textColorHint="@color/slate_grey"
             android:textAlignment="textStart"
+            android:ellipsize="start"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/slate_grey" />
         <ImageView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -36,7 +40,6 @@
             android:layout_gravity="center"
             android:src="@drawable/ic_action_name"
             android:visibility="visible">
-
         </ImageView>
       </LinearLayout>
     <ListView

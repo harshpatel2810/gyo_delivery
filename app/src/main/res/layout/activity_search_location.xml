@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
-    android:layout_gravity="top"
-    >
+    android:layout_gravity="top">
     <com.goyo.grocery_goyo.DelayAutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -26,8 +25,7 @@
         android:textColorHint="@color/grey"
         android:padding="10dp"
         android:textSize="13sp"
-        android:maxLines="1"
-        />
+        android:maxLines="1" />
     <!--<android.support.v7.widget.RecyclerView
         android:layout_height="match_parent"
         android:layout_width="match_parent"

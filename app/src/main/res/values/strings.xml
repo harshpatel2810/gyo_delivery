@@ -18,7 +18,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_resturant">Resturant</string>
     <string name="title_activity_resturant_final">ResturantFinal</string>
-    <string name="ButtonSearchText">Search resturants,dishes and ..</string>
+    <string name="ButtonSearchText"><font size="15">Search resturants,dishes and ..</font></string>
     <string name="ButtonFilter">FILTER</string>
     <string name="title_activity_resturant_profile">ResturantProfile</string>
     <string name="title_activity_main2">Main2Activity</string>

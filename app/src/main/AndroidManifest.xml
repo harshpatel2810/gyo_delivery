@@ -33,7 +33,6 @@
             android:name="com.goyo.grocery_goyo.ResturantProfile"
             android:label="@string/title_activity_resturant_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.goyo.grocery_goyo.SearchResturant" />
         <activity
             android:name="com.goyo.grocery_goyo.SearchLocation"
             android:label="@string/title_activity_search_location"

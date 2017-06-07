@@ -58,14 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         appLocationService = new AppLocationService(this);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         context = this;
-        search = (Button) findViewById(R.id.btnResturantSearch);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent io = new Intent(context, SearchResturant.class);
-                startActivity(io);
-            }
-        });
         filterOption = (ImageView) findViewById(R.id.imageFilter);
         filterOption.setOnClickListener(new View.OnClickListener() {
             @Override

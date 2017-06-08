@@ -169,17 +169,13 @@
         android:layout_above="@+id/layoutApplyButton"
         android:orientation="vertical"
         android:layout_below="@+id/displayCategories"
-        android:background="@drawable/layout_background"
-        >
+        android:background="@drawable/layout_background">
        <ListView
            android:layout_width="wrap_content"
            android:layout_height="match_parent"
-           android:dividerHeight="1.0sp"
            android:textAlignment="center"
-           android:footerDividersEnabled="true"
-           android:divider="@android:color/darker_gray"
+           android:divider="@null"
            android:id="@+id/listDispCategories">
-
        </ListView>
     </LinearLayout>
     <LinearLayout

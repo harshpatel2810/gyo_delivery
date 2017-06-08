@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#C0C0C0"
+    android:background="@color/white"
     tools:context="com.goyo.grocery_goyo.CustomerBill">
     <TextView
         android:id="@+id/txtBillDisplay"
@@ -15,7 +15,7 @@
         android:includeFontPadding="true"
         android:paddingTop="10dp"
         android:text="Your Bill"
-        android:textColor="#003366"
+        android:textColor="@color/dark_grey"
         android:textSize="25dp"
         android:textStyle="bold" />
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-            >
+              >
         </ExpandableListView>
     </LinearLayout>
     <LinearLayout
@@ -49,7 +49,7 @@
             android:layout_weight="2"
             android:text="Total Amount"
             android:textSize="15sp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/dark_grey"
             android:id="@+id/txtAmountDisplay"
             android:textStyle="bold" />
         <TextView
@@ -57,7 +57,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
-            android:textColor="#000000"
+            android:textColor="@color/dark_grey"
+            android:textStyle="bold"
             android:text="₹ 0.00" />
     </LinearLayout>
     <LinearLayout
@@ -76,13 +77,15 @@
             android:id="@+id/txtDeliveryDisplay"
             android:text="Delivery Charges"
             android:textSize="15sp"
-            android:textColor="@color/maroon"
+            android:textColor="@color/dark_grey"
             android:textStyle="bold" />
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
-            android:textColor="#000000"
+            android:textColor="@color/dark_grey"
+            android:textStyle="bold"
+
             android:id="@+id/txtDeliveryValue"
             android:text="₹ 0.00" />
     </LinearLayout>
@@ -96,12 +99,13 @@
         <Button
             android:id="@+id/btnForPayment"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:layout_marginBottom="10dp"
             android:background="@drawable/paymentbuttoncolor"
             android:text="@string/proceed_for_payment"
+            android:singleLine="true"
             android:textAllCaps="true" />
     </LinearLayout>
 </LinearLayout>

@@ -12,6 +12,86 @@ public class restaurantModel {
     @SerializedName("restname")
     public String restname = "";
 
+    public Integer getRestid() {
+        return restid;
+    }
+
+    public void setRestid(Integer restid) {
+        this.restid = restid;
+    }
+
+    public String getRestname() {
+        return restname;
+    }
+
+    public void setRestname(String restname) {
+        this.restname = restname;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
+
+    public String getAdr() {
+        return adr;
+    }
+
+    public void setAdr(String adr) {
+        this.adr = adr;
+    }
+
+    public String getCont() {
+        return cont;
+    }
+
+    public void setCont(String cont) {
+        this.cont = cont;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    public String getResttype() {
+        return resttype;
+    }
+
+    public void setResttype(String resttype) {
+        this.resttype = resttype;
+    }
+
+    public Double getMin_order() {
+        return min_order;
+    }
+
+    public void setMin_order(Double min_order) {
+        this.min_order = min_order;
+    }
+
     @SerializedName("lat")
     public String lat= "0.0";
 

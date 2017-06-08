@@ -31,4 +31,5 @@
     <string name="text_location_search">Search for area,street name,loc...</string>
     <string name="proceed_for_payment">PROCEED TO PAY</string>
     <string name="apply_filter">APPLY FILTERS</string>
+    <string name="search_res"><font size="15" style="italics">Search restaurants....</font></string>
 </resources>

@@ -16,12 +16,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,18 +43,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.jar.Manifest;
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
     private Button search;
     private ImageView filterOption;
     public static TextView txtLocation, txtLocDesc;
     private LinearLayout layout_location;
+    private SearchView etSearchRestaurants;
     Context context;
     public ActionBar action;
     String addressLine,newAddress;
     AppLocationService appLocationService;
     SharedPreferences settings;
+    CustomResturantAdapter resturantAdapter=null;
     Intent io;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +74,7 @@ public class HomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
+        etSearchRestaurants=(SearchView)findViewById(R.id.searchRestaurants);
         global.resturantNames = new ArrayList<>();
         settings = context.getSharedPreferences("PREF_BILL", 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -87,6 +96,9 @@ public class HomeActivity extends AppCompatActivity {
         io = getIntent();
         newAddress=io.getStringExtra("SearchAddress");
         getRestaurant();
+        etSearchRestaurants.setOnQueryTextListener(this);
+
+
     }
     private void getRestaurant() {
         JsonObject json = new JsonObject();
@@ -102,11 +114,13 @@ public class HomeActivity extends AppCompatActivity {
                         Gson gson = new Gson();
                         List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
                         }.getType());
-                        resturant_list.setAdapter(new CustomResturantAdapter(HomeActivity.this, myList));
+                        resturantAdapter=new CustomResturantAdapter(HomeActivity.this,myList);
+                        resturant_list.setAdapter(resturantAdapter);
                         //Toast.makeText(HomeActivity.this,result.toString(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
     //A method to get GPS provider
     public void InitAppBar() {
         ActionBar action = getSupportActionBar();
@@ -142,6 +156,18 @@ public class HomeActivity extends AppCompatActivity {
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+         String text=newText;
+         resturantAdapter.filter(text);
+        return false;
     }
     //getRestaurantMaster
     //flag = 'all'

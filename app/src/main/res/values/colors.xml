@@ -8,4 +8,6 @@
     <color name="darkgreen">#196F3D  </color>
     <color name="maroon">#760B00</color>
     <color name="slate_grey">#2F4F4F</color>
+    <color name="white">#ffffff</color>
+    <color name="dark_grey">#696969</color>
 </resources>

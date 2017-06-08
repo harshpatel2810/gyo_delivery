@@ -12,7 +12,22 @@
         android:layout_height="55dp"
         android:orientation="horizontal"
         android:background="@color/colorPrimary">
-        <EditText
+        <SearchView
+            android:layout_width="match_parent"
+            android:id="@+id/searchRestaurants"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/write_text"
+            android:queryBackground="@color/white"
+            android:queryHint="@string/search_res"
+            android:iconifiedByDefault="false"
+            android:paddingLeft="10dp">
+        </SearchView>
+        <!--<EditText
             android:id="@+id/etResturantSearch"
             android:layout_width="303dp"
             android:layout_height="40dp"
@@ -26,16 +41,17 @@
             android:paddingTop="5dp"
             android:layout_weight="1"
             android:singleLine="true"
-            android:hint="@string/ButtonSearchText"
+            android:hint="Search Restaurants...."
             android:textColorHint="@color/slate_grey"
             android:textAlignment="textStart"
             android:ellipsize="start"
             android:textAllCaps="false"
-            android:textColor="@color/slate_grey" />
+            android:textColor="@color/slate_grey" />-->
         <ImageView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
+            android:layout_marginRight="10dp"
             android:id="@+id/imageFilter"
             android:layout_gravity="center"
             android:src="@drawable/ic_action_name"

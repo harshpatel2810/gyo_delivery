@@ -19,13 +19,17 @@ import com.goyo.grocery_goyo.model.restaurantModel;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 /**
  * Created by Admin on 5/12/2017.
  */
 public class CustomResturantAdapter extends BaseAdapter {
     Context context;
     private List<restaurantModel> x;
+    private ArrayList<restaurantModel> arrayRestaurantModel;
     restaurantModel resturant;
     //Created Shared Preferences at app level to store resturant_id of particular resturant
     private final String PREF_NAME = "Resturant_id";
@@ -34,6 +38,8 @@ public class CustomResturantAdapter extends BaseAdapter {
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz) {
         context = activity;
         x = xyz;
+        this.arrayRestaurantModel=new ArrayList<restaurantModel>();
+        this.arrayRestaurantModel.addAll(x);
         //Created Listener of resturant list because resturant_id can be easily availaible from the webservice
         HomeActivity.resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -84,20 +90,41 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtDeliveryTime = (TextView) convertView.findViewById(R.id.txtDeliveryTime);
         h1.txtMinimumOrderValue=(TextView)convertView.findViewById(R.id.txtSetMinimumPrice);
         resturant = x.get(position);
-        h1.txtRname.setText(resturant.restname);
-        h1.txtRtype.setText(resturant.adr);
+        h1.txtRname.setText(x.get(position).getRestname());
+        h1.txtRtype.setText(x.get(position).getAdr());
         //Below is the code
-        if(resturant.resttype.equals("Veg"))
+        if(x.get(position).getResttype().equals("Veg"))
         {
             h1.txtVegNonVeg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg_resturant_icon, 0, 0, 0);
         }
-        else if(resturant.resttype.equals("Veg/Nonveg"))
+        else if(x.get(position).getResttype().equals("Veg/Nonveg"))
         {
             h1.txtVegNonVeg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.veg_icon_nonveg_icon, 0, 0, 0);
         }
-        h1.txtRating.setText(resturant.rating);
-        h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order"+"  "+"₹"+resturant.min_order));
+        h1.txtRating.setText(x.get(position).getRating());
+        h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order"+"  "+"₹"+x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
         return convertView;
+    }
+    public void filter(String charText)
+    {
+         charText=charText.toString().toLowerCase(Locale.getDefault());
+         x.clear();
+         if(charText.length()==0)
+         {
+           x.addAll(arrayRestaurantModel);
+         }
+         else
+         {
+
+             for(restaurantModel res:arrayRestaurantModel)
+             {
+                 if(res.getRestname().toLowerCase(Locale.getDefault()).contains(charText))
+                 {
+                     x.add(res);
+                 }
+             }
+         }
+         notifyDataSetChanged();
     }
 }

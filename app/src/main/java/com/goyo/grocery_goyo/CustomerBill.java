@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Global.global;
@@ -37,6 +38,8 @@ public class CustomerBill extends AppCompatActivity {
     private List<Integer> totalQuantity;
     private List<Double> Rates;
     public static List<Integer> sumQuantity;
+    public static List<Double> sumAmount;
+
     private android.support.v7.app.ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ public class CustomerBill extends AppCompatActivity {
         itemNames = new HashMap<String, List<String>>();
         quantity = new HashMap<String, List<Integer>>();
         totalRates = new HashMap<String, List<Double>>();
+        //Initializing two arraylist to add the sum and quantity of each and everr restaurant
+        sumQuantity=new ArrayList<>();
+        sumAmount=new ArrayList<>();
         // customerBillDetailsList= (ArrayList<CustomerBillDetails>)io.getSerializableExtra("bill");
         mListView = (ExpandableListView) findViewById(R.id.list_display_bill);
         ArrayList<CustomerBillDetails> cc = new ArrayList<>();
@@ -59,19 +65,20 @@ public class CustomerBill extends AppCompatActivity {
             nowShowing = new ArrayList<>();
             totalQuantity = new ArrayList<>();
             Rates = new ArrayList<>();
-            sumQuantity=new ArrayList<>();
             int qty_sum=0;
+            double sum_amount=0;
             for (int j = 0; j < cc.size(); j++) {
                 //Seperating all the values from CustomerBillDetails ArratList according to the Match of Resturant Names
                 if (global.resturantNames.get(i).contains(cc.get(j).getResturant_name())) {
                     nowShowing.add(cc.get(j).getItem_name());
                     totalQuantity.add(cc.get(j).getQuantity());
                     qty_sum=qty_sum+cc.get(j).getQuantity();
-                    sumQuantity.add(qty_sum);
+                    sum_amount=sum_amount+cc.get(j).getQuantity() * cc.get(j).getRate();
                     Rates.add(Double.valueOf((cc.get(j).getQuantity()) * (cc.get(j).getRate())));
                 }
-
             }
+            sumQuantity.add(qty_sum);
+            sumAmount.add(sum_amount);
             //Putting each resturant and the items in the appropriate HashMap
             itemNames.put(global.resturantNames.get(i), nowShowing);
             quantity.put(global.resturantNames.get(i), totalQuantity);
@@ -81,7 +88,8 @@ public class CustomerBill extends AppCompatActivity {
         btnForPayment = (Button) findViewById(R.id.btnForPayment);
         //Setting the total amount of the bill in the final cart
         txtAmountValue.setText(ResturantProfile.totalAmount.getText().toString() + ".00");
-        btnForPayment.setText(btnForPayment.getText().toString() + " " + ResturantProfile.totalAmount.getText().toString() + ".00");
+        btnForPayment.setText(btnForPayment.getText().toString() + "   " + ResturantProfile.totalAmount.getText().toString() + ".00");
+        btnForPayment.setTypeface(EasyFonts.caviarDreams(this));
         expandableListAdapter = new CustomBillAdapter(CustomerBill.this, global.resturantNames, itemNames, quantity, totalRates);
         mListView.setAdapter(expandableListAdapter);
         actionBar = getSupportActionBar();

@@ -68,11 +68,14 @@ public class FilterScreen extends AppCompatActivity {
                 //Code to change the state of the rating button by changing the icon accordingly and also to change the
                 //state of button Apply Filters
                 deliveryOnOff.setSelected(!deliveryOnOff.isSelected());
-                if (deliveryOnOff.isSelected()) {
+                if (deliveryOnOff.isSelected())
+                {
                     deliveryOnOff.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.ic_clock_delivery));
                     ratingOnOff.setEnabled(false);
                     ApplyFilter.setEnabled(true);
-                } else {
+                }
+                else
+                {
                     deliveryOnOff.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.ic_delivery_clock_off));
                     ratingOnOff.setEnabled(true);
                     ApplyFilter.setEnabled(false);
@@ -102,7 +105,9 @@ public class FilterScreen extends AppCompatActivity {
                     ratingOnOff.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.ic_rate_action));
                     deliveryOnOff.setEnabled(false);
                     ApplyFilter.setEnabled(true);
-                } else {
+                }
+                else
+                {
                     ratingOnOff.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.ic_rate_off));
                     deliveryOnOff.setEnabled(true);
                     ApplyFilter.setEnabled(false);

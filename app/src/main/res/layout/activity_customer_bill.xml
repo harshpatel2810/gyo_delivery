@@ -25,13 +25,14 @@
         android:layout_marginRight="10dp"
         android:layout_weight="3"
         android:gravity="center|bottom"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
         <ExpandableListView
             android:id="@+id/list_display_bill"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible"
-              >
+            android:layout_weight="0.22">
         </ExpandableListView>
     </LinearLayout>
     <LinearLayout
@@ -85,7 +86,6 @@
             android:layout_weight="0.1"
             android:textColor="@color/dark_grey"
             android:textStyle="bold"
-
             android:id="@+id/txtDeliveryValue"
             android:text="₹ 0.00" />
     </LinearLayout>
@@ -99,11 +99,16 @@
         <Button
             android:id="@+id/btnForPayment"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/paymentbuttoncolor"
+            android:layout_marginBottom="7dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_payment_shape"
             android:text="@string/proceed_for_payment"
             android:singleLine="true"
             android:textAllCaps="true" />

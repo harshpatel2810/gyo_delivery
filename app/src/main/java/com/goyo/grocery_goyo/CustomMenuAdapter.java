@@ -69,6 +69,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         //Fetching the current value of the total amount ordered by the customer
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings1.getInt("Total Amount", 0)));
         ResturantProfile.QTY.setText(String.valueOf(settings1.getInt("CurrentCart", 0)));
+        ResturantProfile.totalAmount.setTextColor(Color.RED);
         //Getting Name of the Restaurants
         this.resturant_name = resturant_name;
         //customerBillDetailsList = new ArrayList<CustomerBillDetails>();
@@ -200,6 +201,14 @@ public class CustomMenuAdapter extends BaseAdapter {
                 else
                 {
                     //Creating Alert Dialog Box if the order reaches to the maximum value
+                    if(totalAmountValidate<MinOrder)
+                    {
+                        ResturantProfile.totalAmount.setTextColor(Color.RED);
+                    }
+                    else
+                    {
+                        ResturantProfile.totalAmount.setTextColor(Color.GREEN);
+                    }
                     totalAmount = CalculateTotalPrice(mtem.getRate());
                    totalAmountValidate=AmountToValidateAdd(mtem.getRate());
                     AddToCart();
@@ -239,6 +248,14 @@ public class CustomMenuAdapter extends BaseAdapter {
                 }
                 else
                     {
+                        if(totalAmountValidate>MinOrder)
+                        {
+                            ResturantProfile.totalAmount.setTextColor(Color.GREEN);
+                        }
+                        else
+                        {
+                            ResturantProfile.totalAmount.setTextColor(Color.RED);
+                        }
                     DeductTotalPrice(mtem.getRate());
                     totalAmountValidate=AmountToValidateSub(mtem.getRate());
                     DeductToCart();

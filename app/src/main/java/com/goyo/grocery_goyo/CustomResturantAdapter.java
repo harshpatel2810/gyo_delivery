@@ -106,6 +106,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtDeliveryTime.setText("20");
         return convertView;
     }
+    //Code to implement Search Functionality for the search of Restaurants in that particular area
     public void filter(String charText)
     {
          charText=charText.toString().toLowerCase(Locale.getDefault());

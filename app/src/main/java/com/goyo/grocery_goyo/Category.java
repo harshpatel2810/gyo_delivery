@@ -15,5 +15,4 @@ public class Category {
             R.drawable.buzz,
 
     };
-
 }

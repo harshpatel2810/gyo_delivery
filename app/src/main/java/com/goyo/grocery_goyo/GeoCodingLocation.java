@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo;
-
 import android.content.Context;
 import android.os.Handler;
 import android.content.Context;
@@ -16,8 +15,7 @@ import java.util.Locale;
 public class GeoCodingLocation
 {
     private static final String TAG = "GeocodingLocation";
-    public static void getAddressFromLocation(final String locationAddress, final Context context, final Handler handler)
-    {
+    public static void getAddressFromLocation(final String locationAddress, final Context context, final Handler handler) {
        Thread thread=new Thread()
        {
            public void run()
@@ -25,8 +23,8 @@ public class GeoCodingLocation
                Geocoder geocoder=new Geocoder(context,Locale.getDefault());
                String result=null;
                double latitude=0.0;
+               String area=null,addressLine=null;
                double longtitude=0.0;
-
                try
                {
                  List addresslist=geocoder.getFromLocationName(locationAddress,1);
@@ -39,6 +37,8 @@ public class GeoCodingLocation
                        result = sb.toString();
                        latitude=address.getLatitude();
                        longtitude=address.getLongitude();
+                       area=address.getFeatureName();
+                       addressLine=address.getAddressLine(1);
                    }
                }
                catch (IOException i)
@@ -57,6 +57,8 @@ public class GeoCodingLocation
                            bundle.putString("address", result);
                            bundle.putDouble("lat",latitude);
                            bundle.putDouble("long",longtitude);
+                           bundle.putString("area",area);
+                           bundle.putString("addressLine",addressLine);
                            message.setData(bundle);
                        } else
                        {
@@ -67,14 +69,16 @@ public class GeoCodingLocation
                            bundle.putString("address", result);
                            bundle.putDouble("lat",0.0);
                            bundle.putDouble("long",0.0);
+                           bundle.putString("area",null);
+                           bundle.putString("addressLine",addressLine);
                            message.setData(bundle);
                        }
                        message.sendToTarget();
                    }
                }
-
            }
        };
        thread.start();
     }
+
 }

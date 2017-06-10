@@ -1,9 +1,11 @@
 package com.goyo.grocery_goyo;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -45,24 +47,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.jar.Manifest;
+
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
     private Button search;
     private ImageView filterOption;
-    public static TextView txtLocation, txtLocDesc;
+    public  TextView txtLocation, txtLocDesc;
     private LinearLayout layout_location;
     private SearchView etSearchRestaurants;
     Context context;
     public ActionBar action;
-    String addressLine,newAddress;
+    String addressLine, newAddress;
     AppLocationService appLocationService;
     SharedPreferences settings;
-    CustomResturantAdapter resturantAdapter=null;
+    CustomResturantAdapter resturantAdapter = null;
     Intent io;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        io = getIntent();
+        newAddress=SearchLocation.address;
         appLocationService = new AppLocationService(this);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         context = this;
@@ -74,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                 overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         });
-        etSearchRestaurants=(SearchView)findViewById(R.id.searchRestaurants);
+        etSearchRestaurants = (SearchView) findViewById(R.id.searchRestaurants);
         global.resturantNames = new ArrayList<>();
         settings = context.getSharedPreferences("PREF_BILL", 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -84,22 +90,28 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         resturant_list = (ListView) findViewById(R.id.list_display_resturants);
         InitAppBar();
         //Helps to set the details of user current location
-        if (appLocationService.getIsGPSTrackingEnabled()) {
-            addressLine = String.valueOf(appLocationService.getLocality(this));
-            txtLocation.setText(appLocationService.getAddressLine(this));
-            txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
+        if (appLocationService.getIsGPSTrackingEnabled())
+        {
+            if (newAddress==null)
+            {
+                addressLine = String.valueOf(appLocationService.getLocality(this));
+                txtLocation.setText(appLocationService.getAddressLine(this));
+                txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
+            }
+            else
+            {
+                txtLocation.setText(io.getStringExtra("Area"));
+                txtLocDesc.setText(io.getStringExtra("AddressLine"));
+            }
         }
         else
         {
             appLocationService.showSettingsAlert();
         }
-        io = getIntent();
-        newAddress=io.getStringExtra("SearchAddress");
         getRestaurant();
         etSearchRestaurants.setOnQueryTextListener(this);
-
-
     }
+
     private void getRestaurant() {
         JsonObject json = new JsonObject();
         json.addProperty("flag", "all");
@@ -114,7 +126,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                         Gson gson = new Gson();
                         List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
                         }.getType());
-                        resturantAdapter=new CustomResturantAdapter(HomeActivity.this,myList);
+                        resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList);
                         resturant_list.setAdapter(resturantAdapter);
                         //Toast.makeText(HomeActivity.this,result.toString(),Toast.LENGTH_SHORT).show();
                     }
@@ -139,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
     }
+
     //Request to set permission runtime because of 6.0 and SecurityException Fatal Error
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -165,8 +178,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
 
     @Override
     public boolean onQueryTextChange(String newText) {
-         String text=newText;
-         resturantAdapter.filter(text);
+        String text = newText;
+        resturantAdapter.filter(text);
         return false;
     }
     //getRestaurantMaster

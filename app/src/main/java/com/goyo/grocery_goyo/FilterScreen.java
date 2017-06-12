@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class FilterScreen extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
-    private RecyclerAdapterFilter mAdapter;
     private Context context;
     private ImageButton ratingOnOff;
     private Button ApplyFilter;

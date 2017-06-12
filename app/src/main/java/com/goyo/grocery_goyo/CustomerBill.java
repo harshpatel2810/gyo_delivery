@@ -1,6 +1,8 @@
 package com.goyo.grocery_goyo;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -110,4 +112,5 @@ public class CustomerBill extends AppCompatActivity {
         txtDeliveryDisplay.setTypeface(EasyFonts.caviarDreamsBold(this));
         txtDeliveryValue.setTypeface(EasyFonts.droidSerifItalic(this));
     }
+
 }

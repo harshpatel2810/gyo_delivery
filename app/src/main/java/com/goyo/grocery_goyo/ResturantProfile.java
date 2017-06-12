@@ -65,7 +65,7 @@ public class ResturantProfile extends AppCompatActivity {
         //initializing checkout button to proceed for bill
         checkout = (ImageView) findViewById(R.id.CheckOut);
         //Setting Name of the Resturant by going into the next screen
-        setTitle(io.getStringExtra("resturantName"));
+        //setTitle(io.getStringExtra("resturantName"));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three

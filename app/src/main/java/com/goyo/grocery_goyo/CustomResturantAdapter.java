@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.model.RestaurantTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 
 import org.w3c.dom.Text;

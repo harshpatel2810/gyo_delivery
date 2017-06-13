@@ -129,8 +129,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                         List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
                         }.getType());
 
-                        List<RestaurantTimings> timings = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
-                        }.getType());
                         resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList);
                         resturant_list.setAdapter(resturantAdapter);
 

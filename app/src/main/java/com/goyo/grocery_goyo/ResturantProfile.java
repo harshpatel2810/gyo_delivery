@@ -1,6 +1,7 @@
 package com.goyo.grocery_goyo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.icu.util.ULocale;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.vstechlab.easyfonts.EasyFonts;
 
 import org.w3c.dom.Text;
 
@@ -51,8 +53,8 @@ public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+    private TextView txtRestauranName;
     private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +67,7 @@ public class ResturantProfile extends AppCompatActivity {
         //initializing checkout button to proceed for bill
         checkout = (ImageView) findViewById(R.id.CheckOut);
         //Setting Name of the Resturant by going into the next screen
-        //setTitle(io.getStringExtra("resturantName"));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        InitToolBar();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -96,14 +96,21 @@ public class ResturantProfile extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
     {
 
     }
-
+    private  void InitToolBar()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        View view=getLayoutInflater().inflate(R.layout.restaurant_detail_layout,null);
+        txtRestauranName=(TextView)view.findViewById(R.id.txtRestaurantProfileName);
+        txtRestauranName.setText(io.getStringExtra("resturantName"));
+        txtRestauranName.setTypeface(EasyFonts.droidSerifItalic(this));
+        toolbar.addView(view);
+    }
     /**
      * A placeholder fragment containing a simple view.
      */

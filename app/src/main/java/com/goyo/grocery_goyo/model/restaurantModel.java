@@ -1,6 +1,9 @@
 package com.goyo.grocery_goyo.model;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 /**
  * Created by Admin on 5/17/2017.
  */
@@ -12,6 +15,29 @@ public class restaurantModel {
     @SerializedName("restname")
     public String restname = "";
 
+    @SerializedName("lat")
+    public String lat= "0.0";
+
+    @SerializedName("lon")
+    public String lon= "0.0";
+
+    @SerializedName("adr")
+    public String adr = "";
+
+    @SerializedName("cont")
+    public String cont = "";
+
+    @SerializedName("imgpath")
+    public String image_path;
+
+    @SerializedName("rating")
+    public String rating;
+
+    @SerializedName("resttyp")
+    public String resttype;
+
+   @SerializedName("minordamt")
+    public Double min_order;
     public Integer getRestid() {
         return restid;
     }
@@ -92,27 +118,5 @@ public class restaurantModel {
         this.min_order = min_order;
     }
 
-    @SerializedName("lat")
-    public String lat= "0.0";
 
-    @SerializedName("lon")
-    public String lon= "0.0";
-
-    @SerializedName("adr")
-    public String adr = "";
-
-    @SerializedName("cont")
-    public String cont = "";
-
-    @SerializedName("imgpath")
-    public String image_path;
-
-    @SerializedName("rating")
-    public String rating;
-
-    @SerializedName("resttyp")
-    public String resttype;
-
-   @SerializedName("minordamt")
-    public Double min_order;
 }

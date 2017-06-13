@@ -33,10 +33,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.model.RestaurantTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -113,7 +115,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void getRestaurant() {
-        JsonObject json = new JsonObject();
+        final JsonObject json = new JsonObject();
         json.addProperty("flag", "all");
         Ion.with(context)
                 .load("http://35.154.230.244:8085/getRestaurantMaster")
@@ -126,9 +128,12 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                         Gson gson = new Gson();
                         List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
                         }.getType());
+
+                        List<RestaurantTimings> timings = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
+                        }.getType());
                         resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList);
                         resturant_list.setAdapter(resturantAdapter);
-                        //Toast.makeText(HomeActivity.this,result.toString(),Toast.LENGTH_SHORT).show();
+
                     }
                 });
     }

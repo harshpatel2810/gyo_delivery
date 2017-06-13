@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class CustomResturantAdapter extends BaseAdapter {
     restaurantModel resturant;
     //Created Shared Preferences at app level to store resturant_id of particular resturant
     private final String PREF_NAME = "Resturant_id";
+    private String openingTime;
     public static Double MinOrder;
     SharedPreferences settings;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz) {

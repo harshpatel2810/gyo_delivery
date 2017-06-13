@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txtRestaurantProfileName"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:textColor="#FFFF00"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:text="TextView" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/txtRestaurantProfileName">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtOpenTime"
+            android:layout_weight="1"
+            android:textColor="#FFFF00"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="10dp"
+            android:textSize="10sp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="Opening Time:10:00 AM"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCloseTime"
+            android:layout_marginLeft="10dp"
+            android:textSize="10sp"
+            android:textColor="#FFFF00"
+            android:textAlignment="textStart"
+            android:layout_weight="1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:text="Closing Time:10:00 AM"/>
+    </LinearLayout>
+</RelativeLayout>

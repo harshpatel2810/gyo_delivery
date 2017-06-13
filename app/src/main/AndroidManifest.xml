@@ -40,6 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.goyo.grocery_goyo.CustomerBill"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
            >
         </activity>
         <activity android:name="com.goyo.grocery_goyo.FilterScreen"

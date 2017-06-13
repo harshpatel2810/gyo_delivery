@@ -65,14 +65,12 @@ public class CustomMenuAdapter extends BaseAdapter {
         settings = context.getSharedPreferences("PREF_NAME", 0);
         settings1 = context.getSharedPreferences("PREF_BILL", 0);
         resturant_id = settings.getInt("Resturant_id", 0);
-        totalAmountValidate = 0;
         //Fetching Minimum Order Value According to the Resturant selection
         MinOrder = CustomResturantAdapter.MinOrder.intValue();
         cc = new ArrayList<>();
         //Fetching the current value of the total amount ordered by the customer
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings1.getInt("Total Amount", 0)));
         ResturantProfile.QTY.setText(String.valueOf(settings1.getInt("CurrentCart", 0)));
-        ResturantProfile.totalAmount.setTextColor(Color.RED);
         //Getting Name of the Restaurants
         this.resturant_name = resturant_name;
         //customerBillDetailsList = new ArrayList<CustomerBillDetails>();
@@ -199,11 +197,6 @@ public class CustomMenuAdapter extends BaseAdapter {
                     //Code to validate total Order value with minimum value if order value
                     //is less than minimum order value than the color will be red or else color wiil be
                     //green
-                    if (totalAmountValidate < MinOrder) {
-                        ResturantProfile.totalAmount.setTextColor(Color.RED);
-                    } else {
-                        ResturantProfile.totalAmount.setTextColor(Color.GREEN);
-                    }
                     AddToCart();
                     mtem.setCartQty(currQty + 1);
                     notifyDataSetChanged();
@@ -241,11 +234,6 @@ public class CustomMenuAdapter extends BaseAdapter {
                     //Code to validate total Order value with minimum value if order value
                     //is less than minimum order value than the color will be red or else color wiil be
                     //green
-                    if (totalAmountValidate > MinOrder) {
-                        ResturantProfile.totalAmount.setTextColor(Color.GREEN);
-                    } else {
-                        ResturantProfile.totalAmount.setTextColor(Color.RED);
-                    }
                     DeductToCart();
                     mtem.setCartQty(currQty - 1);
                     notifyDataSetChanged();

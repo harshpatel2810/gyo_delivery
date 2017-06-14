@@ -12,9 +12,9 @@
         <ImageView
             android:id="@+id/imgResturantDisplay"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="17dp"
             android:src="@drawable/resturantpunjab_grill" />
 
         <TextView
@@ -23,10 +23,11 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/imgResturantDisplay"
             android:layout_below="@+id/imgResturantDisplay"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="2dp"
+            android:paddingTop="0dp"
+            android:textAlignment="viewStart"
             android:text="Minimum Order:₹100"
             android:textSize="10dp" />
-
         <TextView
             android:id="@+id/txtResturantName"
             android:layout_width="wrap_content"

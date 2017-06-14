@@ -1,30 +1,15 @@
 package com.goyo.grocery_goyo;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,27 +19,24 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Global.global;
-import com.goyo.grocery_goyo.model.RestaurantTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.jar.Manifest;
 
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
     private Button search;
     private ImageView filterOption;
-    public  TextView txtLocation, txtLocDesc;
+    public TextView txtLocation, txtLocDesc;
     private LinearLayout layout_location;
     private SearchView etSearchRestaurants;
     Context context;
@@ -63,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     AppLocationService appLocationService;
     SharedPreferences settings;
     CustomResturantAdapter resturantAdapter = null;
+    List<restaurantModel> myList;
     Intent io;
 
     @Override
@@ -70,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         io = getIntent();
-        newAddress=SearchLocation.address;
+        newAddress = SearchLocation.address;
         appLocationService = new AppLocationService(this);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         context = this;
@@ -92,22 +75,16 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         resturant_list = (ListView) findViewById(R.id.list_display_resturants);
         InitAppBar();
         //Helps to set the details of user current location
-        if (appLocationService.getIsGPSTrackingEnabled())
-        {
-            if (newAddress==null)
-            {
+        if (appLocationService.getIsGPSTrackingEnabled()) {
+            if (newAddress == null) {
                 addressLine = String.valueOf(appLocationService.getLocality(this));
                 txtLocation.setText(appLocationService.getAddressLine(this));
                 txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
-            }
-            else
-            {
+            } else {
                 txtLocation.setText(io.getStringExtra("Area"));
                 txtLocDesc.setText(io.getStringExtra("AddressLine"));
             }
-        }
-        else
-        {
+        } else {
             appLocationService.showSettingsAlert();
         }
         getRestaurant();
@@ -125,13 +102,14 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
-                        Gson gson = new Gson();
-                        List<restaurantModel> myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
-                        }.getType());
-
-                        resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList);
-                        resturant_list.setAdapter(resturantAdapter);
-
+                        if (result != null) {
+                            Gson gson = new Gson();
+                            myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
+                            }.getType());
+                            resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList);
+                            resturant_list.setAdapter(resturantAdapter);
+                            //               Toast.makeText(context, result.get("data").getAsJsonArray().get(0).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().toString(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
     }

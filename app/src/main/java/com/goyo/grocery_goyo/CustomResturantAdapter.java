@@ -3,8 +3,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
-import com.goyo.grocery_goyo.model.RestaurantTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
-
-import org.w3c.dom.Text;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,7 +34,7 @@ public class CustomResturantAdapter extends BaseAdapter {
     restaurantModel resturant;
     //Created Shared Preferences at app level to store resturant_id of particular resturant
     private final String PREF_NAME = "Resturant_id";
-    private String openingTime;
+    public static String openingTime,closingTime,openingTime1,closingTime1;
     public static Double MinOrder;
     SharedPreferences settings;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz) {
@@ -43,13 +42,15 @@ public class CustomResturantAdapter extends BaseAdapter {
         x = xyz;
         this.arrayRestaurantModel=new ArrayList<restaurantModel>();
         this.arrayRestaurantModel.addAll(x);
+
         //Created Listener of resturant list because resturant_id can be easily availaible from the webservice
         HomeActivity.resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 TextView txtResturant = (TextView) view.findViewById(R.id.txtResturantName);
                 Intent io = new Intent(context, ResturantProfile.class);
                 io.putExtra("resturantName", txtResturant.getText().toString());
+                Toast.makeText(context,openingTime,Toast.LENGTH_LONG).show();
                 settings = context.getSharedPreferences("PREF_NAME", 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
@@ -64,7 +65,7 @@ public class CustomResturantAdapter extends BaseAdapter {
     }
     public class Holder {
         ImageView imgDisplay;
-        TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime,txtMinimumOrderValue;
+        TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime,txtMinimumOrderValue,txtMoriningTime,txtEvening;
     }
     @Override
     public Object getItem(int position) {
@@ -88,7 +89,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.imgDisplay = (ImageView) convertView.findViewById(R.id.imgResturantDisplay);
         h1.txtRname = (TextView) convertView.findViewById(R.id.txtResturantName);
         h1.txtRtype = (TextView) convertView.findViewById(R.id.txtResturantType);
-        h1.txtVegNonVeg = (TextView) convertView.findViewById(R.id.txtExpenseCategory);
+         h1.txtVegNonVeg = (TextView) convertView.findViewById(R.id.txtExpenseCategory);
         h1.txtRating = (TextView) convertView.findViewById(R.id.txtRating);
         h1.txtDeliveryTime = (TextView) convertView.findViewById(R.id.txtDeliveryTime);
         h1.txtMinimumOrderValue=(TextView)convertView.findViewById(R.id.txtSetMinimumPrice);
@@ -107,6 +108,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating.setText(x.get(position).getRating());
         h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order"+"  "+"₹"+x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
+        GetRestaurantTimings(position);
         return convertView;
     }
     //Code to implement Search Functionality for the search of Restaurants in that particular area
@@ -130,5 +132,27 @@ public class CustomResturantAdapter extends BaseAdapter {
              }
          }
          notifyDataSetChanged();
+    }
+    private void GetRestaurantTimings(final int position)
+    {
+        final JsonObject json = new JsonObject();
+        json.addProperty("flag", "all");
+        Ion.with(context)
+                .load("http://35.154.230.244:8085/getRestaurantMaster")
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result)
+                    {
+                        // do stuff with the result or error
+                        Gson gson = new Gson();
+                        openingTime = result.get("data").getAsJsonArray().get(position).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("o1").toString();
+                        closingTime = result.get("data").getAsJsonArray().get(position).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("c1").toString();
+                        openingTime1 = result.get("data").getAsJsonArray().get(position).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("o2").toString();
+                        closingTime1 = result.get("data").getAsJsonArray().get(position).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("c2").toString();
+                    }
+                });
+
     }
 }

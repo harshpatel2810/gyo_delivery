@@ -5,10 +5,9 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="-20dp">
-
         <ImageView
             android:id="@+id/imgResturantDisplay"
             android:layout_width="100dp"
@@ -16,18 +15,66 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="17dp"
             android:src="@drawable/resturantpunjab_grill" />
-
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgResturantDisplay">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:layout_weight="1"
+            android:layout_below="@+id/imgResturantDisplay"
+            android:paddingLeft="10dp">
+          <TextView
             android:id="@+id/txtSetMinimumPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/imgResturantDisplay"
             android:layout_below="@+id/imgResturantDisplay"
             android:layout_marginStart="2dp"
-            android:paddingTop="0dp"
+            android:layout_weight="1"
+              android:textColor="@color/maroon_dark"
+              android:paddingTop="13dp"
             android:textAlignment="viewStart"
             android:text="Minimum Order:₹100"
             android:textSize="10dp" />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:layout_weight="0.8"
+                android:paddingLeft="10dp">
+                <TextView
+                    android:id="@+id/txtMorningTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imgResturantDisplay"
+                    android:layout_below="@+id/imgResturantDisplay"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:textAlignment="viewStart"
+                    android:text="Morning Time:"
+                    android:textColor="@color/green"
+                    android:textSize="10dp" />
+                <TextView
+                    android:id="@+id/txtEveningTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/imgResturantDisplay"
+                    android:layout_below="@+id/imgResturantDisplay"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/green"
+                    android:textAlignment="viewStart"
+                    android:text="Evening Time:"
+                    android:layout_marginTop="2dp"
+                    android:textSize="10dp" />
+            </LinearLayout>
+        </LinearLayout>
         <TextView
             android:id="@+id/txtResturantName"
             android:layout_width="wrap_content"
@@ -81,8 +128,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtResturantType"
-            android:layout_marginLeft="230dp">
-
+            android:layout_marginLeft="230dp"
+            android:id="@+id/linearLayout2">
             <TextView
                 android:id="@+id/txtDeliveryTime"
                 android:layout_width="wrap_content"

@@ -4,42 +4,12 @@
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/txtRestaurantProfileName"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:textColor="#FFFF00"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:text="TextView" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/txtRestaurantProfileName">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtTime1"
-            android:layout_weight="1"
-            android:textColor="#FFFF00"
-            android:textAlignment="textStart"
-            android:layout_marginLeft="10dp"
-            android:textSize="10sp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:text="Morning Time:"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtTime2"
-            android:layout_marginLeft="10dp"
-            android:textSize="10sp"
-            android:layout_below="@+id/txtTime1"
-            android:textColor="#FFFF00"
-            android:textAlignment="textStart"
-            android:layout_weight="1"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:text="Evening Time:"/>
-    </RelativeLayout>
 </RelativeLayout>

@@ -32,6 +32,9 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -52,9 +55,8 @@ public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private TextView txtRestauranName, txtMoriningTime, txtEveningTime;
+    private  TextView txtRestauranName, txtMoriningTime, txtEveningTime;
     private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,21 +104,16 @@ public class ResturantProfile extends AppCompatActivity {
     {
 
     }
-
+    //Method to initialize tool bar and set the name of appropriate restuarant
     private void InitToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         View view = getLayoutInflater().inflate(R.layout.restaurant_detail_layout, null);
         txtRestauranName = (TextView) view.findViewById(R.id.txtRestaurantProfileName);
-        txtMoriningTime = (TextView) view.findViewById(R.id.txtTime1);
-        txtEveningTime = (TextView) view.findViewById(R.id.txtTime2);
-        txtMoriningTime.setText(txtMoriningTime.getText() + " " + CustomResturantAdapter.openingTime + "AM" + "  TO  " + CustomResturantAdapter.closingTime + "AM");
-        txtEveningTime.setText(txtEveningTime.getText() + " " + CustomResturantAdapter.openingTime1 + "PM" + "  TO  " + CustomResturantAdapter.closingTime1 + "PM");
         txtRestauranName.setText(io.getStringExtra("resturantName"));
-        txtRestauranName.setTypeface(EasyFonts.droidSerifItalic(this));
+        txtRestauranName.setTypeface(EasyFonts.caviarDreamsItalic(this));
         toolbar.addView(view);
     }
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -136,7 +133,6 @@ public class ResturantProfile extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();

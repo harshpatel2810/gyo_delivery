@@ -1,4 +1,4 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.model;
 
 import com.goyo.grocery_goyo.Global.global;
 

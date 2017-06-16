@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
+            android:paddingTop="15dp"
             android:layout_weight="1"
             android:layout_below="@+id/imgResturantDisplay"
             android:paddingLeft="10dp">
@@ -36,7 +35,7 @@
             android:layout_marginStart="2dp"
             android:layout_weight="1"
               android:textColor="@color/maroon_dark"
-              android:paddingTop="13dp"
+              android:paddingTop="0dp"
             android:textAlignment="viewStart"
             android:text="Minimum Order:₹100"
             android:textSize="10dp" />
@@ -45,8 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:layout_weight="0.8"
+                android:paddingTop="0dp"
+                android:layout_weight="0.95"
                 android:paddingLeft="10dp">
                 <TextView
                     android:id="@+id/txtMorningTime"
@@ -81,13 +80,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="35dp"
             android:layout_toEndOf="@+id/imgResturantDisplay"
             android:fontFamily="Times New Roman"
             android:text="Punjab Grill"
             android:textSize="15dp"
             android:textStyle="bold" />
-
         <TextView
             android:id="@+id/txtResturantType"
             android:layout_width="wrap_content"
@@ -123,7 +121,6 @@
             android:drawableLeft="@drawable/ic_rate_action"
             android:gravity="fill"
             android:text="3.5" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

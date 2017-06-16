@@ -1,12 +1,7 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.icu.util.ULocale;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -23,17 +18,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Adapters.CustomMenuAdapter;
+import com.goyo.grocery_goyo.model.MenuItems;
 import com.vstechlab.easyfonts.EasyFonts;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ResturantProfile extends AppCompatActivity {
     /**

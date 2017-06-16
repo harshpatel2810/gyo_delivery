@@ -1,57 +1,27 @@
 package com.goyo.grocery_goyo;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
-import com.goyo.grocery_goyo.model.restaurantModel;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.goyo.grocery_goyo.Activity.HomeActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 public class SearchLocation extends AppCompatActivity {
     private URL url;
     public static String address=null;
     private HttpURLConnection hc;
-
     private Integer TRESHOLD = 2;
     private DelayAutoCompleteTextView geo_autocomplete;
     private ImageView geo_autocomplete_clear;

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.goyo.grocery_goyo.HomeActivity"
+    tools:context="com.goyo.grocery_goyo.Activity.HomeActivity"
     android:weightSum="1">
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,6 +61,8 @@
     <ListView
         android:id="@+id/list_display_resturants"
         android:layout_width="match_parent"
+        android:divider="@color/grey"
+        android:dividerHeight="10.0sp"
         android:layout_height="match_parent" />
     <FrameLayout
         android:layout_width="match_parent"

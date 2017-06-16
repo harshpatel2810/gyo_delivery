@@ -1,27 +1,17 @@
-package com.goyo.grocery_goyo;
-import android.app.ActionBar;
+package com.goyo.grocery_goyo.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Adapters.CustomBillAdapter;
 import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.model.CustomerBillDetails;
 import com.vstechlab.easyfonts.EasyFonts;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;

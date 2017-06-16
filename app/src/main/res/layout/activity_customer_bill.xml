@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.goyo.grocery_goyo.CustomerBill">
+    tools:context="com.goyo.grocery_goyo.Activity.CustomerBill">
     <TextView
         android:id="@+id/txtBillDisplay"
         android:layout_width="match_parent"

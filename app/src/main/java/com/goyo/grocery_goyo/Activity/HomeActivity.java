@@ -1,4 +1,4 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,13 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Adapters.CustomResturantAdapter;
+import com.goyo.grocery_goyo.AppLocationService;
 import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.SearchLocation;
+import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -39,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     public TextView txtLocation, txtLocDesc;
     private LinearLayout layout_location;
     private SearchView etSearchRestaurants;
+    RestaurantsTimings resTime;
     Context context;
     public ActionBar action;
     String addressLine, newAddress;
@@ -46,6 +48,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     SharedPreferences settings;
     CustomResturantAdapter resturantAdapter = null;
     List<restaurantModel> myList;
+    List<RestaurantsTimings> resTimings;
+    public String c1, c2, o1, o2;
     Intent io;
 
     @Override
@@ -67,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         });
         etSearchRestaurants = (SearchView) findViewById(R.id.searchRestaurants);
         global.resturantNames = new ArrayList<>();
+        resTimings = new ArrayList<RestaurantsTimings>();
         settings = context.getSharedPreferences("PREF_BILL", 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("Total Amount", 0);
@@ -106,9 +111,19 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                             Gson gson = new Gson();
                             myList = gson.fromJson(result.get("data"), new TypeToken<List<restaurantModel>>() {
                             }.getType());
-                            resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList);
+                            for (int i = 0; i < myList.size(); i++) {
+                                // Toast.makeText(context, result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().toString(), Toast.LENGTH_LONG).show();
+                                // Toast.makeText(context, result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().toString(), Toast.LENGTH_LONG).show();
+                                // Toast.makeText(context, result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("c1").getAsString(), Toast.LENGTH_LONG).show();
+                                c1 = result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("c1").getAsString();
+                                c2 = result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("c2").getAsString();
+                                o1 = result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("o1").getAsString();
+                                o2 = result.get("data").getAsJsonArray().get(i).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().get("o2").getAsString();
+                                resTime = new RestaurantsTimings(c1, c2, o1, o2);
+                                resTimings.add(resTime);
+                            }
+                            resturantAdapter = new CustomResturantAdapter(HomeActivity.this, myList,resTimings);
                             resturant_list.setAdapter(resturantAdapter);
-                            //               Toast.makeText(context, result.get("data").getAsJsonArray().get(0).getAsJsonObject().get("tm").getAsJsonArray().get(0).getAsJsonObject().toString(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -132,7 +147,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
     }
-
     //Request to set permission runtime because of 6.0 and SecurityException Fatal Error
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {

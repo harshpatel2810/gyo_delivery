@@ -1,21 +1,17 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.model;
 
 import android.content.Intent;
 import android.view.MenuItem;
-
 /**
  * Created by Admin on 5/13/2017.
  */
-
 public class MenuItems {
     public Integer getItemId() {
         return itemId;
     }
-
     public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
-
     private Integer itemId;
     private String itemName;
     private Integer Rate;

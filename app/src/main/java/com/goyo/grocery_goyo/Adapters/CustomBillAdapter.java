@@ -1,25 +1,19 @@
-package com.goyo.grocery_goyo;
-import android.app.Activity;
+package com.goyo.grocery_goyo.Adapters;
 import android.content.Context;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.goyo.grocery.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.Activity.CustomerBill;
 import com.vstechlab.easyfonts.EasyFonts;
 
-import de.halfbit.pinnedsection.PinnedSectionListView;
 public class CustomBillAdapter extends BaseExpandableListAdapter {
     Context context;
     HoldGroup hg = null;

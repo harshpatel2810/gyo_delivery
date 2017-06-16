@@ -1,6 +1,6 @@
 package com.goyo.grocery_goyo.Global;
 
-import com.goyo.grocery_goyo.CustomerBillDetails;
+import com.goyo.grocery_goyo.model.CustomerBillDetails;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.Adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

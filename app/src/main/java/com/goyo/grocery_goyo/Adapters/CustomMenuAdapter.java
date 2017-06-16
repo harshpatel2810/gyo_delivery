@@ -1,4 +1,4 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.Adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,33 +6,26 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Activity.CustomerBill;
+import com.goyo.grocery_goyo.model.CustomerBillDetails;
 import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.model.MenuItems;
+import com.goyo.grocery_goyo.Activity.ResturantProfile;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
@@ -43,7 +36,6 @@ public class CustomMenuAdapter extends BaseAdapter {
     private ImageButton btnAddQty, btnsubQty;
     private int resturant_id;
     private String resturant_name;
-    PlaceOrder p1;
     Holder h1 = null;
     //Declaring static variable for total amount to add total cost
     private static int totalAmount = 0;
@@ -221,11 +213,16 @@ public class CustomMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Integer currQty = mtem.getCartQty();
+                if(global.myCart==null)
+                {
+                  Toast.makeText(context,"No items purchased....",Toast.LENGTH_LONG);
+                }
                 if (currQty == 0) {
                     Toast.makeText(context, "Qty cannot be less than 0", Toast.LENGTH_SHORT).show();
                     global.myCart.remove(mtem.getItemId());
                     return;
-                } else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
+                }
+                else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
 
                 } else {
 

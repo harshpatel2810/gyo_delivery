@@ -1,4 +1,4 @@
-package com.goyo.grocery_goyo;
+package com.goyo.grocery_goyo.Activity;
 
 import com.goyo.grocery.R;
 

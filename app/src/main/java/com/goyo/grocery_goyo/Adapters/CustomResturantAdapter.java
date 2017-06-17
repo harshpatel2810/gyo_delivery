@@ -1,6 +1,9 @@
 package com.goyo.grocery_goyo.Adapters;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DateFormat;
@@ -24,6 +27,7 @@ import com.google.gson.JsonObject;
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Activity.HomeActivity;
 import com.goyo.grocery_goyo.Activity.ResturantProfile;
+import com.goyo.grocery_goyo.TimeValidate.TimeValidate;
 import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
@@ -50,10 +54,13 @@ public class CustomResturantAdapter extends BaseAdapter {
     //Created Shared Preferences at app level to store resturant_id of particular resturant
     private final String PREF_NAME = "Resturant_id";
     public static Double MinOrder;
+    TimeValidate t1;
     SharedPreferences settings;
-    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
-    Date currentLocalTime = cal.getTime();
-    DateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+    DateFormat sdf = new SimpleDateFormat("hh:mm");
+    private Date date;
+    private Date dateCompareOne;
+    private Date dateCompareTwo;
+    TextView txtResturant;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz, final List<RestaurantsTimings> resTimings) {
         context = activity;
         x = xyz;
@@ -64,24 +71,46 @@ public class CustomResturantAdapter extends BaseAdapter {
         HomeActivity.resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                TextView txtResturant = (TextView) view.findViewById(R.id.txtResturantName);
-                Intent io = new Intent(context, ResturantProfile.class);
-                io.putExtra("resturantName", txtResturant.getText().toString());
+               txtResturant = (TextView) view.findViewById(R.id.txtResturantName);
                 settings = context.getSharedPreferences("PREF_NAME", 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
                 MinOrder = (Double) x.get(position).min_order;
-                try {
-                    ValidateDate(resTimings.get(position).o1,resTimings.get(position).c1);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                //Initializing totalAmount variable to zero every time on the click of restaurant
+                //to maintain seperate amount for validations..
+                t1=new TimeValidate();
+                boolean result=t1.checkTime(resTimings.get(position).o2.concat("-").concat(resTimings.get(position).c2));
+                if(result==true)
+                {
+                    Intent io = new Intent(context, ResturantProfile.class);
+                    CustomMenuAdapter.totalAmountValidate = 0;
+                    io.putExtra("resturantName", txtResturant.getText().toString());
+                    context.startActivity(io);
                 }
-                Toast.makeText(context,resTimings.get(position).o1,Toast.LENGTH_LONG).show();
+                else
+                {
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(context);
+                    }
+                    builder.setTitle("Service Unavailaible.")
+                            .setMessage("Try again next time..")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                }
+                            })
+                            .setIcon(R.drawable.ic_restaurant_close)
+
+                            .show();
+                }
                 editor.commit();
-                context.startActivity(io);
             }
         });
     }
+
     public int getCount() {
         return x.size();
     }
@@ -92,6 +121,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime, txtMinimumOrderValue;
         TextView txtMoriningTime, txtEvening;
     }
+
     @Override
     public Object getItem(int position) {
         return position;
@@ -135,35 +165,82 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating.setText(x.get(position).getRating());
         h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order" + "  " + "₹" + x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
-        h1.txtMoriningTime.setText("Morining Time:"+resTime.getO1()+"AM"+"  TO  "+resTime.getC1()+"AM");
-        h1.txtEvening.setText("Evening Time:"+resTime.getO2()+"PM"+"  TO  "+resTime.getC2()+"PM");
+        h1.txtMoriningTime.setText("Morining Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
+        h1.txtEvening.setText("Evening Time:" + resTime.getO2() + "PM" + "  TO  " + resTime.getC2() + "PM");
         // GetRestaurantTimings(position);
         return convertView;
     }
-    public void ValidateDate(String date1,String date2) throws ParseException {
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
-        Date currentLocalTime = cal.getTime();
-        Date t1=parseDate(date1);
-        DateFormat date = new SimpleDateFormat("hh:mm");
-      // you can get seconds by adding  "...:ss" to it
-        date.setTimeZone(android.icu.util.TimeZone.getTimeZone("GMT+5:30"));
-        String localTime = date.format(currentLocalTime);
-        Toast.makeText(context,localTime,Toast.LENGTH_LONG).show();
-    }
-  private  Date parseDate(String date)
-    {
-        try
+
+   /* public void ValidateDate(String date1, String date2) throws ParseException {
+        *//*Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+        int hour = now.get(Calendar.HOUR);
+        int minutes = now.get(Calendar.MINUTE);
+        date = parseDate(hour + ":" + minutes);
+        dateCompareOne = parseDate("1:30");
+        Toast.makeText(context, date.toString(), Toast.LENGTH_LONG).show();
+*//*
+*//*
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"));
+        sdf.setTimeZone(android.icu.util.TimeZone.getTimeZone("GMT+5:30"));
+        String formattedDate = sdf.format(c.getTime());
+        date=parseDate("2:15 PM");
+        dateCompareOne=parseDate("11:00 PM");
+        dateCompareTwo=parseDate("3:00  PM");
+        // Now formattedDate have current date/time
+        Toast.makeText(context,date.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,dateCompareOne.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,dateCompareTwo.toString(),Toast.LENGTH_SHORT).show();
+*//*
+        String dateFormat = "HH:mm";
+        String startTime = date1;
+        String endTime = date2;
+        String currentTime = new SimpleDateFormat(dateFormat).format(new Date());
+
+        Calendar cStart = setTimeToCalendar(dateFormat, startTime, false);
+        Calendar cEnd = setTimeToCalendar(dateFormat, endTime, true);
+        Calendar cNow = setTimeToCalendar(dateFormat, currentTime, true);
+        Date curDate = cNow.getTime();
+
+        if (curDate.after(cStart.getTime()) && curDate.before(cEnd.getTime()))
         {
-            return  sdf.parse(date);
+            Toast.makeText(context, "Date is in range", Toast.LENGTH_LONG).show();
+
         }
-        catch (java.text.ParseException e)
+        else
         {
-             return  new Date(0);
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(context);
+            }
+            builder.setTitle("Service Unavailaible.")
+                    .setMessage("Try again next time..")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(R.drawable.ic_empty_cart)
+                    .show();
+
         }
+ *//*       Toast.makeText(context, cStart.getTime().toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, cEnd.getTime().toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, cNow.getTime().toString(), Toast.LENGTH_LONG).show();
+
+ *//*
+        Toast.makeText(context, String.valueOf(cStart.get(Calendar.HOUR)), Toast.LENGTH_LONG).show();
     }
+   *//* private Date parseDate(String date) {
+        try {
+            return sdf.parse(date);
+        } catch (java.text.ParseException e) {
+            return new Date(0);
+        }
+    }*/
     //Code to implement Search Functionality for the search of Restaurants in that particular area
-    public void filter(String charText)
-    {
+    public void filter(String charText) {
         charText = charText.toString().toLowerCase(Locale.getDefault());
         x.clear();
         if (charText.length() == 0) {
@@ -178,7 +255,18 @@ public class CustomResturantAdapter extends BaseAdapter {
         }
         notifyDataSetChanged();
     }
+
+    private Calendar setTimeToCalendar(String dateFormat, String date, boolean addADay) throws ParseException {
+        Date time = new SimpleDateFormat(dateFormat).parse(date);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time);
+        if (addADay) {
+            cal.add(Calendar.DATE, 1);
+        }
+        return cal;
+    }
 }
+
 //Android code to call web api to get the timings of the restaurants and set it in appropriate view.
 /*
  private void GetRestaurantTimings(final int position) {

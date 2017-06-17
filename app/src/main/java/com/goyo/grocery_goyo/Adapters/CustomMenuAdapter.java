@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo.Adapters;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -26,7 +25,6 @@ import com.goyo.grocery_goyo.Activity.ResturantProfile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
@@ -50,7 +48,6 @@ public class CustomMenuAdapter extends BaseAdapter {
     private final String PREF_BILL = "Bill Details";
     SharedPreferences settings, settings1;
     ArrayList<CustomerBillDetails> cc;
-
     public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, final String resturant_name) {
         context = activity;
         dataList = xyz;
@@ -96,7 +93,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                             .setIcon(R.drawable.ic_empty_cart)
                             .show();
                 }
-                else if(totalAmountValidate < MinOrder) {
+                if (totalAmountValidate < MinOrder) {
 
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -213,16 +210,14 @@ public class CustomMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Integer currQty = mtem.getCartQty();
-                if(global.myCart==null)
-                {
-                  Toast.makeText(context,"No items purchased....",Toast.LENGTH_LONG);
+                if (global.myCart == null) {
+                    Toast.makeText(context, "No items purchased....", Toast.LENGTH_LONG);
                 }
                 if (currQty == 0) {
                     Toast.makeText(context, "Qty cannot be less than 0", Toast.LENGTH_SHORT).show();
                     global.myCart.remove(mtem.getItemId());
                     return;
-                }
-                else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
+                } else if (ResturantProfile.totalAmount.getText().toString().equals("0") || ResturantProfile.QTY.getText().toString().equals("0")) {
 
                 } else {
 

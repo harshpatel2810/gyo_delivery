@@ -128,7 +128,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                     }
                 });
     }
-
     //A method to get GPS provider
     public void InitAppBar() {
         ActionBar action = getSupportActionBar();

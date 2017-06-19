@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo.Adapters;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,9 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import static butterknife.ButterKnife.findById;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.goyo.grocery.R;
@@ -32,7 +29,6 @@ import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -41,7 +37,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomResturantAdapter extends BaseAdapter {
     Context context;
@@ -61,12 +56,16 @@ public class CustomResturantAdapter extends BaseAdapter {
     private Date dateCompareOne;
     private Date dateCompareTwo;
     TextView txtResturant;
+    private boolean result;
+    private String am_pm;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz, final List<RestaurantsTimings> resTimings) {
         context = activity;
         x = xyz;
         this.resTimings = resTimings;
         this.arrayRestaurantModel = new ArrayList<restaurantModel>();
         this.arrayRestaurantModel.addAll(x);
+        t1=new TimeValidate(context);
+        am_pm=t1.GetAmPm();
         //Created Listener of resturant list because resturant_id can be easily availaible from the webservice
         HomeActivity.resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,8 +77,17 @@ public class CustomResturantAdapter extends BaseAdapter {
                 MinOrder = (Double) x.get(position).min_order;
                 //Initializing totalAmount variable to zero every time on the click of restaurant
                 //to maintain seperate amount for validations..
-                t1=new TimeValidate();
-                boolean result=t1.checkTime(resTimings.get(position).o2.concat("-").concat(resTimings.get(position).c2));
+                if(am_pm.equals("PM"))
+                {
+
+                    result=t1.checkTime(resTimings.get(position).o2.concat("-").concat(resTimings.get(position).c2));
+                    Toast.makeText(context,"Evening",Toast.LENGTH_LONG).show();
+                }
+                else if(am_pm.equals("AM"))
+                {
+                    result=t1.checkTime(resTimings.get(position).o1.concat("-").concat(resTimings.get(position).c1));
+                    Toast.makeText(context,"Morning",Toast.LENGTH_LONG).show();
+                }
                 if(result==true)
                 {
                     Intent io = new Intent(context, ResturantProfile.class);
@@ -95,22 +103,35 @@ public class CustomResturantAdapter extends BaseAdapter {
                     } else {
                         builder = new AlertDialog.Builder(context);
                     }
-                    builder.setTitle("Service Unavailaible.")
-                            .setMessage("Try again next time..")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                }
-                            })
-                            .setIcon(R.drawable.ic_restaurant_close)
-
-                            .show();
+                    if(am_pm.equals("PM"))
+                    {
+                        builder.setTitle("Service Unavailaible.")
+                                .setMessage("Opens At...."+resTimings.get(position).getO2()+" PM ")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                    }
+                                })
+                                .setIcon(R.drawable.ic_restaurant_close)
+                                .show();
+                    }
+                    else if(am_pm.equals("AM"))
+                    {
+                        builder.setTitle("Service Unavailaible.")
+                                .setMessage("Opens At...."+resTimings.get(position).getO1()+" PM ")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                    }
+                                })
+                                .setIcon(R.drawable.ic_restaurant_close)
+                                .show();
+                    }
                 }
                 editor.commit();
             }
         });
     }
-
     public int getCount() {
         return x.size();
     }
@@ -121,17 +142,14 @@ public class CustomResturantAdapter extends BaseAdapter {
         TextView txtRname, txtRtype, txtVegNonVeg, txtRating, txtDeliveryTime, txtMinimumOrderValue;
         TextView txtMoriningTime, txtEvening;
     }
-
     @Override
     public Object getItem(int position) {
         return position;
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         h1 = new Holder();
@@ -150,7 +168,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating = (TextView) convertView.findViewById(R.id.txtRating);
         h1.txtDeliveryTime = (TextView) convertView.findViewById(R.id.txtDeliveryTime);
         h1.txtMinimumOrderValue = (TextView) convertView.findViewById(R.id.txtSetMinimumPrice);
-        h1.txtMoriningTime = (TextView) convertView.findViewById(R.id.txtMorningTime);
+        //h1.txtMoriningTime = (TextView) convertView.findViewById(R.id.txtMorningTime);
         h1.txtEvening = (TextView) convertView.findViewById(R.id.txtEveningTime);
         resturant = x.get(position);
         resTime = resTimings.get(position);
@@ -165,8 +183,15 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating.setText(x.get(position).getRating());
         h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order" + "  " + "₹" + x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
-        h1.txtMoriningTime.setText("Morining Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
-        h1.txtEvening.setText("Evening Time:" + resTime.getO2() + "PM" + "  TO  " + resTime.getC2() + "PM");
+        if(am_pm.equals("PM"))
+        {
+            h1.txtEvening.setText("Evening Time:" + resTime.getO2() + "PM" + "  TO  " + resTime.getC2() + "PM");
+        }
+        else
+        {
+            h1.txtEvening.setText("Morning Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
+        }
+       // h1.txtMoriningTime.setText("Morining Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
         // GetRestaurantTimings(position);
         return convertView;
     }
@@ -256,7 +281,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    private Calendar setTimeToCalendar(String dateFormat, String date, boolean addADay) throws ParseException {
+    /*private Calendar setTimeToCalendar(String dateFormat, String date, boolean addADay) throws ParseException {
         Date time = new SimpleDateFormat(dateFormat).parse(date);
         Calendar cal = Calendar.getInstance();
         cal.setTime(time);
@@ -264,9 +289,8 @@ public class CustomResturantAdapter extends BaseAdapter {
             cal.add(Calendar.DATE, 1);
         }
         return cal;
-    }
+    }*/
 }
-
 //Android code to call web api to get the timings of the restaurants and set it in appropriate view.
 /*
  private void GetRestaurantTimings(final int position) {

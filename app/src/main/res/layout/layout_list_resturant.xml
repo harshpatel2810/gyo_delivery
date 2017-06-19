@@ -47,7 +47,7 @@
                 android:paddingTop="0dp"
                 android:layout_weight="0.95"
                 android:paddingLeft="10dp">
-                <TextView
+               <!-- <TextView
                     android:id="@+id/txtMorningTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                     android:textAlignment="viewStart"
                     android:text="Morning Time:"
                     android:textColor="@color/green"
-                    android:textSize="10dp" />
+                    android:textSize="10dp" />-->
                 <TextView
                     android:id="@+id/txtEveningTime"
                     android:layout_width="match_parent"
@@ -70,6 +70,7 @@
                     android:textColor="@color/green"
                     android:textAlignment="viewStart"
                     android:text="Evening Time:"
+                    android:paddingTop="10dp"
                     android:layout_marginTop="2dp"
                     android:textSize="10dp" />
             </LinearLayout>

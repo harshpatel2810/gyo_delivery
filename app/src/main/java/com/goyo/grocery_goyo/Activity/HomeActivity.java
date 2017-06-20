@@ -1,9 +1,10 @@
 package com.goyo.grocery_goyo.Activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Adapters.CustomResturantAdapter;
 import com.goyo.grocery_goyo.AppLocationService;
 import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.LocalDB.AddToCart;
 import com.goyo.grocery_goyo.SearchLocation;
 import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
@@ -32,7 +34,6 @@ import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
     private Button search;
@@ -51,11 +52,12 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     List<RestaurantsTimings> resTimings;
     public String c1, c2, o1, o2;
     Intent io;
-
+    AddToCart addToCart;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        addToCart=new AddToCart(this);
         io = getIntent();
         newAddress = SearchLocation.address;
         appLocationService = new AppLocationService(this);
@@ -104,6 +106,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error
@@ -173,7 +176,9 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onQueryTextChange(String newText) {
         String text = newText;
-        resturantAdapter.filter(text);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            resturantAdapter.filter(text);
+        }
         return false;
     }
     //getRestaurantMaster

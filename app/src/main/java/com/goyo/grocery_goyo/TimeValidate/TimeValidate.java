@@ -41,35 +41,45 @@ public class TimeValidate
             toTime = Calendar.getInstance();
             toTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(until[0]));
             toTime.set(Calendar.MINUTE, Integer.valueOf(until[1]));
-
-
             currentLocalTime = currentTime.getTime();
             date = new SimpleDateFormat("hh:mm");
             date.setTimeZone(android.icu.util.TimeZone.getTimeZone("GMT+5:30"));
             String localTime = date.format(currentLocalTime);
-            Toast.makeText(cxt,localTime,Toast.LENGTH_LONG).show();
+            //Toast.makeText(cxt,localTime,Toast.LENGTH_LONG).show();
             currentTime.setTime(date.parse(localTime));
-
-
-            Toast.makeText(cxt,String.valueOf(currentTime.getTime().toString()),Toast.LENGTH_LONG).show();
-            Toast.makeText(cxt,String.valueOf(fromTime.getTime().toString()),Toast.LENGTH_LONG).show();
+            //Toast.makeText(cxt,String.valueOf(currentTime.getTime().toString()),Toast.LENGTH_LONG).show();
+          /*  Toast.makeText(cxt,String.valueOf(fromTime.getTime().toString()),Toast.LENGTH_LONG).show();
             Toast.makeText(cxt,String.valueOf(toTime.getTime().toString()),Toast.LENGTH_LONG).show();
-            //this approach had been tried by me but the between timings is not happening
+          */  //this approach had been tried by me but the between timings is not happening
            /* if(currentTime.after(fromTime) && currentTime.before(toTime))
             {
                 return true;
             }*/
+
+           //I have tried another approach according to my logic its going perfectly
             int a=Integer.valueOf(currentTime.get(Calendar.HOUR));
             int b=Integer.valueOf(fromTime.get(Calendar.HOUR));
             int c=Integer.valueOf(toTime.get(Calendar.HOUR));
-            if(a>=b && a<=c)
+            if(a==b)
             {
-                if(a<=c && Integer.valueOf(currentTime.get(Calendar.MINUTE))<=Integer.valueOf(toTime.get(Calendar.MINUTE)))
+                if(Integer.valueOf(currentTime.get(Calendar.MINUTE))>=Integer.valueOf(fromTime.get(Calendar.MINUTE)))
+                {
+                   return true;
+                }
+            }
+            else if(a==c)
+            {
+                if(Integer.valueOf(currentTime.get(Calendar.MINUTE))<=Integer.valueOf(toTime.get(Calendar.MINUTE)))
                 {
                     return true;
                 }
             }
-      }
+            else {
+                if (a >= b && a <= c) {
+                    return true;
+                }
+            }
+        }
         catch (Exception e)
         {
             return false;

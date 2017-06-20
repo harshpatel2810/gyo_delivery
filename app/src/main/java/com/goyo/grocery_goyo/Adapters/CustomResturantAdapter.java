@@ -81,12 +81,12 @@ public class CustomResturantAdapter extends BaseAdapter {
                 {
 
                     result=t1.checkTime(resTimings.get(position).o2.concat("-").concat(resTimings.get(position).c2));
-                    Toast.makeText(context,"Evening",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context,"Evening",Toast.LENGTH_LONG).show();
                 }
                 else if(am_pm.equals("AM"))
                 {
                     result=t1.checkTime(resTimings.get(position).o1.concat("-").concat(resTimings.get(position).c1));
-                    Toast.makeText(context,"Morning",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context,"Morning",Toast.LENGTH_LONG).show();
                 }
                 if(result==true)
                 {
@@ -105,8 +105,8 @@ public class CustomResturantAdapter extends BaseAdapter {
                     }
                     if(am_pm.equals("PM"))
                     {
-                        builder.setTitle("Service Unavailaible.")
-                                .setMessage("Opens At...."+resTimings.get(position).getO2()+" PM ")
+                        builder.setTitle(txtResturant.getText().toString()+" "+"Service Unavailaible.")
+                                .setMessage("Opens At...."+resTimings.get(position).getO2()+am_pm)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // continue with delete
@@ -118,7 +118,7 @@ public class CustomResturantAdapter extends BaseAdapter {
                     else if(am_pm.equals("AM"))
                     {
                         builder.setTitle("Service Unavailaible.")
-                                .setMessage("Opens At...."+resTimings.get(position).getO1()+" PM ")
+                                .setMessage("Opens At...."+resTimings.get(position).getO1()+am_pm)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // continue with delete
@@ -168,7 +168,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating = (TextView) convertView.findViewById(R.id.txtRating);
         h1.txtDeliveryTime = (TextView) convertView.findViewById(R.id.txtDeliveryTime);
         h1.txtMinimumOrderValue = (TextView) convertView.findViewById(R.id.txtSetMinimumPrice);
-        //h1.txtMoriningTime = (TextView) convertView.findViewById(R.id.txtMorningTime);
+        h1.txtMoriningTime = (TextView) convertView.findViewById(R.id.txtMorningTime);
         h1.txtEvening = (TextView) convertView.findViewById(R.id.txtEveningTime);
         resturant = x.get(position);
         resTime = resTimings.get(position);
@@ -183,14 +183,10 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating.setText(x.get(position).getRating());
         h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order" + "  " + "₹" + x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
-        if(am_pm.equals("PM"))
-        {
+
             h1.txtEvening.setText("Evening Time:" + resTime.getO2() + "PM" + "  TO  " + resTime.getC2() + "PM");
-        }
-        else
-        {
-            h1.txtEvening.setText("Morning Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
-        }
+            h1.txtMoriningTime.setText("Morning Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
+
        // h1.txtMoriningTime.setText("Morining Time:" + resTime.getO1() + "AM" + "  TO  " + resTime.getC1() + "AM");
         // GetRestaurantTimings(position);
         return convertView;

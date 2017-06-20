@@ -124,17 +124,14 @@ public class CustomMenuAdapter extends BaseAdapter {
     public int getCount() {
         return dataList.size();
     }
-
     @Override
     public Object getItem(int position) {
         return position;
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //View rowView;

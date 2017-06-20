@@ -1,5 +1,4 @@
 package com.goyo.grocery_goyo.Activity;
-
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +24,6 @@ import com.goyo.grocery_goyo.model.MenuItems;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
-
 public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

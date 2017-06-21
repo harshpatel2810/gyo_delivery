@@ -9,10 +9,10 @@
         android:layout_marginTop="-30dp">
         <ImageView
             android:id="@+id/imgResturantDisplay"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="17dp"
+            android:paddingTop="35dp"
             android:src="@drawable/resturantpunjab_grill" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="50dp"
             android:layout_toEndOf="@+id/imgResturantDisplay"
             android:fontFamily="Times New Roman"
             android:text="Punjab Grill"
@@ -124,24 +124,28 @@
             android:layout_toEndOf="@+id/txtExpenseCategory"
             android:drawableLeft="@drawable/ic_rate_action"
             android:gravity="fill"
+            android:layout_weight="1"
             android:text="3.5" />
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtResturantType"
             android:layout_marginLeft="230dp"
             android:id="@+id/linearLayout2">
-            <TextView
-                android:id="@+id/txtDeliveryTime"
-                android:layout_width="wrap_content"
-                android:paddingLeft="10dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/txtRating"
-                android:layout_below="@+id/txtResturantType"
-                android:layout_toEndOf="@+id/txtResturantType"
-                android:drawableLeft="@drawable/ic_clock_delivery"
-                android:gravity="fill"
-                android:text="22 mins" />
-        </LinearLayout>
+        </LinearLayout>-->
+        <TextView
+            android:id="@+id/txtDeliveryTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_clock_delivery"
+            android:layout_below="@+id/txtResturantType"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="70dp"
+            android:text="22 mins"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/txtExpenseCategory"
+            android:gravity="fill"
+             />
     </RelativeLayout>
 </LinearLayout>

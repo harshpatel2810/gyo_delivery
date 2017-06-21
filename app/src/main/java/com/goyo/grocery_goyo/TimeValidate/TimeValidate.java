@@ -11,12 +11,12 @@ import java.util.TimeZone;
 /**
  * Created by Admin on 6/17/2017.
  */
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class TimeValidate
 {
     Context cxt;
     Date currentLocalTime;
     DateFormat date;
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public TimeValidate(Context cxt)
     {
         this.cxt=cxt;
@@ -37,7 +37,6 @@ public class TimeValidate
             fromTime.set(Calendar.MINUTE, Integer.valueOf(from[1]));
            // Toast.makeText(cxt,String.valueOf(fromTime.get(Calendar.HOUR_OF_DAY)+":"+fromTime.get(Calendar.MINUTE)),Toast.LENGTH_LONG).show();
 
-
             toTime = Calendar.getInstance();
             toTime.set(Calendar.HOUR_OF_DAY, Integer.valueOf(until[0]));
             toTime.set(Calendar.MINUTE, Integer.valueOf(until[1]));
@@ -47,16 +46,6 @@ public class TimeValidate
             String localTime = date.format(currentLocalTime);
             //Toast.makeText(cxt,localTime,Toast.LENGTH_LONG).show();
             currentTime.setTime(date.parse(localTime));
-            //Toast.makeText(cxt,String.valueOf(currentTime.getTime().toString()),Toast.LENGTH_LONG).show();
-          /*  Toast.makeText(cxt,String.valueOf(fromTime.getTime().toString()),Toast.LENGTH_LONG).show();
-            Toast.makeText(cxt,String.valueOf(toTime.getTime().toString()),Toast.LENGTH_LONG).show();
-          */  //this approach had been tried by me but the between timings is not happening
-           /* if(currentTime.after(fromTime) && currentTime.before(toTime))
-            {
-                return true;
-            }*/
-
-           //I have tried another approach according to my logic its going perfectly
             int a=Integer.valueOf(currentTime.get(Calendar.HOUR));
             int b=Integer.valueOf(fromTime.get(Calendar.HOUR));
             int c=Integer.valueOf(toTime.get(Calendar.HOUR));

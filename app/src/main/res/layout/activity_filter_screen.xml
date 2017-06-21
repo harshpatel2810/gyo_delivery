@@ -118,23 +118,36 @@
         android:layout_below="@+id/linearLayout"
         android:paddingTop="28dp"
         android:paddingLeft="5dp"
-        android:text="VEG-NON VEG DISHES" />
+        android:text="DISHES" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_below="@+id/displayVegNonveg"
         android:background="@drawable/layout_background"
         >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1">
         <CheckBox
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/chkVeg"
             android:checked="false"
             android:text="VEG"
+            android:layout_gravity="center"
             android:layout_weight="1">
            </CheckBox>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
         <CheckBox
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -143,6 +156,12 @@
             android:text="NON VEG"
             android:layout_weight="1">
         </CheckBox>
+        </RelativeLayout>
+        <!--<RelativeLayout
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
         <CheckBox
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -151,6 +170,7 @@
             android:text="VEG-NON VEG"
             android:layout_weight="1">
         </CheckBox>
+        </RelativeLayout>-->
     </LinearLayout>
     <TextView
         android:id="@+id/displayCategories"
@@ -159,11 +179,11 @@
         android:textStyle="bold"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout"
-        android:paddingTop="180dp"
+        android:paddingTop="120dp"
         android:paddingLeft="5dp"
         android:text="CATEGORIES" />
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_above="@+id/layoutApplyButton"
@@ -171,7 +191,7 @@
         android:layout_below="@+id/displayCategories"
         android:background="@drawable/layout_background">
        <ListView
-           android:layout_width="wrap_content"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:textAlignment="center"
            android:divider="@null"

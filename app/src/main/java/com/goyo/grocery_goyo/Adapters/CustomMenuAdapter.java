@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,21 +27,18 @@ import com.goyo.grocery_goyo.Activity.ResturantProfile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomMenuAdapter extends BaseAdapter {
     Context context;
     private ArrayList<MenuItems> dataList;
     private Integer addTocart = 0;
     ImageButton addQty, subQty;
     ImageView checkout;
-    private ImageButton btnAddQty, btnsubQty;
     private int resturant_id;
     private String resturant_name;
     Holder h1 = null;
-    //Declaring static variable for total amount to add total cost
     private static int totalAmount = 0;
-    //Declaring static variable to get the order amount according to the restaurant by calling method
     public static int totalAmountValidate;
-    //Variable to fetch value of Minimum Order according to restaurant
     private int MinOrder;
     public BottomNavigationView navigationView;
     CustomerBillDetails customerBillDetails;
@@ -69,7 +68,8 @@ public class CustomMenuAdapter extends BaseAdapter {
         if (global.resturantNames.contains(this.resturant_name)) {
             //Code to to validate the wether the resturant name is already included in array list if availaible
             //than it will not include it
-        } else {
+        } else
+        {
             //Else it will include it in the array list
             global.resturantNames.add(this.resturant_name);
         }
@@ -117,8 +117,10 @@ public class CustomMenuAdapter extends BaseAdapter {
                     context.startActivity(io);
                 }
                 //Checking with the Method FetchOrderAmount wether Order Value is Greater Than Minimum Value
+
             }
         });
+
     }
 
     public int getCount() {
@@ -148,13 +150,11 @@ public class CustomMenuAdapter extends BaseAdapter {
         }
         final MenuItems mtem = dataList.get(position);
         navigationView = (BottomNavigationView) convertView.findViewById(R.id.btmNavCart);
-        btnAddQty = (ImageButton) convertView.findViewById(R.id.btnAddQty);
-        btnAddQty.setTag(position);
-        btnsubQty = (ImageButton) convertView.findViewById(R.id.btnSubQty);
-        btnsubQty.setTag(position);
+        h1.btnAddQty.setTag(position);
+        h1.btnsubQty.setTag(position);
         h1.uniqueKey = String.valueOf(position);
-        btnAddQty.setTag(position + "");
-        btnAddQty.setOnClickListener(new View.OnClickListener() {
+        h1.btnAddQty.setTag(position + "");
+        h1.btnAddQty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer currQty = mtem.getCartQty();
@@ -202,8 +202,8 @@ public class CustomMenuAdapter extends BaseAdapter {
                 }
             }
         });
-        btnsubQty.setTag(position + "");
-        btnsubQty.setOnClickListener(new View.OnClickListener() {
+        h1.btnsubQty.setTag(position + "");
+        h1.btnsubQty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Integer currQty = mtem.getCartQty();
@@ -251,6 +251,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         {
             h1.textMenuDesc.setEnabled(false);
         }*/
+        ValidateRestaurantOpenClose();
         return convertView;
     }
 
@@ -263,7 +264,6 @@ public class CustomMenuAdapter extends BaseAdapter {
         notifyDataSetChanged();
         return addTocart;
     }
-
     //Method to update the total bill of the user in the bottom Navigation View
     public Integer CalculateTotalPrice(int rate) {
         //Each time user will increment the quantity of 1 so the total amount will added in
@@ -311,7 +311,6 @@ public class CustomMenuAdapter extends BaseAdapter {
         return addTocart;
     }
     //Getting Total Amount of Bill According to Restaurant Wise
-
     //Approach to get the order of the restaurant
     /*public Integer FetchOrderAmount() {
 
@@ -329,12 +328,35 @@ public class CustomMenuAdapter extends BaseAdapter {
     public class Holder {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;
+        private ImageButton btnAddQty, btnsubQty;
+        public Holder()
+        {
 
+        }
         public Holder(View item) {
             textItemName = (TextView) item.findViewById(R.id.txtMenuItem);
             textMenuPrice = (TextView) item.findViewById(R.id.txtMenuRate);
             textMenuDesc = (TextView) item.findViewById(R.id.txtMenuDesc);
             txtQty = (TextView) item.findViewById(R.id.txtRate);
+            btnAddQty=(ImageButton)item.findViewById(R.id.btnAddQty);
+            btnsubQty=(ImageButton)item.findViewById(R.id.btnSubQty);
+        }
+    }
+    public void ValidateRestaurantOpenClose()
+    {
+        boolean result=CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings);
+        if(result==true) {
+            ResturantProfile.txtRestaurantStatus.setText("Restaurant Open");
+            ResturantProfile.txtRestaurantStatus.setTextColor(Color.GREEN);
+            h1.btnAddQty.setEnabled(true);
+            h1.btnsubQty.setEnabled(true);
+        }
+        else
+        {
+            ResturantProfile.txtRestaurantStatus.setText("Restaurant Closed");
+            ResturantProfile.txtRestaurantStatus.setTextColor(Color.RED);
+            h1.btnAddQty.setEnabled(false);
+            h1.btnsubQty.setEnabled(false);
         }
     }
 }

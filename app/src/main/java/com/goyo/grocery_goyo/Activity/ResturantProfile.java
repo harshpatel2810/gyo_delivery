@@ -1,5 +1,7 @@
 package com.goyo.grocery_goyo.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +26,7 @@ import com.goyo.grocery_goyo.model.MenuItems;
 import com.vstechlab.easyfonts.EasyFonts;
 
 import java.util.ArrayList;
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,7 +47,7 @@ public class ResturantProfile extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private  TextView txtRestauranName, txtMoriningTime, txtEveningTime;
+    public static   TextView txtRestauranName,txtRestaurantStatus;
     private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class ResturantProfile extends AppCompatActivity {
         setSupportActionBar(toolbar);
         View view = getLayoutInflater().inflate(R.layout.restaurant_detail_layout, null);
         txtRestauranName = (TextView) view.findViewById(R.id.txtRestaurantProfileName);
+        txtRestaurantStatus = (TextView)view.findViewById(R.id.txtRestaurantStatus);
         txtRestauranName.setText(io.getStringExtra("resturantName"));
         txtRestauranName.setTypeface(EasyFonts.caviarDreamsItalic(this));
         toolbar.addView(view);
@@ -140,6 +144,7 @@ public class ResturantProfile extends AppCompatActivity {
             return rootView;
 
         }
+
 
         private void fillData(View rootView) {
 

@@ -172,13 +172,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onQueryTextChange(String newText) {
         String text = newText;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             resturantAdapter.filter(text);
-        }
         return false;
     }
     //getRestaurantMaster

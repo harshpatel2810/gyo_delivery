@@ -12,4 +12,6 @@
     <color name="dark_grey">#696969</color>
     <color name="maroon_dark">#883755</color>
     <color name="green">#328332</color>
+    <color name="light_green">#a4c639</color>
+    <color name="light_orange">#FFA500</color>
 </resources>

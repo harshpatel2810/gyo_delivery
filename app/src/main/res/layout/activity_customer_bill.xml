@@ -122,5 +122,4 @@
             android:text="@string/proceed_for_payment"
             android:singleLine="true"
             android:textAllCaps="true" />
-
 </LinearLayout>

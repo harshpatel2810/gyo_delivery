@@ -39,25 +39,23 @@ import java.util.Locale;
 import java.util.TimeZone;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomResturantAdapter extends BaseAdapter {
+    private final String PREF_NAME = "Resturant_id";
+    public static Double MinOrder;
+    private String am_pm;
+
     Context context;
     Holder h1;
+    restaurantModel resturant;
+    RestaurantsTimings resTime;
+    SharedPreferences settings;
+    TextView txtResturant;
+    public static TimeValidate t1;
     private List<restaurantModel> x;
     private List<RestaurantsTimings> resTimings;
     private ArrayList<restaurantModel> arrayRestaurantModel;
-    restaurantModel resturant;
-    RestaurantsTimings resTime;
     //Created Shared Preferences at app level to store resturant_id of particular resturant
-    private final String PREF_NAME = "Resturant_id";
-    public static Double MinOrder;
-    TimeValidate t1;
-    SharedPreferences settings;
     DateFormat sdf = new SimpleDateFormat("hh:mm");
-    private Date date;
-    private Date dateCompareOne;
-    private Date dateCompareTwo;
-    TextView txtResturant;
-    private boolean result;
-    private String am_pm;
+    public static String restaurantTimings;
     public CustomResturantAdapter(HomeActivity activity, List<restaurantModel> xyz, final List<RestaurantsTimings> resTimings) {
         context = activity;
         x = xyz;
@@ -75,58 +73,21 @@ public class CustomResturantAdapter extends BaseAdapter {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
                 MinOrder = (Double) x.get(position).min_order;
+                Intent io = new Intent(context, ResturantProfile.class);
+                CustomMenuAdapter.totalAmountValidate = 0;
+                io.putExtra("resturantName", txtResturant.getText().toString());
+                context.startActivity(io);
                 //Initializing totalAmount variable to zero every time on the click of restaurant
                 //to maintain seperate amount for validations..
                 if(am_pm.equals("PM"))
                 {
-
-                    result=t1.checkTime(resTimings.get(position).o2.concat("-").concat(resTimings.get(position).c2));
-                    //Toast.makeText(context,"Evening",Toast.LENGTH_LONG).show();
+                   restaurantTimings=resTimings.get(position).o2.concat("-").concat(resTimings.get(position).c2);
+                    Toast.makeText(context,restaurantTimings,Toast.LENGTH_LONG).show();
                 }
                 else if(am_pm.equals("AM"))
                 {
-                    result=t1.checkTime(resTimings.get(position).o1.concat("-").concat(resTimings.get(position).c1));
-                    //Toast.makeText(context,"Morning",Toast.LENGTH_LONG).show();
-                }
-                if(result==true)
-                {
-                    Intent io = new Intent(context, ResturantProfile.class);
-                    CustomMenuAdapter.totalAmountValidate = 0;
-                    io.putExtra("resturantName", txtResturant.getText().toString());
-                    context.startActivity(io);
-                }
-                else
-                {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(context);
-                    }
-                    if(am_pm.equals("PM"))
-                    {
-                        builder.setTitle(txtResturant.getText().toString()+" "+"Service Unavailaible.")
-                                .setMessage("Opens At...."+resTimings.get(position).getO2()+am_pm)
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // continue with delete
-                                    }
-                                })
-                                .setIcon(R.drawable.ic_restaurant_close)
-                                .show();
-                    }
-                    else if(am_pm.equals("AM"))
-                    {
-                        builder.setTitle("Service Unavailaible.")
-                                .setMessage("Opens At...."+resTimings.get(position).getO1()+am_pm)
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // continue with delete
-                                    }
-                                })
-                                .setIcon(R.drawable.ic_restaurant_close)
-                                .show();
-                    }
+                   restaurantTimings=resTimings.get(position).o1.concat("-").concat(resTimings.get(position).c1);
+                    Toast.makeText(context,restaurantTimings,Toast.LENGTH_LONG).show();
                 }
                 editor.commit();
             }
@@ -180,6 +141,7 @@ public class CustomResturantAdapter extends BaseAdapter {
         } else if (x.get(position).getResttype().equals("Veg/Nonveg")) {
             h1.txtVegNonVeg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.veg_icon_nonveg_icon, 0, 0, 0);
         }
+
         h1.txtRating.setText(x.get(position).getRating());
         h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order" + "  " + "₹" + x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
@@ -191,7 +153,6 @@ public class CustomResturantAdapter extends BaseAdapter {
         // GetRestaurantTimings(position);
         return convertView;
     }
-
    /* public void ValidateDate(String date1, String date2) throws ParseException {
         *//*Calendar now = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
         int hour = now.get(Calendar.HOUR);

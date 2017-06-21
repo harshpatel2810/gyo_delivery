@@ -12,4 +12,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:text="TextView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtRestaurantProfileName"
+        android:text="Restuarant Open"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:textColor="@color/light_green"
+        android:id="@+id/txtRestaurantStatus"/>
 </RelativeLayout>

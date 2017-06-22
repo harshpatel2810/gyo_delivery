@@ -1,10 +1,19 @@
 package com.goyo.grocery_goyo.Activity;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.goyo.grocery.R;
@@ -31,7 +40,7 @@ public class CustomerBill extends AppCompatActivity {
     private List<Double> Rates;
     public static List<Integer> sumQuantity;
     public static List<Double> sumAmount;
-
+    Point p;
     private android.support.v7.app.ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +87,15 @@ public class CustomerBill extends AppCompatActivity {
         }
         txtAmountValue = (TextView) findViewById(R.id.txtAmountValue);
         btnForPayment = (Button) findViewById(R.id.btnForPayment);
+        btnForPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  if(p!=null) {
+                      showPopUp(CustomerBill.this, p);
+                  }
+
+            }
+        });
         //Setting the total amount of the bill in the final cart
         txtAmountValue.setText(ResturantProfile.totalAmount.getText().toString() + ".00");
         btnForPayment.setText(btnForPayment.getText().toString() + "   " + ResturantProfile.totalAmount.getText().toString() + ".00");
@@ -87,6 +105,52 @@ public class CustomerBill extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.hide();
         setFonts();
+    }
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+
+        int[] location = new int[2];
+        Button button = (Button) findViewById(R.id.btnForPayment);
+
+        // Get the x, y location and store it in the location[] array
+        // location[0] = x, location[1] = y.
+        button.getLocationOnScreen(location);
+
+        //Initialize the Point with x, and y positions
+        p = new Point();
+        p.x = location[0];
+        p.y = location[1];
+    }
+    private void showPopUp(final Activity cxt,Point p)
+    {
+        int popUpwidth=1500;
+        int popUpHeight=1500;
+        RelativeLayout viewGroup=(RelativeLayout)cxt.findViewById(R.id.popup);
+        LayoutInflater layoutInflater = (LayoutInflater)cxt
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.layout_delivery_address, viewGroup);
+        final PopupWindow popup = new PopupWindow(cxt);
+        popup.setContentView(layout);
+        popup.setWidth(popUpHeight);
+        popup.setHeight(popUpwidth);
+        popup.setFocusable(true);
+
+        int OFFSET_X = 350;
+        int OFFSET_Y = 400;
+
+        // Clear the default translucent background
+        popup.setBackgroundDrawable(new BitmapDrawable());
+
+        // Displaying the popup at the specified location, + offsets.
+        popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+        // Getting a reference to Close button, and close the popup when clicked.
+        Button ok = (Button)layout.findViewById(R.id.btnOk);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popup.dismiss();
+            }
+        });
     }
     private void setFonts()
     {

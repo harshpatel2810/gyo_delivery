@@ -76,53 +76,72 @@ public class CustomMenuAdapter extends BaseAdapter {
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (global.myCart == null) {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(context);
+                if(CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings)==true) {
+                    if (global.myCart == null) {
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(context);
+                        }
+                        builder.setTitle("Cart Empty")
+                                .setMessage("Purchase your receipe to proceed for cart..")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                    }
+                                })
+                                .setIcon(R.drawable.ic_empty_cart)
+                                .show();
                     }
-                    builder.setTitle("Cart Empty")
-                            .setMessage("Purchase your receipe to proceed for cart..")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                }
-                            })
-                            .setIcon(R.drawable.ic_empty_cart)
-                            .show();
-                }
-                if (totalAmountValidate < MinOrder) {
+                    else if (totalAmountValidate < MinOrder) {
 
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(context);
+                        AlertDialog.Builder builder;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                        } else {
+                            builder = new AlertDialog.Builder(context);
+                        }
+                           builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
+                                .setMessage("Unable to proceed please select more items..")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                    }
+                                })
+                                .setIcon(R.drawable.ic_empty_cart)
+                                .show();
                     }
-                    builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
-                            .setMessage("Unable to proceed please select more items..")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                }
-                            })
-                            .setIcon(R.drawable.ic_empty_cart)
-                            .show();
-                } else {
-                    Intent io = new Intent(context, CustomerBill.class);
+                    else
+                    {
+                        Intent io = new Intent(context, CustomerBill.class);
 //                      io.putExtra("bill", (Serializable) customerBillDetailsList);
 //                      Toast.makeText(context,"Hello",Toast.LENGTH_LONG).show();
-                    context.startActivity(io);
+                        context.startActivity(io);
+                    }
+                }
+                 else if(CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings)==false)
+                {
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(context);
+                    }
+                    builder.setTitle("Service Unavailable")
+                            .setMessage("Restaurant Close")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                }
+                            })
+                            .setIcon(R.drawable.ic_restaurant_close)
+                            .show();
                 }
                 //Checking with the Method FetchOrderAmount wether Order Value is Greater Than Minimum Value
-
             }
         });
-
     }
-
     public int getCount() {
         return dataList.size();
     }
@@ -228,7 +247,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                     if (global.myCart == null) {
                         global.myCart = new HashMap<Integer, CustomerBillDetails>();
-                    }
+                     }
                     if (global.myCart.containsKey(mtem.getItemId())) {
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());

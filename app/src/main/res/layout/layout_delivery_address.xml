@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+   android:gravity="top|center"
+    android:id="@+id/popup"
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_image_delivery"
+        android:gravity="center"
+        android:layout_weight="1">
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:id="@+id/image_delivery_popup"
+        android:layout_weight="1"
+
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/ic_delivery_address_icon"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/layout_image_delivery"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/display_delivery_address"
+            android:layout_height="match_parent"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="@string/select_address"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          android:layout_marginTop="20dp"
+            android:id="@+id/btnOk"
+
+            android:background="@drawable/button_payment_shape"
+            android:text="OK" />
+    </LinearLayout>
+
+</RelativeLayout>

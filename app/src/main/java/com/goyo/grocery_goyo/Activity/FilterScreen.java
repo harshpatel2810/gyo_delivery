@@ -54,6 +54,12 @@ public class FilterScreen extends AppCompatActivity {
         restaurantCategories.add(restaurantCategory);
         restaurantCategory = new RestaurantCategory(6, "ITALIAN", false);
         restaurantCategories.add(restaurantCategory);
+        restaurantCategory = new RestaurantCategory(7, "ITALIAN", false);
+        restaurantCategories.add(restaurantCategory);
+        restaurantCategory = new RestaurantCategory(8, "GUJARATI", false);
+        restaurantCategories.add(restaurantCategory);
+        restaurantCategory = new RestaurantCategory(9, "KATHIYAVADI", false);
+        restaurantCategories.add(restaurantCategory);
         adapter=new CustomRestaurantCategoryAdapter(this,restaurantCategories);
         ListView listView=(ListView)findViewById(R.id.listDispCategories);
         listView.setAdapter(adapter);

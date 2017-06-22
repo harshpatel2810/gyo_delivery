@@ -152,6 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:id="@+id/chkNonVeg"
+            android:layout_marginLeft="20dp"
             android:checked="false"
             android:text="NON VEG"
             android:layout_weight="1">
@@ -194,6 +195,7 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:textAlignment="center"
+           android:orientation="horizontal"
            android:divider="@null"
            android:id="@+id/listDispCategories">
        </ListView>

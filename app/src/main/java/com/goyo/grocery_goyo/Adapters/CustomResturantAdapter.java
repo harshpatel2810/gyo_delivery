@@ -1,13 +1,10 @@
 package com.goyo.grocery_goyo.Adapters;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
@@ -17,26 +14,20 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import static butterknife.ButterKnife.findById;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Activity.HomeActivity;
 import com.goyo.grocery_goyo.Activity.ResturantProfile;
-import com.goyo.grocery_goyo.TimeValidate.TimeValidate;
+import com.goyo.grocery_goyo.Classes.TimeValidate;
 import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import java.sql.Time;
-import java.text.ParseException;
+
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
+
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomResturantAdapter extends BaseAdapter {
     private final String PREF_NAME = "Resturant_id";

@@ -21,11 +21,14 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAXJbhK_apLxdfAqe3kvcW0LpVppuEehXQ"/>
-        <activity android:name="com.goyo.grocery_goyo.Activity.HomeActivity"
+            android:value="AIzaSyAXJbhK_apLxdfAqe3kvcW0LpVppuEehXQ" />
+
+        <activity
+            android:name="com.goyo.grocery_goyo.Activity.HomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,13 +41,16 @@
             android:name="com.goyo.grocery_goyo.SearchLocation"
             android:label="@string/title_activity_search_location"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.goyo.grocery_goyo.Activity.CustomerBill"
+        <activity
+            android:name="com.goyo.grocery_goyo.Activity.CustomerBill"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-           >
-        </activity>
-        <activity android:name="com.goyo.grocery_goyo.Activity.FilterScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.goyo.grocery_goyo.Activity.FilterScreen"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.goyo.grocery_goyo.Activity.Pop"
+            android:theme="@style/AppTheme.CustomTheme">
         </activity>
     </application>
+
 </manifest>

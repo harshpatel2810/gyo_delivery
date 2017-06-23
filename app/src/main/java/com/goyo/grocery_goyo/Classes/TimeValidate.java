@@ -1,10 +1,10 @@
-package com.goyo.grocery_goyo.TimeValidate;
+package com.goyo.grocery_goyo.Classes;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -45,7 +45,7 @@ public class TimeValidate
             date.setTimeZone(android.icu.util.TimeZone.getTimeZone("GMT+5:30"));
             String localTime = date.format(currentLocalTime);
             //Toast.makeText(cxt,localTime,Toast.LENGTH_LONG).show();
-            currentTime.setTime(date.parse(localTime));
+            currentTime.setTime(date.parse("10:30"));
             int a=Integer.valueOf(currentTime.get(Calendar.HOUR));
             int b=Integer.valueOf(fromTime.get(Calendar.HOUR));
             int c=Integer.valueOf(toTime.get(Calendar.HOUR));

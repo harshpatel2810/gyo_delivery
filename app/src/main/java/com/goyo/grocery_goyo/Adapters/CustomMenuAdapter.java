@@ -40,13 +40,13 @@ public class CustomMenuAdapter extends BaseAdapter {
     private static int totalAmount = 0;
     public static int totalAmountValidate;
     private int MinOrder;
-    public BottomNavigationView navigationView;
     CustomerBillDetails customerBillDetails;
     //public static ArrayList<CustomerBillDetails> customerBillDetailsList;
     //HashMap<String,Integer> positiveNumbers=new HashMap<String,Integer>();
     private final String PREF_BILL = "Bill Details";
     SharedPreferences settings, settings1;
     ArrayList<CustomerBillDetails> cc;
+
     public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, final String resturant_name) {
         context = activity;
         dataList = xyz;
@@ -59,24 +59,17 @@ public class CustomMenuAdapter extends BaseAdapter {
         //Fetching the current value of the total amount ordered by the customer
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings1.getInt("Total Amount", 0)));
         ResturantProfile.QTY.setText(String.valueOf(settings1.getInt("CurrentCart", 0)));
+        ResturantProfile.navigationView.setVisibility(View.GONE);
         //Getting Name of the Restaurants
         this.resturant_name = resturant_name;
         //customerBillDetailsList = new ArrayList<CustomerBillDetails>();
         //Created listener for checkout imageview so that it can intent to screen of bill
         //Since there is need of resturant id i have stored it in object of shared preference
         //and i am fetching it through same object of shared preference
-        if (global.resturantNames.contains(this.resturant_name)) {
-            //Code to to validate the wether the resturant name is already included in array list if availaible
-            //than it will not include it
-        } else
-        {
-            //Else it will include it in the array list
-            global.resturantNames.add(this.resturant_name);
-        }
         ResturantProfile.checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings)==true) {
+                if (CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings) == true) {
                     if (global.myCart == null) {
                         AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -93,8 +86,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                                 })
                                 .setIcon(R.drawable.ic_empty_cart)
                                 .show();
-                    }
-                    else if (totalAmountValidate < MinOrder) {
+                    } else if (totalAmountValidate < MinOrder) {
 
                         AlertDialog.Builder builder;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -102,7 +94,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                         } else {
                             builder = new AlertDialog.Builder(context);
                         }
-                           builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
+                        builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
                                 .setMessage("Unable to proceed please select more items..")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
@@ -111,17 +103,13 @@ public class CustomMenuAdapter extends BaseAdapter {
                                 })
                                 .setIcon(R.drawable.ic_empty_cart)
                                 .show();
-                    }
-                    else
-                    {
+                    } else {
                         Intent io = new Intent(context, CustomerBill.class);
 //                      io.putExtra("bill", (Serializable) customerBillDetailsList);
 //                      Toast.makeText(context,"Hello",Toast.LENGTH_LONG).show();
                         context.startActivity(io);
                     }
-                }
-                 else if(CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings)==false)
-                {
+                } else if (CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings) == false) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         builder = new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog_Alert);
@@ -142,17 +130,21 @@ public class CustomMenuAdapter extends BaseAdapter {
             }
         });
     }
+
     public int getCount() {
         return dataList.size();
     }
+
     @Override
     public Object getItem(int position) {
         return position;
     }
+
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //View rowView;
@@ -168,7 +160,6 @@ public class CustomMenuAdapter extends BaseAdapter {
             h1 = (Holder) convertView.getTag();
         }
         final MenuItems mtem = dataList.get(position);
-        navigationView = (BottomNavigationView) convertView.findViewById(R.id.btmNavCart);
         h1.btnAddQty.setTag(position);
         h1.btnsubQty.setTag(position);
         h1.uniqueKey = String.valueOf(position);
@@ -179,6 +170,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                 Integer currQty = mtem.getCartQty();
                 //AddToCart Method which will increment quantity on add button and will help to set it on the cart icon
                 //Checking for maximum quantity selected by user
+
                 if (mtem.getCartQty() >= 10) {
                     AlertDialog.Builder builder;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -202,6 +194,13 @@ public class CustomMenuAdapter extends BaseAdapter {
                     //Code to validate total Order value with minimum value if order value
                     //is less than minimum order value than the color will be red or else color wiil be
                     //green
+                    if (global.resturantNames.contains(resturant_name)) {
+                        //Code to to validate the wether the resturant name is already included in array list if availaible
+                        //than it will not include it
+                    } else {
+                        //Else it will include it in the array list
+                        global.resturantNames.add(resturant_name);
+                    }
                     AddToCart();
                     mtem.setCartQty(currQty + 1);
                     notifyDataSetChanged();
@@ -209,7 +208,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                     if (global.myCart == null) {
                         global.myCart = new HashMap<Integer, CustomerBillDetails>();
                     }
-                    if (global.myCart.containsKey(mtem.getItemId())) {
+                    else if (global.myCart.containsKey(mtem.getItemId())) {
 
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());
@@ -217,8 +216,14 @@ public class CustomMenuAdapter extends BaseAdapter {
                         customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
                         global.myCart.put(mtem.getItemId(), customerBillDetails);
                     }
+                    if(totalAmountValidate>0)
+                    {
+                        ResturantProfile.navigationView.setVisibility(View.VISIBLE);
+                    }
+
                     //Code for validating the Minimum Order of each and every resturant
                 }
+
             }
         });
         h1.btnsubQty.setTag(position + "");
@@ -247,14 +252,19 @@ public class CustomMenuAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                     if (global.myCart == null) {
                         global.myCart = new HashMap<Integer, CustomerBillDetails>();
-                     }
-                    if (global.myCart.containsKey(mtem.getItemId())) {
+                    }
+                    else if (global.myCart.containsKey(mtem.getItemId())) {
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());
 
                     } else {
                         customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
                         global.myCart.put(mtem.getItemId(), customerBillDetails);
+                    }
+
+                    if(totalAmount==0)
+                    {
+                        ResturantProfile.navigationView.setVisibility(View.GONE);
                     }
                 }
             }
@@ -283,6 +293,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         notifyDataSetChanged();
         return addTocart;
     }
+
     //Method to update the total bill of the user in the bottom Navigation View
     public Integer CalculateTotalPrice(int rate) {
         //Each time user will increment the quantity of 1 so the total amount will added in
@@ -329,6 +340,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         ResturantProfile.QTY.setText(String.valueOf(addTocart));
         return addTocart;
     }
+
     //Getting Total Amount of Bill According to Restaurant Wise
     //Approach to get the order of the restaurant
     /*public Integer FetchOrderAmount() {
@@ -348,30 +360,29 @@ public class CustomMenuAdapter extends BaseAdapter {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;
         private ImageButton btnAddQty, btnsubQty;
-        public Holder()
-        {
+
+        public Holder() {
 
         }
+
         public Holder(View item) {
             textItemName = (TextView) item.findViewById(R.id.txtMenuItem);
             textMenuPrice = (TextView) item.findViewById(R.id.txtMenuRate);
             textMenuDesc = (TextView) item.findViewById(R.id.txtMenuDesc);
             txtQty = (TextView) item.findViewById(R.id.txtRate);
-            btnAddQty=(ImageButton)item.findViewById(R.id.btnAddQty);
-            btnsubQty=(ImageButton)item.findViewById(R.id.btnSubQty);
+            btnAddQty = (ImageButton) item.findViewById(R.id.btnAddQty);
+            btnsubQty = (ImageButton) item.findViewById(R.id.btnSubQty);
         }
     }
-    public void ValidateRestaurantOpenClose()
-    {
-        boolean result=CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings);
-        if(result==true) {
+
+    public void ValidateRestaurantOpenClose() {
+        boolean result = CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings);
+        if (result == true) {
             ResturantProfile.txtRestaurantStatus.setText("Restaurant Open");
             ResturantProfile.txtRestaurantStatus.setTextColor(Color.GREEN);
             h1.btnAddQty.setEnabled(true);
             h1.btnsubQty.setEnabled(true);
-        }
-        else
-        {
+        } else {
             ResturantProfile.txtRestaurantStatus.setText("Restaurant Closed");
             ResturantProfile.txtRestaurantStatus.setTextColor(Color.RED);
             h1.btnAddQty.setEnabled(false);

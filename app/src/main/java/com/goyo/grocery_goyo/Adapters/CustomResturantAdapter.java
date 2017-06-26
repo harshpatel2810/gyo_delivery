@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static butterknife.ButterKnife.findById;
 
@@ -56,15 +57,15 @@ public class CustomResturantAdapter extends BaseAdapter {
         t1=new TimeValidate(context);
         am_pm=t1.GetAmPm();
         h1 = new Holder();
+        settings = context.getSharedPreferences("PREF_NAME", 0);
+
         //Created Listener of resturant list because resturant_id can be easily availaible from the webservice
         HomeActivity.resturant_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                txtResturant = (TextView) view.findViewById(R.id.txtResturantName);
-                settings = context.getSharedPreferences("PREF_NAME", 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
-                editor.putString("Restaurant_Name",x.get(position).restname);
                 MinOrder = (Double) x.get(position).min_order;
                 //Initializing totalAmount variable to zero every time on the click of restaurant
                 //to maintain seperate amount for validations..
@@ -79,25 +80,32 @@ public class CustomResturantAdapter extends BaseAdapter {
                     //Toast.makeText(context,restaurantTimings,Toast.LENGTH_LONG).show();
                 }
                 editor.commit();
+                Intent io = new Intent(context, ResturantProfile.class);
+                io.putExtra("resturantName", txtResturant.getText().toString());
+                editor.putString("Restaurant_Name",txtResturant.getText().toString());
                 if(x.get(position).restname.equals(settings.getString("Restaurant_Name",null)))
                 {
-                   CustomMenuAdapter.totalAmountValidate=CustomMenuAdapter.totalAmountValidate;
+                    CustomMenuAdapter.totalAmountValidate=CustomMenuAdapter.totalAmountValidate;
+                    Toast.makeText(context,String.valueOf(CustomMenuAdapter.totalAmountValidate),Toast.LENGTH_LONG).show();
+
                 }
                 else
                 {
                     CustomMenuAdapter.totalAmountValidate=0;
+                    Toast.makeText(context,String.valueOf(CustomMenuAdapter.totalAmountValidate),Toast.LENGTH_LONG).show();
+
                 }
-                Intent io = new Intent(context, ResturantProfile.class);
-                //CustomMenuAdapter.totalAmountValidate = 0;
-                io.putExtra("resturantName", txtResturant.getText().toString());
+                editor.commit();
                 context.startActivity(io);
             }
 
         });
     }
     public int getCount() {
+
         return x.size();
     }
+
     public class Holder {
         public
         ImageView imgDisplay;

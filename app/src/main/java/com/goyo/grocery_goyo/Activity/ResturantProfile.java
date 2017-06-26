@@ -2,6 +2,7 @@ package com.goyo.grocery_goyo.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ public class ResturantProfile extends AppCompatActivity {
     static public ImageView checkout;
     static Intent io;
     private int CART;
+    public static BottomNavigationView navigationView;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -57,6 +59,7 @@ public class ResturantProfile extends AppCompatActivity {
         //total Amount initialization
         QTY = (TextView) findViewById(R.id.textAddToCart);
         totalAmount = (TextView) findViewById(R.id.txtTotalAmount);
+        navigationView=(BottomNavigationView)findViewById(R.id.btmNavCart);
         io = getIntent();
         //initializing checkout button to proceed for bill
         checkout = (ImageView) findViewById(R.id.CheckOut);

@@ -76,7 +76,7 @@
             android:textSize="15dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="1"/>
+            android:text="0"/>
         <ImageButton
             android:layout_width="40dp"
             android:id="@+id/btnAddQty"

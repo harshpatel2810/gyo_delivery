@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#1d1919</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#778899</color>
+    <color name="dim_grey">#778899</color>
     <color name="grey">#D3D3D3</color>
     <color name="blue">#141492</color>
     <color name="darkgreen">#196F3D  </color>
@@ -15,4 +16,6 @@
     <color name="light_green">#a4c639</color>
     <color name="light_orange">#FFA500</color>
     <color name="light_white">#e5e5e5</color>
+    <color name="dark_blue">#19198C</color>
+    <color name="silver">#C0C0C0</color>
 </resources>

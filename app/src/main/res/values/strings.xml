@@ -33,4 +33,7 @@
     <string name="apply_filter">APPLY FILTERS</string>
     <string name="search_res"><font style="italics" size="15">Search restaurants....</font></string>
     <string name="select_address">Select Address For Delivery</string>
+    <string name="display_street_locality">Street/Locality(*)</string>
+    <string name="display_building_flat">Building/Flat Number(*)</string>
+    <string name="display_building_landmark">Landmark(*)</string>
 </resources>

@@ -28,11 +28,10 @@ import com.goyo.grocery_goyo.model.restaurantModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomResturantAdapter extends BaseAdapter {
     private final String PREF_NAME = "Resturant_id";
-    public static Double MinOrder;
+    public static Integer MinOrder;
     private String am_pm;
     Context context;
     Holder h1;
@@ -66,7 +65,7 @@ public class CustomResturantAdapter extends BaseAdapter {
                txtResturant = (TextView) view.findViewById(R.id.txtResturantName);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putInt("Resturant_id", resturant.restid);
-                MinOrder = (Double) x.get(position).min_order;
+                MinOrder = x.get(position).min_order;
                 //Initializing totalAmount variable to zero every time on the click of restaurant
                 //to maintain seperate amount for validations..
                 if(am_pm.equals("PM"))
@@ -86,14 +85,10 @@ public class CustomResturantAdapter extends BaseAdapter {
                 if(x.get(position).restname.equals(settings.getString("Restaurant_Name",null)))
                 {
                     CustomMenuAdapter.totalAmountValidate=CustomMenuAdapter.totalAmountValidate;
-                    Toast.makeText(context,String.valueOf(CustomMenuAdapter.totalAmountValidate),Toast.LENGTH_LONG).show();
-
                 }
                 else
                 {
                     CustomMenuAdapter.totalAmountValidate=0;
-                    Toast.makeText(context,String.valueOf(CustomMenuAdapter.totalAmountValidate),Toast.LENGTH_LONG).show();
-
                 }
                 editor.commit();
                 context.startActivity(io);
@@ -152,8 +147,8 @@ public class CustomResturantAdapter extends BaseAdapter {
         h1.txtRating.setText(x.get(position).getRating());
         h1.txtMinimumOrderValue.setText(String.valueOf("Minimum Order" + "  " + "₹" + x.get(position).getMin_order()));
         h1.txtDeliveryTime.setText("20");
-        h1.txtEvening.setText("Evening Time:" + resTimings.get(position).getO2() + "PM" + "  TO  " + resTimings.get(position).getC2() + "PM");
-        h1.txtMoriningTime.setText("Morning Time:" + resTimings.get(position).getO1() + "AM" + "  TO  " + resTimings.get(position).getC1() + "AM");
+        h1.txtEvening.setText(resTimings.get(position).getO2() + "PM" + "  TO  " + resTimings.get(position).getC2() + "PM");
+        h1.txtMoriningTime.setText(resTimings.get(position).getO1() + "AM" + "  TO  " + resTimings.get(position).getC1() + "AM");
         // GetRestaurantTimings(position);
         return convertView;
     }

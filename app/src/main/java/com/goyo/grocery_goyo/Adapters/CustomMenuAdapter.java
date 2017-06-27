@@ -46,7 +46,6 @@ public class CustomMenuAdapter extends BaseAdapter {
     private final String PREF_BILL = "Bill Details";
     SharedPreferences settings, settings1;
     ArrayList<CustomerBillDetails> cc;
-
     public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, final String resturant_name) {
         context = activity;
         dataList = xyz;
@@ -54,7 +53,7 @@ public class CustomMenuAdapter extends BaseAdapter {
         settings1 = context.getSharedPreferences("PREF_BILL", 0);
         resturant_id = settings.getInt("Resturant_id", 0);
         //Fetching Minimum Order Value According to the Resturant selection
-        MinOrder = CustomResturantAdapter.MinOrder.intValue();
+        MinOrder = CustomResturantAdapter.MinOrder;
         cc = new ArrayList<>();
         //Fetching the current value of the total amount ordered by the customer
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings1.getInt("Total Amount", 0)));
@@ -94,8 +93,8 @@ public class CustomMenuAdapter extends BaseAdapter {
                         } else {
                             builder = new AlertDialog.Builder(context);
                         }
-                        builder.setTitle("Minimum Amount not satisy for" + " " + resturant_name)
-                                .setMessage("Unable to proceed please select more items..")
+                        builder.setTitle("Unable to proceed..")
+                                .setMessage("Minimum Order Value"+" "+"₹"+MinOrder)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // continue with delete
@@ -117,7 +116,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                         builder = new AlertDialog.Builder(context);
                     }
                     builder.setTitle("Service Unavailable")
-                            .setMessage("Restaurant Close")
+                            .setMessage("Close")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // continue with delete
@@ -134,17 +133,14 @@ public class CustomMenuAdapter extends BaseAdapter {
     public int getCount() {
         return dataList.size();
     }
-
     @Override
     public Object getItem(int position) {
         return position;
     }
-
     @Override
     public long getItemId(int position) {
         return position;
     }
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //View rowView;
@@ -318,7 +314,6 @@ public class CustomMenuAdapter extends BaseAdapter {
         totalAmountValidate = totalAmountValidate - rate * 1;
         return totalAmountValidate;
     }
-
     public Integer DeductTotalPrice(int rate) {
         //Each time user will decrement the quantity of 1 so the total amount will be deducted in
         //the variable name totalAmount
@@ -360,7 +355,6 @@ public class CustomMenuAdapter extends BaseAdapter {
         private TextView textItemName, textMenuPrice, textMenuDesc, txtQty;
         private String uniqueKey;
         private ImageButton btnAddQty, btnsubQty;
-
         public Holder() {
 
         }
@@ -374,16 +368,15 @@ public class CustomMenuAdapter extends BaseAdapter {
             btnsubQty = (ImageButton) item.findViewById(R.id.btnSubQty);
         }
     }
-
     public void ValidateRestaurantOpenClose() {
         boolean result = CustomResturantAdapter.t1.checkTime(CustomResturantAdapter.restaurantTimings);
         if (result == true) {
-            ResturantProfile.txtRestaurantStatus.setText("Restaurant Open");
+            ResturantProfile.txtRestaurantStatus.setText("OPEN");
             ResturantProfile.txtRestaurantStatus.setTextColor(Color.GREEN);
             h1.btnAddQty.setEnabled(true);
             h1.btnsubQty.setEnabled(true);
         } else {
-            ResturantProfile.txtRestaurantStatus.setText("Restaurant Closed");
+            ResturantProfile.txtRestaurantStatus.setText("CLOSED");
             ResturantProfile.txtRestaurantStatus.setTextColor(Color.RED);
             h1.btnAddQty.setEnabled(false);
             h1.btnsubQty.setEnabled(false);

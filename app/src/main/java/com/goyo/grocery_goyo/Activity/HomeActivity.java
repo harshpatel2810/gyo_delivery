@@ -1,12 +1,17 @@
 package com.goyo.grocery_goyo.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,9 +39,10 @@ import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
-    private Button search;
+    private Button search,btn_refresh;
     private ImageView filterOption;
     public TextView txtLocation, txtLocDesc;
     private LinearLayout layout_location;
@@ -57,47 +63,67 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        addToCart=new AddToCart(this);
-        io = getIntent();
-        newAddress = SearchLocation.address;
-        appLocationService = new AppLocationService(this);
-        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         context = this;
-        filterOption = (ImageView) findViewById(R.id.imageFilter);
-        filterOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), FilterScreen.class));
-                overridePendingTransition(R.anim.enter, R.anim.exit);
-            }
-        });
-        etSearchRestaurants = (SearchView) findViewById(R.id.searchRestaurants);
-        global.resturantNames = new ArrayList<>();
-        resTimings = new ArrayList<RestaurantsTimings>();
-        settings = context.getSharedPreferences("PREF_BILL", 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("Total Amount", 0);
-        editor.putInt("CurrentCart", 0);
-        editor.commit();
-        resturant_list = (ListView) findViewById(R.id.list_display_resturants);
-        InitAppBar();
-        //Helps to set the details of user current location
-        if (appLocationService.getIsGPSTrackingEnabled()) {
-            if (newAddress == null) {
-                addressLine = String.valueOf(appLocationService.getLocality(this));
-                txtLocation.setText(appLocationService.getAddressLine(this));
-                txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
-            } else {
-                txtLocation.setText(io.getStringExtra("Area"));
-                txtLocDesc.setText(io.getStringExtra("AddressLine"));
-            }
-        } else {
-            appLocationService.showSettingsAlert();
-        }
-        getRestaurant();
-        etSearchRestaurants.setOnQueryTextListener(this);
-    }
+        if(haveNetworkConnection(HomeActivity.this)==false)
+        {
+           // showInternetAlertDialog(HomeActivity.this).show();
+            View view=getLayoutInflater().inflate(R.layout.layout_no_internet_connectvity,null);
+            setContentView(view);
+            Button btn=(Button)view.findViewById(R.id.button_refresh);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(haveNetworkConnection(context)==true)
+                    {
+                        startActivity(new Intent(context,HomeActivity.class));
+                    }
+                }
+            });
+         }
+        else
+        {
+            Toast.makeText(this,"Internet Connected.....",Toast.LENGTH_LONG).show();
+            addToCart=new AddToCart(this);
+            io = getIntent();
+            newAddress = SearchLocation.address;
+            appLocationService = new AppLocationService(this);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
+            filterOption = (ImageView) findViewById(R.id.imageFilter);
+            filterOption.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), FilterScreen.class));
+                    overridePendingTransition(R.anim.enter, R.anim.exit);
+                }
+            });
+            etSearchRestaurants = (SearchView) findViewById(R.id.searchRestaurants);
+            global.resturantNames = new ArrayList<>();
+            resTimings = new ArrayList<RestaurantsTimings>();
+            settings = context.getSharedPreferences("PREF_BILL", 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("Total Amount", 0);
+            editor.putInt("CurrentCart", 0);
+            editor.commit();
+            resturant_list = (ListView) findViewById(R.id.list_display_resturants);
+            InitAppBar();
+            //Helps to set the details of user current location
+            if (appLocationService.getIsGPSTrackingEnabled()) {
+                if (newAddress == null) {
+                    addressLine = String.valueOf(appLocationService.getLocality(this));
+                    txtLocation.setText(appLocationService.getAddressLine(this));
+                    txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
+                } else {
+                    txtLocation.setText(io.getStringExtra("Area"));
+                    txtLocDesc.setText(io.getStringExtra("AddressLine"));
+                }
+            } else {
+                appLocationService.showSettingsAlert();
+            }
+            getRestaurant();
+            etSearchRestaurants.setOnQueryTextListener(this);
+        }
+   }
     private void getRestaurant() {
         final JsonObject json = new JsonObject();
         json.addProperty("flag", "all");
@@ -150,7 +176,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         });
     }
     //Request to set permission runtime because of 6.0 and SecurityException Fatal Error
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+   /* public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 // If request is cancelled, the result arrays are empty.
@@ -167,12 +193,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             // permissions this app might request
         }
     }
-
+*/
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onQueryTextChange(String newText) {
         String text = newText;
@@ -181,5 +206,42 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     }
     //getRestaurantMaster
     //flag = 'all'
+    private  boolean haveNetworkConnection(Context context)
+    {
+        ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo=cm.getActiveNetworkInfo();
+        if(netinfo!=null && netinfo.isConnectedOrConnecting())
+        {
+            android.net.NetworkInfo wifi=cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile=cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if((mobile!=null && mobile.isConnectedOrConnecting()) || (wifi!=null && wifi.isConnectedOrConnecting()))
+            {
+              return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        return false;
+    }
+    private AlertDialog.Builder showInternetAlertDialog(Context c)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Application Requires Internet Connection....")
+                .setCancelable(false)
+                .setPositiveButton("Connect to Wifi or Mobile Internet", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                });
+              /*  .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        System.exit(1);
+                    }
+                });
+              */return builder;
+    }
 }
 

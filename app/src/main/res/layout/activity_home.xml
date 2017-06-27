@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.goyo.grocery_goyo.Activity.HomeActivity"
     android:weightSum="1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -54,7 +55,7 @@
             android:layout_marginRight="10dp"
             android:id="@+id/imageFilter"
             android:layout_gravity="center"
-            android:src="@drawable/ic_action_name"
+            android:src="@drawable/ic_filter_icon"
             android:visibility="visible">
         </ImageView>
       </LinearLayout>

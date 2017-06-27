@@ -27,56 +27,8 @@
             android:layout_weight="1"
             android:layout_below="@+id/imgResturantDisplay"
             android:paddingLeft="10dp">
-          <TextView
-            android:id="@+id/txtSetMinimumPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/imgResturantDisplay"
-            android:layout_below="@+id/imgResturantDisplay"
-            android:layout_marginStart="2dp"
-            android:layout_weight="1"
-              android:paddingTop="0dp"
-              android:layout_marginTop="5dp"
-              android:textColor="@color/maroon_dark"
-            android:textAlignment="viewStart"
-            android:text="Minimum Order:₹100"
-            android:textSize="10dp" />
+
         </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="-0dp"
-                android:layout_marginTop="0dp"
-                android:layout_weight="0.95"
-                android:paddingLeft="10dp">
-                <TextView
-                    android:id="@+id/txtMorningTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/imgResturantDisplay"
-                    android:layout_below="@+id/imgResturantDisplay"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:textAlignment="viewStart"
-                    android:text="Morning Time:"
-                    android:textColor="@color/green"
-                    android:textSize="10dp" />
-                <TextView
-                    android:id="@+id/txtEveningTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/imgResturantDisplay"
-                    android:layout_below="@+id/imgResturantDisplay"
-                    android:layout_marginStart="2dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/green"
-                    android:textAlignment="viewStart"
-                    android:text="Evening Time:"
-                    android:paddingTop="0dp"
-                    android:layout_marginTop="2dp"
-                    android:textSize="10dp" />
-            </LinearLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/txtResturantName"
@@ -84,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="35dp"
             android:layout_toEndOf="@+id/imgResturantDisplay"
             android:fontFamily="Times New Roman"
             android:text="Punjab Grill"
@@ -125,6 +77,7 @@
             android:drawableLeft="@drawable/ic_rate_action"
             android:gravity="fill"
             android:layout_weight="1"
+            android:textSize="10dp"
             android:text="3.5" />
         <!--<LinearLayout
             android:layout_width="wrap_content"
@@ -142,10 +95,65 @@
             android:layout_marginLeft="10dp"
             android:paddingLeft="70dp"
             android:text="22 mins"
+            android:textSize="10dp"
             android:layout_weight="1"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/txtExpenseCategory"
             android:gravity="fill"
-             />
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="5"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/imgResturantDisplay"
+             >
+            <TextView
+                android:id="@+id/txtSetMinimumPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imgResturantDisplay"
+                android:layout_below="@+id/imgResturantDisplay"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:paddingTop="0dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/maroon_dark"
+                android:textAlignment="viewStart"
+                android:text="Minimum Order:₹100"
+                android:textSize="10dp" />
+
+</LinearLayout>
+
+        <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+            android:orientation="vertical"
+    android:layout_below="@+id/txtDeliveryTime"
+            android:layout_marginStart="15dp"
+     android:layout_toRightOf="@id/imgResturantDisplay"
+    >
+        <TextView
+            android:id="@+id/txtMorningTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:textAlignment="viewStart"
+            android:text="Morning Time:"
+            android:textColor="@color/green"
+            android:textSize="10dp" />
+        <TextView
+            android:id="@+id/txtEveningTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/green"
+            android:textAlignment="viewStart"
+            android:text="Evening Time:"
+            android:paddingTop="0dp"
+            android:textSize="10dp" />
+    </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

@@ -51,7 +51,7 @@ public class restaurantModel {
     public String resttype;
 
    @SerializedName("minordamt")
-    public Double min_order;
+    public Integer min_order;
     public Integer getRestid() {
         return restid;
     }
@@ -124,10 +124,10 @@ public class restaurantModel {
         this.resttype = resttype;
     }
 
-    public Double getMin_order() {
+    public Integer getMin_order() {
         return min_order;
     }
-    public void setMin_order(Double min_order) {
+    public void setMin_order(Integer min_order) {
         this.min_order = min_order;
     }
 

@@ -39,7 +39,6 @@ import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
     private Button search,btn_refresh;
@@ -69,7 +68,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
            // showInternetAlertDialog(HomeActivity.this).show();
             View view=getLayoutInflater().inflate(R.layout.layout_no_internet_connectvity,null);
             setContentView(view);
-            Button btn=(Button)view.findViewById(R.id.button_refresh);
+            Button btn=(Button)view.findViewById(R.id.btn_refresh);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,13 +81,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
          }
         else
         {
-            Toast.makeText(this,"Internet Connected.....",Toast.LENGTH_LONG).show();
             addToCart=new AddToCart(this);
             io = getIntent();
             newAddress = SearchLocation.address;
             appLocationService = new AppLocationService(this);
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
             filterOption = (ImageView) findViewById(R.id.imageFilter);
             filterOption.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -132,7 +129,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         // do stuff with the result or error

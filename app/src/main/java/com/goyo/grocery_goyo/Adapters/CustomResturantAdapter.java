@@ -28,7 +28,6 @@ import com.goyo.grocery_goyo.model.restaurantModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class CustomResturantAdapter extends BaseAdapter {
     private final String PREF_NAME = "Resturant_id";
     public static Integer MinOrder;

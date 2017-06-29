@@ -38,20 +38,39 @@
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:orientation="vertical"
+         android:orientation="horizontal"
          android:paddingLeft="10dp"
          android:id="@+id/select_address_type"
          android:layout_marginTop="10dp"
          android:layout_below="@+id/viewAddress">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Select Address Type"
-             android:textSize="12dp"/>
-         <Spinner
-             android:id="@+id/spinner"
+         <RadioGroup
+             android:id="@+id/radioSex"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content" />
+             android:orientation="horizontal"
+             android:layout_height="wrap_content" >
+             <RadioButton
+                 android:id="@+id/radioHome"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/Home"
+                 android:textAlignment="center"
+                 android:layout_weight="1"
+                 android:checked="true" />
+             <RadioButton
+                 android:id="@+id/radioWork"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:textAlignment="center"
+                 android:text="@string/Work" />
+             <RadioButton
+                 android:id="@+id/radioOther"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:textAlignment="center"
+                 android:text="@string/Other" />
+         </RadioGroup>
      </LinearLayout>
          <View
              android:layout_width="match_parent"
@@ -70,12 +89,12 @@
              android:orientation="horizontal">
              <EditText
                  android:id="@+id/txtAddressStreet"
-                 android:layout_width="215dp"
+                 android:layout_width="210dp"
                  android:layout_height="match_parent"
                  android:paddingLeft="10dp"
                  android:layout_weight="1"
                  android:editable="false"
-                 android:maxLines="2"
+                 android:maxLines="1"
                  android:textColor="@color/slate_grey"
                  android:textSize="12dp"
                  android:backgroundTint="@color/white"
@@ -85,11 +104,12 @@
              <ImageButton
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
+                 android:id="@+id/btnnEditStreet"
                  android:layout_gravity="right"
                  android:src="@drawable/ic_update_icon"
                  android:background="@color/white"
                  android:layout_marginRight="10dp"
-                 android:layout_weight="1"
+                 android:layout_weight="0.3"
                 />
          </FrameLayout>
          <View
@@ -112,8 +132,9 @@
         android:paddingLeft="10dp"
         android:textColor="@color/slate_grey"
         android:textSize="12dp"
+        android:id="@+id/etFlatBuilding"
         android:backgroundTint="@color/white"
-        android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
+        android:inputType="textNoSuggestions|textCapSentences|textMultiLine"
         android:hint="@string/display_building_flat"
         />
       </LinearLayout>
@@ -137,12 +158,12 @@
                  android:paddingLeft="10dp"
                  android:textColor="@color/slate_grey"
                  android:textSize="12dp"
+                 android:id="@+id/etLandmark"
                  android:backgroundTint="@color/white"
-                 android:inputType="textNoSuggestions|textMultiLine|textCapSentences"
+                 android:inputType="textNoSuggestions|textCapSentences"
                  android:hint="@string/display_building_landmark"
                  />
          </LinearLayout>
-
      </RelativeLayout>
      <!--<TextView
          android:layout_width="wrap_content"

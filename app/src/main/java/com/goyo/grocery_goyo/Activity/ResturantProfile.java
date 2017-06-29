@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Adapters.CustomMenuAdapter;
@@ -121,9 +122,9 @@ public class ResturantProfile extends AppCompatActivity {
         TextView txtDisplayCart;
         private static final String ARG_SECTION_NUMBER = "section_number";
         private int mpage;
-
         public PlaceholderFragment() {
-        }
+
+         }
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -191,6 +192,7 @@ public class ResturantProfile extends AppCompatActivity {
                     item.add(mi);
                     break;
                 case 3:
+                    navigationView.setVisibility(1);
                     mi = new MenuItems(15, "Spicy Raita 15", 250, "It will contain curd with some spices");
                     item.add(mi);
                     mi = new MenuItems(16, "Vegetable Salad 16", 190, "Mix Vegetable salad");

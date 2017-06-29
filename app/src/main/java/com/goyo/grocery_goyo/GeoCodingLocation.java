@@ -80,5 +80,4 @@ public class GeoCodingLocation
        };
        thread.start();
     }
-
 }

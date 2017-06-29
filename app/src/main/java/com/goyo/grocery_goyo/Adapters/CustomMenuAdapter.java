@@ -164,7 +164,7 @@ public class CustomMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Integer currQty = mtem.getCartQty();
-                //AddToCart Method which will increment quantity on add button and will help to set it on the cart icon
+                //UserDbHelper Method which will increment quantity on add button and will help to set it on the cart icon
                 //Checking for maximum quantity selected by user
 
                 if (mtem.getCartQty() >= 10) {

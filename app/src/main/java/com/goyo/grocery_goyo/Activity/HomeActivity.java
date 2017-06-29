@@ -3,12 +3,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -21,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,7 +26,7 @@ import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Adapters.CustomResturantAdapter;
 import com.goyo.grocery_goyo.AppLocationService;
 import com.goyo.grocery_goyo.Global.global;
-import com.goyo.grocery_goyo.LocalDB.AddToCart;
+import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
 import com.goyo.grocery_goyo.SearchLocation;
 import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
@@ -57,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     List<RestaurantsTimings> resTimings;
     public String c1, c2, o1, o2;
     Intent io;
-    AddToCart addToCart;
+    UserDbHelper userDbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
          }
         else
         {
-            addToCart=new AddToCart(this);
+            userDbHelper =new UserDbHelper(this);
             io = getIntent();
             newAddress = SearchLocation.address;
             appLocationService = new AppLocationService(this);

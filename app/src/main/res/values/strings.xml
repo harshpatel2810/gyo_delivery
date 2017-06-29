@@ -39,5 +39,8 @@
     <string name="button_refresh">Refresh</string>
     <string name="no_internet">No Internet Connection....</string>
     <string name="address">Address</string>
+    <string name="Home">Home</string>
+    <string name="Work">Work</string>
+    <string name="Other">Other</string>
 
 </resources>

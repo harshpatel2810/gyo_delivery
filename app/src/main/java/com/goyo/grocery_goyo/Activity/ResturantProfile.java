@@ -96,7 +96,6 @@ public class ResturantProfile extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     {
 
     }
@@ -148,8 +147,6 @@ public class ResturantProfile extends AppCompatActivity {
             return rootView;
 
         }
-
-
         private void fillData(View rootView) {
 
             ArrayList<MenuItems> items = GetMenuList();
@@ -218,7 +215,6 @@ public class ResturantProfile extends AppCompatActivity {
             return item;
         }
     }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.

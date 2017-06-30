@@ -44,16 +44,17 @@
          android:layout_marginTop="10dp"
          android:layout_below="@+id/viewAddress">
          <RadioGroup
-             android:id="@+id/radioSex"
+             android:id="@+id/radioAddressType"
              android:layout_width="match_parent"
              android:orientation="horizontal"
+
              android:layout_height="wrap_content" >
              <RadioButton
                  android:id="@+id/radioHome"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:text="@string/Home"
-                 android:textAlignment="center"
+                 android:textAlignment="viewStart"
                  android:layout_weight="1"
                  android:checked="true" />
              <RadioButton
@@ -61,15 +62,9 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_weight="1"
-                 android:textAlignment="center"
+                 android:textAlignment="textStart"
                  android:text="@string/Work" />
-             <RadioButton
-                 android:id="@+id/radioOther"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"
-                 android:textAlignment="center"
-                 android:text="@string/Other" />
+
          </RadioGroup>
      </LinearLayout>
          <View

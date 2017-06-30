@@ -1,5 +1,6 @@
 package com.goyo.grocery_goyo.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.Contacts;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.goyo.grocery.R;
@@ -24,15 +27,19 @@ public class Pop extends AppCompatActivity{
      @BindView(R.id.etLandmark) EditText etLandmark;
      @BindView(R.id.btnnEditStreet) ImageButton btnEditStreet;
      @BindView(R.id.btnSaveAddress)  Button btnSaveAddress;
+     @BindView(R.id.radioAddressType) RadioGroup radioAddressType;
      DisplayMetrics dm;
      AppLocationService appLocationService;
-    Context context=this;
-    UserDbHelper userDbHelper;
-    SQLiteDatabase sqLiteDatabase;
+     Context context=this;
+     UserDbHelper userDbHelper;
+     SQLiteDatabase sqLiteDatabase;
+     private  StringBuffer useraddress;
+     private String addressType;
      @Override
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.layout_delivery_address);
+         useraddress=new StringBuffer();
          ButterKnife.bind(this);
          appLocationService=new AppLocationService(this);
          dm=new DisplayMetrics();
@@ -67,10 +74,28 @@ public class Pop extends AppCompatActivity{
                }
                else
                {
+                   final String addressType = ((RadioButton)findViewById(radioAddressType.getCheckedRadioButtonId())).getText().toString();
+                   useraddress.setLength(0);
+                   useraddress.append(etFlatName.getText().toString());
+                   useraddress.append(" "+ettxtAddressStreet.getText().toString());
+                   useraddress.append(" "+etLandmark.getText().toString());
+                   useraddress.append(" "+appLocationService.getLocality(getBaseContext()).toString());
                    userDbHelper=new UserDbHelper(context);
                    sqLiteDatabase=userDbHelper.getWritableDatabase();
-                   userDbHelper.addAddressDetails("101","301,Masuri park flats usmanpura Ahmedabad-13","Home",sqLiteDatabase);
+                   //userDbHelper.DeleteDetails(sqLiteDatabase);
+                   userDbHelper.addAddressDetails(HomeActivity.unique_id,useraddress.toString(),addressType,sqLiteDatabase);
                    Toast.makeText(getBaseContext(),"Data Saved Successfully",Toast.LENGTH_LONG).show();
+                   Cursor re=userDbHelper.GetAddressDetails(sqLiteDatabase);
+                   if(re.getCount()==0)
+                   {
+                       return;
+                   }
+                   StringBuffer stringBuffer=new StringBuffer();
+                   while (re.moveToNext())
+                   {
+                       stringBuffer.append("Delivery Address"+re.getString(1));
+                   }
+                   Toast.makeText(getBaseContext(),stringBuffer,Toast.LENGTH_LONG).show();
                    userDbHelper.close();
                }
              }

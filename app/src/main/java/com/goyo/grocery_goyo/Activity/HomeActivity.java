@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -35,8 +36,10 @@ import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     public static ListView resturant_list;
+    public static String unique_id;
     private Button search,btn_refresh;
     private ImageView filterOption;
     public TextView txtLocation, txtLocDesc;
@@ -58,6 +61,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        unique_id=UUID.randomUUID().toString().replace("-","");
         context = this;
         if(haveNetworkConnection(HomeActivity.this)==false)
         {

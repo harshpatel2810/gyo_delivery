@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/goyologo500"
@@ -19,9 +20,11 @@
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAXJbhK_apLxdfAqe3kvcW0LpVppuEehXQ" />
+
         <activity
             android:name="com.goyo.grocery_goyo.Activity.HomeActivity"
             android:screenOrientation="portrait">
@@ -42,14 +45,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.goyo.grocery_goyo.Activity.CustomerBill"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="com.goyo.grocery_goyo.Activity.FilterScreen"
             android:screenOrientation="portrait" />
-        <activity android:name="com.goyo.grocery_goyo.Activity.Pop"
-            android:theme="@style/AppTheme.CustomTheme"
-        >
-        </activity>
+        <activity
+            android:name="com.goyo.grocery_goyo.Activity.Pop"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
     </application>
+
 </manifest>

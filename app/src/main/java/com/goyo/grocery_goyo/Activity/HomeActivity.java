@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
     public String c1, c2, o1, o2;
     Intent io;
     UserDbHelper userDbHelper;
+    SQLiteDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         else
         {
             userDbHelper =new UserDbHelper(this);
+            db=userDbHelper.getWritableDatabase();
+            userDbHelper.DeleteDetails(db);
             io = getIntent();
             newAddress = SearchLocation.address;
             appLocationService = new AppLocationService(this);

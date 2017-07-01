@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Activity.CustomerBill;
+import com.goyo.grocery_goyo.Activity.HomeActivity;
+import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
 import com.goyo.grocery_goyo.model.CustomerBillDetails;
 import com.goyo.grocery_goyo.Global.global;
 import com.goyo.grocery_goyo.model.MenuItems;
@@ -46,6 +49,8 @@ public class CustomMenuAdapter extends BaseAdapter {
     private final String PREF_BILL = "Bill Details";
     SharedPreferences settings, settings1;
     ArrayList<CustomerBillDetails> cc;
+    UserDbHelper userDbHelper;
+    SQLiteDatabase sqLiteDatabase;
     public CustomMenuAdapter(Context activity, final ArrayList<MenuItems> xyz, final String resturant_name) {
         context = activity;
         dataList = xyz;
@@ -55,6 +60,8 @@ public class CustomMenuAdapter extends BaseAdapter {
         //Fetching Minimum Order Value According to the Resturant selection
         MinOrder = CustomResturantAdapter.MinOrder;
         cc = new ArrayList<>();
+        userDbHelper=new UserDbHelper(context);
+        sqLiteDatabase=userDbHelper.getWritableDatabase();
         //Fetching the current value of the total amount ordered by the customer
         ResturantProfile.totalAmount.setText("₹" + String.valueOf(settings1.getInt("Total Amount", 0)));
         ResturantProfile.QTY.setText(String.valueOf(settings1.getInt("CurrentCart", 0)));
@@ -211,6 +218,7 @@ public class CustomMenuAdapter extends BaseAdapter {
                     } else {
                         customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
                         global.myCart.put(mtem.getItemId(), customerBillDetails);
+                        userDbHelper.addCartItems(HomeActivity.unique_id,resturant_id,resturant_name,customerBillDetails.getItemId(),customerBillDetails.getItem_name(),customerBillDetails.getQuantity(),customerBillDetails.getTotalAmount(),sqLiteDatabase);
                     }
                     if(totalAmountValidate>0)
                     {

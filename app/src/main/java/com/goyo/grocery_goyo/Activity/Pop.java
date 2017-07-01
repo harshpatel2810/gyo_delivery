@@ -82,7 +82,6 @@ public class Pop extends AppCompatActivity{
                    useraddress.append(" "+appLocationService.getLocality(getBaseContext()).toString());
                    userDbHelper=new UserDbHelper(context);
                    sqLiteDatabase=userDbHelper.getWritableDatabase();
-                   //userDbHelper.DeleteDetails(sqLiteDatabase);
                    userDbHelper.addAddressDetails(HomeActivity.unique_id,useraddress.toString(),addressType,sqLiteDatabase);
                    Toast.makeText(getBaseContext(),"Data Saved Successfully",Toast.LENGTH_LONG).show();
                    Cursor re=userDbHelper.GetAddressDetails(sqLiteDatabase);
@@ -93,9 +92,11 @@ public class Pop extends AppCompatActivity{
                    StringBuffer stringBuffer=new StringBuffer();
                    while (re.moveToNext())
                    {
+                       stringBuffer.setLength(0);
                        stringBuffer.append("Delivery Address"+re.getString(1));
+                       Toast.makeText(context,stringBuffer.toString(),Toast.LENGTH_LONG).show();
+
                    }
-                   Toast.makeText(getBaseContext(),stringBuffer,Toast.LENGTH_LONG).show();
                    userDbHelper.close();
                }
              }

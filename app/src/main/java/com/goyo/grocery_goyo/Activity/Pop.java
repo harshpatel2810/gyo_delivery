@@ -95,7 +95,6 @@ public class Pop extends AppCompatActivity{
                        stringBuffer.setLength(0);
                        stringBuffer.append("Delivery Address"+re.getString(1));
                        Toast.makeText(context,stringBuffer.toString(),Toast.LENGTH_LONG).show();
-
                    }
                    userDbHelper.close();
                }

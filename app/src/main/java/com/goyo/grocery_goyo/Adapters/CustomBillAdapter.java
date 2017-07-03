@@ -1,9 +1,13 @@
 package com.goyo.grocery_goyo.Adapters;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
 
 import com.goyo.grocery.R;
@@ -12,9 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.goyo.grocery_goyo.Activity.CustomerBill;
+import com.goyo.grocery_goyo.LocalDB.UserContract;
+import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
 import com.vstechlab.easyfonts.EasyFonts;
 
-public class CustomBillAdapter extends BaseExpandableListAdapter {
+public class CustomBillAdapter extends BaseExpandableListAdapter{
     Context context;
     HoldGroup hg = null;
     HoldChild hc = null;
@@ -24,6 +30,8 @@ public class CustomBillAdapter extends BaseExpandableListAdapter {
     HashMap<String, List<Double>> totalRates;
     List<Integer> quantityTotal;
     List<Double> sumAmount;
+    UserDbHelper userDbHelper;
+    SQLiteDatabase sqLiteDatabase;
     public CustomBillAdapter(Context context, List<String> resturantNames, HashMap<String, List<String>> itemNames, HashMap<String, List<Integer>> totalQuantity, HashMap<String, List<Double>> totalRates) {
         this.context = context;
         this.itemNames = itemNames;
@@ -32,6 +40,9 @@ public class CustomBillAdapter extends BaseExpandableListAdapter {
         this.totalRates = totalRates;
         quantityTotal = CustomerBill.sumQuantity;
         sumAmount=CustomerBill.sumAmount;
+        userDbHelper=new UserDbHelper(context);
+        sqLiteDatabase=userDbHelper.getWritableDatabase();
+
     }
     @Override
     public int getGroupCount() {
@@ -96,7 +107,9 @@ public class CustomBillAdapter extends BaseExpandableListAdapter {
         }
 
         final String res = resturantNames.get(groupPosition);
+        //Cursor re=userDbHelper.GetRestuarantDetails(sqLiteDatabase);
         hg.txtResturantName.setText(res);
+        userDbHelper.close();
         hg.txtItemCount.setText("Items:"+String.valueOf(quantityTotal.get(groupPosition)));
         hg.txtAmount.setText("Amount"+" "+"₹"+String.valueOf(sumAmount.get(groupPosition)));
         return convertView;
@@ -120,6 +133,7 @@ public class CustomBillAdapter extends BaseExpandableListAdapter {
         hc.txtBillItemRate.setText("₹" + rates);
         return convertView;
     }
+
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {

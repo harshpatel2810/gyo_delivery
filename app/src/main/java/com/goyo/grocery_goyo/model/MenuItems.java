@@ -44,13 +44,13 @@ public class MenuItems {
         this.itemName = itemName;
         Rate = rate;
     }
+    private Integer cartQty = 0;
     public Integer getCartQty() {
         return cartQty;
     }
     public void setCartQty(Integer cartQty) {
         this.cartQty = cartQty;
     }
-    private Integer cartQty = 0;
     public MenuItems()
     {
     }

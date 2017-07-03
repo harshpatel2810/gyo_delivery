@@ -63,12 +63,20 @@ public class UserDbHelper extends SQLiteOpenHelper {
         cn.put(UserContract.CartDetails.RES_NAME,res_name);
         cn.put(UserContract.CartDetails.ITEM_ID,item_id);
         cn.put(UserContract.CartDetails.ITEM_NAME,item_name);
+        cn.put(UserContract.CartDetails.ITEM_QTY,qty);
         cn.put(UserContract.CartDetails.ITEM_PRICE,price);
         db.insert(UserContract.CartDetails.TABLE_NAME,null,cn);
     }
     public Cursor GetAddressDetails(SQLiteDatabase db)
     {
         String query="SELECT * FROM "+UserContract.AddressDetails.TABLE_NAME+" WHERE "+UserContract.AddressDetails.USER_ID+" ='"+HomeActivity.unique_id+"'";
+        db=this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(query,null);
+        return cursor;
+    }
+    public Cursor GetRestuarantDetails(SQLiteDatabase db)
+    {
+        String query="SELECT DISTINCT RES_NAME FROM "+UserContract.CartDetails.TABLE_NAME;
         db=this.getReadableDatabase();
         Cursor cursor=db.rawQuery(query,null);
         return cursor;

@@ -1,5 +1,6 @@
 package com.goyo.grocery_goyo.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,10 +9,12 @@ import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.Adapters.CustomBillAdapter;
 import com.goyo.grocery_goyo.Global.global;
+import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
 import com.goyo.grocery_goyo.model.CustomerBillDetails;
 import com.vstechlab.easyfonts.EasyFonts;
 
@@ -28,6 +31,8 @@ public class CustomerBill extends AppCompatActivity {
     HashMap<String, List<Integer>> quantity;
     HashMap<String, List<Double>> totalRates;
     //Array List to store item names of each and every restaurant wise
+    UserDbHelper userDbHelper;
+    SQLiteDatabase sqLiteDatabase;
     private List<String> nowShowing;
     private List<Integer> totalQuantity;
     private List<Double> Rates;
@@ -39,6 +44,8 @@ public class CustomerBill extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_bill);
+        userDbHelper=new UserDbHelper(this);
+        sqLiteDatabase=userDbHelper.getWritableDatabase();
         Intent io = getIntent();
         itemNames = new HashMap<String, List<String>>();
         quantity = new HashMap<String, List<Integer>>();
@@ -52,6 +59,12 @@ public class CustomerBill extends AppCompatActivity {
         for (Map.Entry<Integer, CustomerBillDetails> entry : global.myCart.entrySet()) {
             cc.add(entry.getValue());
             //System.out.println(entry.getKey() + "/" + entry.getValue());
+        }
+        //Inserting data into the local db selected by user from the cart
+        for(int i=0;i<cc.size();i++)
+        {
+            userDbHelper.addCartItems(HomeActivity.unique_id,cc.get(i).getResturant_id(),cc.get(i).getResturant_name(),cc.get(i).getItemId(),cc.get(i).getItem_name(),cc.get(i).getQuantity(),cc.get(i).getRate()*cc.get(i).getQuantity(),sqLiteDatabase);
+            Toast.makeText(this,"Item Inserted in Database",Toast.LENGTH_LONG).show();
         }
         //Code to seperate each and every item according to resturant wise purchased by the customer
         for (int i = 0; i < global.resturantNames.size(); i++) {
@@ -85,7 +98,6 @@ public class CustomerBill extends AppCompatActivity {
             public void onClick(View v) {
                       //showPopUp(CustomerBill.this, p);
                       startActivity(new Intent(CustomerBill.this,Pop.class));
-
             }
         });
         //Setting the total amount of the bill in the final cart

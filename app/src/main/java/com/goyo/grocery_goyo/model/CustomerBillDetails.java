@@ -85,5 +85,4 @@ public class CustomerBillDetails {
         ItemId = itemId;
     }
 
-
 }

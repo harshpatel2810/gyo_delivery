@@ -68,7 +68,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         if(haveNetworkConnection(HomeActivity.this)==false)
         {
            // showInternetAlertDialog(HomeActivity.this).show();
-            View view=getLayoutInflater().inflate(R.layout.layout_no_internet_connectvity,null);
+            View view=getLayoutInflater().inflate(R.layout.layout_no_internet_resource_1,null);
             setContentView(view);
             Button btn=(Button)view.findViewById(R.id.btn_refresh);
             btn.setOnClickListener(new View.OnClickListener() {

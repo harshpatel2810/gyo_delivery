@@ -38,6 +38,7 @@ public class CustomMenuAdapter extends BaseAdapter {
     ImageButton addQty, subQty;
     ImageView checkout;
     private int resturant_id;
+
     private String resturant_name;
     Holder h1 = null;
     private static int totalAmount = 0;
@@ -215,19 +216,22 @@ public class CustomMenuAdapter extends BaseAdapter {
 
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());
-                    } else {
-                        customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
-                        global.myCart.put(mtem.getItemId(), customerBillDetails);
-                        userDbHelper.addCartItems(HomeActivity.unique_id,resturant_id,resturant_name,customerBillDetails.getItemId(),customerBillDetails.getItem_name(),customerBillDetails.getQuantity(),customerBillDetails.getTotalAmount(),sqLiteDatabase);
-                    }
+
+
+                    } else
+                        {
+                            customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
+                            global.myCart.put(mtem.getItemId(), customerBillDetails);
+                            //userDbHelper.addCartItems(HomeActivity.unique_id,resturant_id,resturant_name,mtem.getItemId(),mtem.getItemName(),AddToCart(),customerBillDetails.getRate()*customerBillDetails.getQuantity(),sqLiteDatabase);
+
+                        }
                     if(totalAmountValidate>0)
                     {
                         ResturantProfile.navigationView.setVisibility(View.VISIBLE);
                     }
-
                     //Code for validating the Minimum Order of each and every resturant
-                }
 
+                }
             }
         });
         h1.btnsubQty.setTag(position + "");
@@ -260,12 +264,10 @@ public class CustomMenuAdapter extends BaseAdapter {
                     else if (global.myCart.containsKey(mtem.getItemId())) {
                         customerBillDetails = global.myCart.get(mtem.getItemId());
                         customerBillDetails.setQuantity(mtem.getCartQty());
-
                     } else {
                         customerBillDetails = new CustomerBillDetails(mtem.getItemId(), resturant_id, resturant_name, mtem.getItemName(), mtem.getCartQty(), mtem.getRate(), totalAmount);
                         global.myCart.put(mtem.getItemId(), customerBillDetails);
                     }
-
                     if(totalAmount==0)
                     {
                         ResturantProfile.navigationView.setVisibility(View.GONE);

@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         {
            // showInternetAlertDialog(HomeActivity.this).show();
             View view=getLayoutInflater().inflate(R.layout.layout_no_internet_resource_1,null);
+
             setContentView(view);
             Button btn=(Button)view.findViewById(R.id.btn_refresh);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             userDbHelper =new UserDbHelper(this);
             db=userDbHelper.getWritableDatabase();
             userDbHelper.DeleteDetails(db);
+            userDbHelper.DeleteCartDetails(db);
             io = getIntent();
             newAddress = SearchLocation.address;
             appLocationService = new AppLocationService(this);

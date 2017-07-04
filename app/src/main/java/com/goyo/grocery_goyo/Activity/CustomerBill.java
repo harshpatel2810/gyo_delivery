@@ -64,7 +64,6 @@ public class CustomerBill extends AppCompatActivity {
         for(int i=0;i<cc.size();i++)
         {
             userDbHelper.addCartItems(HomeActivity.unique_id,cc.get(i).getResturant_id(),cc.get(i).getResturant_name(),cc.get(i).getItemId(),cc.get(i).getItem_name(),cc.get(i).getQuantity(),cc.get(i).getRate()*cc.get(i).getQuantity(),sqLiteDatabase);
-            Toast.makeText(this,"Item Inserted in Database",Toast.LENGTH_LONG).show();
         }
         //Code to seperate each and every item according to resturant wise purchased by the customer
         for (int i = 0; i < global.resturantNames.size(); i++) {

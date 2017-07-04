@@ -52,7 +52,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.goyo.grocery_goyo.Activity.Pop"
-            android:theme="@style/AppTheme.CustomTheme"></activity>
+            android:theme="@style/AppTheme.CustomTheme" />
     </application>
 
 </manifest>

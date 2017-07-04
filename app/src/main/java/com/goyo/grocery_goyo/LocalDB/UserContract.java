@@ -23,6 +23,5 @@ public class UserContract {
         public static final String ITEM_QTY="ITEM_QTY";
         public static final String ITEM_PRICE="ITEM_PRICE";
         public static final String TABLE_NAME="Cart_Details";
-
     }
 }

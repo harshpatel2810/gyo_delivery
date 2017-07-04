@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorTreeAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.goyo.grocery.R;
 
@@ -19,7 +20,6 @@ import com.goyo.grocery_goyo.Activity.CustomerBill;
 import com.goyo.grocery_goyo.LocalDB.UserContract;
 import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
 import com.vstechlab.easyfonts.EasyFonts;
-
 public class CustomBillAdapter extends BaseExpandableListAdapter{
     Context context;
     HoldGroup hg = null;
@@ -32,6 +32,8 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
     List<Double> sumAmount;
     UserDbHelper userDbHelper;
     SQLiteDatabase sqLiteDatabase;
+    Cursor result;
+    GroupDetails groupDetails;
     public CustomBillAdapter(Context context, List<String> resturantNames, HashMap<String, List<String>> itemNames, HashMap<String, List<Integer>> totalQuantity, HashMap<String, List<Double>> totalRates) {
         this.context = context;
         this.itemNames = itemNames;
@@ -42,11 +44,12 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
         sumAmount=CustomerBill.sumAmount;
         userDbHelper=new UserDbHelper(context);
         sqLiteDatabase=userDbHelper.getWritableDatabase();
-
+        result=userDbHelper.GetRestuarantDetails(sqLiteDatabase);
     }
     @Override
     public int getGroupCount() {
-        return resturantNames.size();
+        //return resturantNames.size();
+        return result.getCount();
     }
     @Override
     public int getChildrenCount(int groupPosition) {
@@ -54,18 +57,20 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
     }
     @Override
     public Object getGroup(int groupPosition) {
-        return this.resturantNames.get(groupPosition);
+        //return this.resturantNames.get(groupPosition);
+        result.moveToPosition(groupPosition);
+        //String res=result.getString(0);
+        //return res;
+        GroupDetails groupDetails=new GroupDetails(result.getString(0),result.getString(1),result.getString(2));
+        return groupDetails;
     }
-
     public Object getGroupQuantity(int groupPosition) {
         return this.quantityTotal.get(groupPosition);
     }
-
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.itemNames.get(this.resturantNames.get(groupPosition)).get(childPosition);
+      return this.itemNames.get(this.resturantNames.get(groupPosition)).get(childPosition);
     }
-
     public Object getChildQuantity(int groupPosition, int childPosition) {
         return this.totalQuantity.get(this.resturantNames.get(groupPosition)).get(childPosition);
     }
@@ -73,7 +78,6 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
     public Object getChildRates(int groupPosition, int childPosition) {
         return this.totalRates.get(this.resturantNames.get(groupPosition)).get(childPosition);
     }
-
     public int getChildrenCountQuantity(int groupPosition) {
         return this.totalQuantity.get(this.resturantNames.get(groupPosition)).size();
     }
@@ -81,7 +85,6 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
     public int getChildrenCountRates(int groupPosition) {
         return this.totalRates.get(this.resturantNames.get(groupPosition)).size();
     }
-
     @Override
     public long getGroupId(int groupPosition) {
         return groupPosition;
@@ -105,13 +108,14 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
         } else {
             hg = (HoldGroup) convertView.getTag();
         }
-
-        final String res = resturantNames.get(groupPosition);
-        //Cursor re=userDbHelper.GetRestuarantDetails(sqLiteDatabase);
-        hg.txtResturantName.setText(res);
-        userDbHelper.close();
-        hg.txtItemCount.setText("Items:"+String.valueOf(quantityTotal.get(groupPosition)));
+        //Lines which are in commment are the coding lines getting data from arraylist and while
+        //rest of them are the coding lines which brings the data from the database
+        final GroupDetails res = (GroupDetails) getGroup(groupPosition);
+        hg.txtResturantName.setText(res.getRes_name());
+        //hg.txtItemCount.setText("Items:"+String.valueOf(quantityTotal.get(groupPosition)));
+        hg.txtItemCount.setText("Items:"+res.getRes_qty());
         hg.txtAmount.setText("Amount"+" "+"₹"+String.valueOf(sumAmount.get(groupPosition)));
+        userDbHelper.close();
         return convertView;
     }
     @Override
@@ -133,8 +137,6 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
         hc.txtBillItemRate.setText("₹" + rates);
         return convertView;
     }
-
-
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
@@ -160,6 +162,23 @@ public class CustomBillAdapter extends BaseExpandableListAdapter{
         }
 
         private TextView txtBillItemName, txtBillItemQuantity, txtBillItemRate;
+    }
+    public class GroupDetails
+    {
+        private String res_name;
+        private String res_qty;
+        private String res_amount;
+        public GroupDetails(String res_name, String res_qty,String res_amount) {
+            this.res_name = res_name;
+            this.res_qty = res_qty;
+            this.res_amount=res_amount;
+        }
+        public String getRes_name() {
+            return res_name;
+        }
+        public String getRes_qty() {
+            return res_qty;
+        }
     }
 }
 

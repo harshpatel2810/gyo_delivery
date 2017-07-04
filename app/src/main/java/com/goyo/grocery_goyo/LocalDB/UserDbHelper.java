@@ -45,6 +45,10 @@ public class UserDbHelper extends SQLiteOpenHelper {
     {
         db.execSQL("DELETE FROM "+UserContract.AddressDetails.TABLE_NAME);
     }
+    public void DeleteCartDetails(SQLiteDatabase db)
+    {
+        db.execSQL("DELETE FROM "+UserContract.CartDetails.TABLE_NAME);
+    }
     public void addAddressDetails(String user_id,String address,String address_type,SQLiteDatabase db)
     {
         //Helps to put the value in key-value format so for that Content Value Class is to be created
@@ -76,10 +80,19 @@ public class UserDbHelper extends SQLiteOpenHelper {
     }
     public Cursor GetRestuarantDetails(SQLiteDatabase db)
     {
-        String query="SELECT DISTINCT RES_NAME FROM "+UserContract.CartDetails.TABLE_NAME;
+        String query="SELECT DISTINCT RES_NAME,SUM(ITEM_QTY),SUM(ITEM_PRICE) FROM "+UserContract.CartDetails.TABLE_NAME+" WHERE "+UserContract.CartDetails.USER_ID+" ='"+HomeActivity.unique_id+"'" +
+                "GROUP BY "+UserContract.CartDetails.RES_NAME;
         db=this.getReadableDatabase();
         Cursor cursor=db.rawQuery(query,null);
         return cursor;
+    }
+    public Cursor GetChildRestaurantDetails(SQLiteDatabase db,String res_name)
+    {
+        String query="SELECT DISTINCT ITEM_NAME,ITEM_PRICE FROM "+UserContract.CartDetails.TABLE_NAME+" WHERE "+UserContract.CartDetails.USER_ID+" ='"+HomeActivity.unique_id+"'" +
+                " and  "+UserContract.CartDetails.RES_NAME+"='"+res_name+"'";
+        db=this.getReadableDatabase();
+        Cursor cursor=db.rawQuery(query,null);
+        return  cursor;
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)

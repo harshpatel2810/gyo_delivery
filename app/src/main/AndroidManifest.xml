@@ -39,6 +39,10 @@
             android:label="@string/title_activity_resturant_profile"
             android:screenOrientation="locked"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.goyo.grocery_goyo.Activity.PaymentScreen"
+            android:label="PaymentScreen"
+            android:screenOrientation="locked"/>
+
         <activity
             android:name="com.goyo.grocery_goyo.SearchLocation"
             android:label="@string/title_activity_search_location"

@@ -4,34 +4,70 @@
     android:layout_height="match_parent"
     android:gravity="top|center"
     android:theme="@android:style/Theme.NoTitleBar"
-    android:background="@color/white"
+    android:background="@mipmap/orange_theme_wallpaper"
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_weight="1"
+        android:layout_marginTop="90dp"
+        android:layout_weight="1.5"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/goyologo500"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1.5"
+        android:orientation="vertical"
+        android:baselineAligned="false">
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/imgNoInternet"
             android:src="@drawable/no_internet_connection"
-            android:layout_below="@+id/imgLogo"
+
             />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_weight="0.4"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
         <Button
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:id="@+id/btn_refresh"
             android:background="@drawable/button_refresh_shape"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:text="@string/button_refresh"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:src="@mipmap/schoolbus"/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:src="@mipmap/rickshaw"/>
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:src="@mipmap/deliveryicon"/>
+
     </LinearLayout>
 </LinearLayout>

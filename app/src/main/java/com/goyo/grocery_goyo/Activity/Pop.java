@@ -1,5 +1,6 @@
 package com.goyo.grocery_goyo.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.Contacts;
@@ -59,7 +60,11 @@ public class Pop extends AppCompatActivity{
          btnSaveAddress.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-               if(etFlatName.getText().toString().isEmpty())
+               if(ettxtAddressStreet.getText().toString().isEmpty())
+               {
+                 ettxtAddressStreet.setError("Enter Location");
+               }
+               else if(etFlatName.getText().toString().isEmpty())
                {
                    etFlatName.setError("Enter Building Details");
                }
@@ -84,19 +89,8 @@ public class Pop extends AppCompatActivity{
                    sqLiteDatabase=userDbHelper.getWritableDatabase();
                    userDbHelper.addAddressDetails(HomeActivity.unique_id,useraddress.toString(),addressType,sqLiteDatabase);
                    Toast.makeText(getBaseContext(),"Data Saved Successfully",Toast.LENGTH_LONG).show();
-                   Cursor re=userDbHelper.GetAddressDetails(sqLiteDatabase);
-                   if(re.getCount()==0)
-                   {
-                       return;
-                   }
-                   StringBuffer stringBuffer=new StringBuffer();
-                   while (re.moveToNext())
-                   {
-                       stringBuffer.setLength(0);
-                       stringBuffer.append("Delivery Address"+re.getString(1));
-                       Toast.makeText(context,stringBuffer.toString(),Toast.LENGTH_LONG).show();
-                   }
                    userDbHelper.close();
+                   startActivity(new Intent(getApplicationContext(),PaymentScreen.class));
                }
              }
          });

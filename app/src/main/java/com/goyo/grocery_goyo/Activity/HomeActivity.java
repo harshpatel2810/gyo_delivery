@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +35,6 @@ import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -68,8 +68,9 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         if(haveNetworkConnection(HomeActivity.this)==false)
         {
            // showInternetAlertDialog(HomeActivity.this).show();
-            View view=getLayoutInflater().inflate(R.layout.layout_no_internet_resource_1,null);
 
+            getSupportActionBar().hide();
+            View view=getLayoutInflater().inflate(R.layout.layout_no_internet_resource_1,null);
             setContentView(view);
             Button btn=(Button)view.findViewById(R.id.btn_refresh);
             btn.setOnClickListener(new View.OnClickListener() {

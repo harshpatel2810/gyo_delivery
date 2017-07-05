@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ScrollView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/cardview_shadow_end_color">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/label_delivery_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DELIVERY ADDRESS"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                />
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/label_delivery_address"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_grey"
+                />
+            <TextView
+                android:id="@+id/tvItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aloo Cheese"
+                android:layout_below="@+id/view1"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/label_bill_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BILL SUMMARY"
+                />
+            <TextView
+                android:id="@+id/tvItemInDigit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="1"
+                />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_grey"
+                android:layout_below="@+id/label_bill_summary"
+                android:layout_marginTop="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view2"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:text="Sub Total"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/payment_mode"
+                android:text="PAYMENT MODE"/>
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_grey"
+                android:layout_below="@+id/payment_mode"
+                android:layout_marginTop="20dp"/>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/view3">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioCash"
+                    android:layout_weight="1"
+                    android:text="CASH"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioPayUMoney"
+                    android:layout_weight="1"
+                    android:text="PayUmoney"/>
+            </RadioGroup>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/cardview_shadow_end_color">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/label_deals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DEALS"
+                android:textAllCaps="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                />
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/label_delivery_address"
+                android:layout_marginTop="20dp"
+                android:background="@color/light_grey"
+                />
+            <TextView
+                android:id="@+id/txtSpecialDeals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aloo Cheese"
+                android:layout_below="@+id/view4"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

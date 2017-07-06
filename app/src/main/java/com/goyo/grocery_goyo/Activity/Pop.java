@@ -15,11 +15,9 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.AppLocationService;
 import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 public class Pop extends AppCompatActivity{

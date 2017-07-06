@@ -19,6 +19,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DELIVERY ADDRESS"
+                android:textColor="@color/dark_blue"
                 android:textAllCaps="true"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentLeft="true"
@@ -32,7 +33,7 @@
                 android:background="@color/light_grey"
                 />
             <TextView
-                android:id="@+id/tvItemName"
+                android:id="@+id/tvDisplayDeliveryAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aloo Cheese"
@@ -56,6 +57,7 @@
                 android:id="@+id/label_bill_summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/dark_blue"
                 android:text="BILL SUMMARY"
                 />
             <TextView
@@ -73,13 +75,18 @@
                 android:background="@color/light_grey"
                 android:layout_below="@+id/label_bill_summary"
                 android:layout_marginTop="20dp"/>
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/view2"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
-                android:text="Sub Total"/>
+                android:text="Sub Total"/>-->
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_below="@+id/view2"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -94,30 +101,37 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/payment_mode"
+                android:id="@+id/label_payment_mode"
+                android:textColor="@color/dark_blue"
                 android:text="PAYMENT MODE"/>
             <View
                 android:id="@+id/view3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/light_grey"
-                android:layout_below="@+id/payment_mode"
+                android:layout_below="@+id/label_payment_mode"
                 android:layout_marginTop="20dp"/>
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:layout_below="@id/view3">
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/radioCash"
+                    android:background="@drawable/radio_button_selector"
+                    android:textColor="@drawable/radio_text_selector"
                     android:layout_weight="1"
-                    android:text="CASH"/>
+                    android:text="Cash"/>
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/radioPayUMoney"
+                    android:layout_marginLeft="2dp"
+                    android:background="@drawable/radio_button_selector"
+                    android:textColor="@drawable/radio_text_selector"
                     android:layout_weight="1"
                     android:text="PayUmoney"/>
             </RadioGroup>
@@ -137,6 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DEALS"
+                android:textColor="@color/dark_blue"
                 android:textAllCaps="true"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentLeft="true"
@@ -153,11 +168,10 @@
                 android:id="@+id/txtSpecialDeals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aloo Cheese"
+                android:text="12% Off on the bill amount of 1000/- and above from GoYo"
                 android:layout_below="@+id/view4"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
 </LinearLayout>

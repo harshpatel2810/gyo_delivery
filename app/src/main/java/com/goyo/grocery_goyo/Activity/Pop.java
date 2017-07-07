@@ -47,7 +47,7 @@ public class Pop extends AppCompatActivity{
          int height=dm.heightPixels;
          getWindow().setLayout((int)(width*.8),(int)(height*.6));
          getSupportActionBar().hide();
-         ettxtAddressStreet.setText(appLocationService.getAddressLine(this));
+         ettxtAddressStreet.setText(appLocationService.getAddressLineOne(this));
          btnEditStreet.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {

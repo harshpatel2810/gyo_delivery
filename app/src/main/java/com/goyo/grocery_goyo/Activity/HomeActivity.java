@@ -112,11 +112,11 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             resturant_list = (ListView) findViewById(R.id.list_display_resturants);
             InitAppBar();
             //Helps to set the details of user current location
-            if (appLocationService.getIsGPSTrackingEnabled()) {
+            if (appLocationService.canGetLocation()) {
                 if (newAddress == null) {
                     addressLine = String.valueOf(appLocationService.getLocality(this));
-                    txtLocation.setText(appLocationService.getAddressLine(this));
-                    txtLocDesc.setText(appLocationService.getAddressLine(this) + "," + String.valueOf(addressLine));
+                    txtLocation.setText(appLocationService.getAddressLineOne(this));
+                    txtLocDesc.setText(appLocationService.getAddressLineTwo(this) + "," + appLocationService.getLocality(this));
                 } else {
                     txtLocation.setText(io.getStringExtra("Area"));
                     txtLocDesc.setText(io.getStringExtra("AddressLine"));

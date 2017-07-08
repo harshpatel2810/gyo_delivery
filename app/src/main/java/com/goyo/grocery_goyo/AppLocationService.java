@@ -19,7 +19,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.goyo.grocery.R;
 import java.io.IOException;
 import java.security.SecurityPermission;

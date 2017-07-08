@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+
 /**
  * Created by Admin on 7/8/2017.
  */
 @SuppressLint("AppCompatCustomView")
-public class SwipeButton extends Button
+public class SwipeButton extends RelativeLayout
 {
 
     public SwipeButton(Context context) {

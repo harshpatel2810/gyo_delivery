@@ -225,6 +225,7 @@
     <com.goyo.grocery_goyo.SwipeButton
         android:id="@+id/my_swipe_button"
         android:layout_width="match_parent"
+        android:background="@drawable/shape_rounded_swipe"
         android:layout_height="45dp"
         android:text="BUTTON"
         android:layout_alignParentBottom="true"/>

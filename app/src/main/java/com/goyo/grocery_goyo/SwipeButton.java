@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
-
 /**
  * Created by Admin on 7/8/2017.
  */
-
 @SuppressLint("AppCompatCustomView")
 public class SwipeButton extends Button
 {

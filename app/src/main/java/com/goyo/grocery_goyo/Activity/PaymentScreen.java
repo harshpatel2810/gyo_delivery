@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.goyo.grocery.R;
 import com.goyo.grocery_goyo.AppLocationService;
 import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
+import com.goyo.grocery_goyo.SwipeButton;
+import com.goyo.grocery_goyo.SwipeButtonCustomItems;
 import com.vstechlab.easyfonts.EasyFonts;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +43,27 @@ public class PaymentScreen extends AppCompatActivity {
         sqLiteDatabase=userDbHelper.getReadableDatabase();
         InitLabelFonts();
         DisplayDeliveryAddress();
+        SwipeButton mSwipeButton = (SwipeButton) findViewById(R.id.my_swipe_button);
+        SwipeButtonCustomItems swipeButtonSettings = new SwipeButtonCustomItems() {
+            @Override
+            public void onSwipeConfirm() {
+                Log.d("NEW_STUFF", "New swipe confirm callback");
+            }
+        };
+        swipeButtonSettings
+                .setButtonPressText(">> SWIPE TO CONFIRM >>")
+                .setGradientColor1(0xFF888888)
+                .setGradientColor2(0xFF666666)
+                .setGradientColor2Width(10)
+                .setGradientColor3(0xFF333333)
+                .setPostConfirmationColor(0xFF888888)
+                .setActionConfirmDistanceFraction(0.9)
+                .setActionConfirmText(">> SWIPE TO CONFIRM >>");
+
+        if (mSwipeButton != null) {
+            mSwipeButton.setSwipeButtonCustomItems(swipeButtonSettings);
+        }
+        getSupportActionBar().setTitle("CHECKOUT");
     }
     private  void InitLabelFonts()
     {

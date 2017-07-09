@@ -219,14 +219,48 @@
                         android:layout_marginLeft="10dp"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/cardview_shadow_end_color">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DEALS"
+                        android:textColor="@color/dark_blue"
+                        android:textAllCaps="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentLeft="true"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/label_delivery_address"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/light_grey"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12% Off on the bill amount of 1000/- and above from GoYo"
+                        android:layout_below="@+id/view4"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
     <com.goyo.grocery_goyo.SwipeButton
         android:id="@+id/my_swipe_button"
         android:layout_width="match_parent"
-        android:background="@drawable/shape_rounded_swipe"
-        android:layout_height="45dp"
-        android:text="BUTTON"
+        android:layout_height="50dp"
+        android:background="@color/grey"
+        android:text=">> SWIPE TO CONFIRM >>"
         android:layout_alignParentBottom="true"/>
 </RelativeLayout>

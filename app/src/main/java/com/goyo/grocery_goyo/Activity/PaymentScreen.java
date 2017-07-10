@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.goyo.grocery.R;
+import com.goyo.grocery_goyo.Adapters.CustomPaymentRestauranAdapter;
 import com.goyo.grocery_goyo.AppLocationService;
 import com.goyo.grocery_goyo.LocalDB.UserDbHelper;
 import com.goyo.grocery_goyo.SwipeButton;
@@ -31,6 +34,7 @@ public class PaymentScreen extends AppCompatActivity {
     @BindView(R.id.tvDisplayDeliveryAddress) TextView tvDisplayDelivery;
     UserDbHelper userDbHelper;
     SQLiteDatabase sqLiteDatabase;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,9 @@ public class PaymentScreen extends AppCompatActivity {
             mSwipeButton.setSwipeButtonCustomItems(swipeButtonSettings);
         }
         getSupportActionBar().setTitle("CHECKOUT");
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerRestaurantDetails);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new CustomPaymentRestauranAdapter(this));
     }
     private  void InitLabelFonts()
     {

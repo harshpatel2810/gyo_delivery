@@ -1,12 +1,16 @@
 package com.goyo.grocery_goyo.Activity;
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -35,10 +39,13 @@ import com.goyo.grocery_goyo.model.RestaurantsTimings;
 import com.goyo.grocery_goyo.model.restaurantModel;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
+
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 public class HomeActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+    private static final int PERMS_REQUEST_CODE=123;
     public static ListView resturant_list;
     public static String unique_id;
     private Button search,btn_refresh;
@@ -65,6 +72,16 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_home);
         unique_id=UUID.randomUUID().toString().replace("-","");
         context = this;
+
+        if(hasPermission())
+        {
+           //Our App has permissions
+        }
+        else
+        {
+            //Our App Does not have permissions
+            requestPermissions();
+        }
         if(haveNetworkConnection(HomeActivity.this)==false)
         {
            // showInternetAlertDialog(HomeActivity.this).show();
@@ -178,25 +195,6 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         });
     }
-    //Request to set permission runtime because of 6.0 and SecurityException Fatal Error
-   /* public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                return;
-            }
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
-*/
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -245,6 +243,61 @@ public class HomeActivity extends AppCompatActivity implements SearchView.OnQuer
                     }
                 });
               */return builder;
+    }
+    private boolean hasPermission()
+    {
+        int res=0;
+        String permissions[]=new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+        for(String params:permissions)
+        {
+            res=checkCallingOrSelfPermission(params);
+            if(!(res== PackageManager.PERMISSION_GRANTED));
+            {
+                return false;
+            }
+        }
+       return true;
+
+    }
+    private void requestPermissions()
+    {
+        String permissions[]=new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
+        {
+            requestPermissions(permissions,PERMS_REQUEST_CODE);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean allowed=true;
+        switch (requestCode)
+        {
+            case PERMS_REQUEST_CODE:
+                for(int res:grantResults)
+                {
+                    // If User granted all the permissions
+                    allowed=allowed && (res==PackageManager.PERMISSION_GRANTED);
+                }
+                break;
+
+            default:
+                //if user not granted permission
+                allowed=false;
+                break;
+        }
+        if(allowed)
+        {
+            //user granted all permissions we can perform our task
+        }
+        else
+        {
+            //we will give warning to user that they havent granted permissions
+            if(shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                Toast.makeText(this,"Location permission denied.",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
 
